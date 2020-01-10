@@ -1,27 +1,46 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Monopoly
 {
     public class Game
     {
         private readonly Board board;
-        private readonly Player[] players;
+        private readonly IDice dice;
+        private readonly IOrderedEnumerable<Player> players;
 
-        public Game(Board board, Player[] players)
+        public Game(Board board, IDice dice, IEnumerable<Player> players)
         {
             this.board = board;
-            this.players = players;
+            this.dice = dice;
+            this.players = ShufflePlayers(players);
         }
 
-        public Player[] Players
+        private IOrderedEnumerable<Player> ShufflePlayers(IEnumerable<Player> players)
         {
-            get
+            return players.OrderBy(p => Guid.NewGuid());
+        }
+
+        public IEnumerable<string> GetPlayerOrder()
+        {
+            return players.Select(p => p.Name);
+        }
+
+        public void Play(int rounds)
+        {
+            if (players.Count() < 2 || players.Count() > 8)
             {
-                return players;
+                throw new Exception();
+            }
+
+            for (var i = 0; i < rounds; i++)
+            {
+                PlayRound();
             }
         }
 
-        public void PlayRound(IDice dice)
+        private void PlayRound()
         {
             players.ToList().ForEach(p => TakeTurn(p, dice));
         }
