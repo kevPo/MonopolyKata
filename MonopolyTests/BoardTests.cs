@@ -16,19 +16,23 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void CalculateNewLocationFrom0With7LocationsToMoveReturns7()
+        public void MoveNewPlayer7LocationsReturns7()
         {
             var board = new Board();
 
-            Assert.AreEqual(7, board.CalculateNewLocation(0, 7));
+            Assert.AreEqual(7, board.MovePlayer("horse", 7));
         }
 
         [TestMethod]
         public void CalculateNewLocationFrom39With6LocationsToMoveReturns5()
         {
             var board = new Board();
+            var horse = "horse";
+            board.MovePlayer(horse, 39);
 
-            Assert.AreEqual(5, board.CalculateNewLocation(39, 6));
+            var newLocation = board.MovePlayer(horse, 6);
+
+            Assert.AreEqual(5, newLocation);
         }
     }
 }

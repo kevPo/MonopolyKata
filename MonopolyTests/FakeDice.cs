@@ -30,7 +30,7 @@ namespace MonopolyTests
         {
             if (rollQueue.Count() == 0)
             {
-                return random.Next(1, 12);
+                return random.Next(2, 12);
             }
 
             return rollQueue.Dequeue();

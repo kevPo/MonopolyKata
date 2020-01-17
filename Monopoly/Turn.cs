@@ -2,13 +2,8 @@
 {
     public class Turn
     {
-        public int TurnOrder { get; private set; }
-        public Player Player { get; private set; }
-
-        public Turn(int turnOrder, Player player)
-        {
-            TurnOrder = turnOrder;
-            Player = player;
-        }
+        public int TurnOrder { get; set; }
+        public string Player { get; set; }
+        public int Location { get; set; }
     }
 }
