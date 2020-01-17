@@ -9,14 +9,14 @@ namespace MonopolyTests
     [TestClass]
     public class GameTests
     {
-        private readonly Game game;
         private readonly Board board;
         private readonly FakeDice dice;
         private readonly IEnumerable<Player> players;
+        private Game game;
 
         public GameTests()
         {
-            players = new[] { new Player("Horse"), new Player("Car") };
+            players = new[] { new Player { Name = "Horse" }, new Player { Name = "Car" } };
 
             board = new Board();
             dice = new FakeDice();
@@ -35,9 +35,9 @@ namespace MonopolyTests
             dice.LoadRoll(7);
             dice.LoadRoll(7);
 
-            game.Play(1);
+            game = game.Play();
 
-            Assert.IsTrue(players.All(p => p.Location == 7));
+            Assert.IsTrue(game.Rounds[0].All(turn => turn.Player.Location == 7));
         }
 
         [TestMethod]
@@ -47,15 +47,15 @@ namespace MonopolyTests
             dice.LoadRoll(6);
             players.ToList().ForEach(p => p.Location = 39);
 
-            game.Play(1);
+            game = game.Play();
 
-            Assert.IsTrue(players.All(p => p.Location == 5));
+            Assert.IsTrue(game.Rounds[0].All(turn => turn.Player.Location == 5));
         }
 
         [TestMethod]
         public void GameCanBeCreatedWithTwoPlayers()
         {
-            var players = new[] { new Player("Horse"), new Player("Car") };
+            var players = new[] { new Player { Name = "Horse" }, new Player { Name = "Car" } };
 
             new Game(board, dice, players);
         }
@@ -63,10 +63,10 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithOnePlayer()
         {
-            var horse = new Player("Horse");
+            var horse = new Player { Name = "Horse" };
             var game = new Game(board, dice, new[] { horse });
 
-            Assert.ThrowsException<Exception>(() => game.Play(1));
+            Assert.ThrowsException<Exception>(() => game.Play());
         }
 
         [TestMethod]
@@ -74,7 +74,7 @@ namespace MonopolyTests
         {
             var game = new Game(board, dice, new Player[9]);
 
-            Assert.ThrowsException<Exception>(() => game.Play(1));
+            Assert.ThrowsException<Exception>(() => game.Play());
         }
 
         [TestMethod]
@@ -82,23 +82,43 @@ namespace MonopolyTests
         {
             var game = new Game(board, dice, Enumerable.Empty<Player>().ToArray());
 
-            Assert.ThrowsException<Exception>(() => game.Play(1));
+            Assert.ThrowsException<Exception>(() => game.Play());
         }
 
         [TestMethod]
         public void TheOrderOfPlayersIsRandomPer100Games()
         {
             var games = new List<Game>();
-            var horse = new Player("horse");
-            var car = new Player("car");
+            var horse = new Player { Name = "Horse" };
+            var car = new Player { Name = "Car" };
 
             for (var i = 0; i < 100; i++)
             {
-                games.Add(new Game(board, dice, new[] { horse, car }));
+                var game = new Game(board, dice, new[] { horse, car });
+                games.Add(game.Play());
             }
 
-            Assert.IsTrue(games.Any(g => g.GetPlayerOrder().First() == horse.Name));
-            Assert.IsTrue(games.Any(g => g.GetPlayerOrder().First() == car.Name));
+            Assert.IsTrue(games.Any(g => g.Rounds[0].First().Player.Name == horse.Name));
+            Assert.IsTrue(games.Any(g => g.Rounds[0].First().Player.Name == car.Name));
+        }
+
+        [TestMethod]
+        public void PlayReturnsAGameWith20PlayedRounds()
+        {
+            game = game.Play();
+
+            Assert.AreEqual(20, game.Rounds.Count());
+        }
+
+        [TestMethod]
+        public void PlayerMaintainSameTurnOrderForEveryRoundOfGame()
+        {
+            game = game.Play();
+
+            var carTurnOrder = game.Rounds[0].Where(t => t.Player.Name == "Car").First().TurnOrder;
+            var horseTurnOrder = game.Rounds[0].Where(t => t.Player.Name == "Horse").First().TurnOrder;
+            Assert.IsTrue(game.Rounds.SelectMany(r => r.Value).Where(t => t.Player.Name == "Car").All(t => t.TurnOrder == carTurnOrder));
+            Assert.IsTrue(game.Rounds.SelectMany(r => r.Value).Where(t => t.Player.Name == "Horse").All(t => t.TurnOrder == horseTurnOrder));
         }
     }
 }

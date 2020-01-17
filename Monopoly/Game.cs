@@ -6,49 +6,64 @@ namespace Monopoly
 {
     public class Game
     {
+        private const int NumberOfRounds = 20;
+
+        public IDictionary<int, IEnumerable<Turn>> Rounds { get; private set; }
+
         private readonly Board board;
         private readonly IDice dice;
-        private readonly IOrderedEnumerable<Player> players;
+        private readonly IDictionary<int, Player> playerOrder;
 
         public Game(Board board, IDice dice, IEnumerable<Player> players)
         {
             this.board = board;
             this.dice = dice;
-            this.players = ShufflePlayers(players);
+            this.playerOrder = ShufflePlayers(players);
+
+            Rounds = new Dictionary<int, IEnumerable<Turn>>();
         }
 
-        private IOrderedEnumerable<Player> ShufflePlayers(IEnumerable<Player> players)
+        private IDictionary<int, Player> ShufflePlayers(IEnumerable<Player> players)
         {
-            return players.OrderBy(p => Guid.NewGuid());
+            var orderedPlayers = players.OrderBy(p => Guid.NewGuid());
+            var playerOrder = 0;
+
+            return orderedPlayers.ToDictionary(p => playerOrder++, p => p);
         }
 
-        public IEnumerable<string> GetPlayerOrder()
+        public Game Play()
         {
-            return players.Select(p => p.Name);
-        }
-
-        public void Play(int rounds)
-        {
-            if (players.Count() < 2 || players.Count() > 8)
+            if (playerOrder.Count() < 2 || playerOrder.Count() > 8)
             {
                 throw new Exception();
             }
 
-            for (var i = 0; i < rounds; i++)
+            for (var round = 0; round < NumberOfRounds; round++)
             {
-                PlayRound();
+                PlayRound(round);
             }
+
+            return this;
         }
 
-        private void PlayRound()
+        private void PlayRound(int round)
         {
-            players.ToList().ForEach(p => TakeTurn(p, dice));
+            var turns = new List<Turn>();
+
+            for (var i = 0; i < playerOrder.Count(); i++)
+            {
+                turns.Add(TakeTurn(playerOrder[i], i));
+            }
+
+            Rounds.Add(round, turns);
         }
 
-        private void TakeTurn(Player player, IDice dice)
+        private Turn TakeTurn(Player player, int turnOrder)
         {
             var rolled = dice.Roll();
             player.Location = board.CalculateNewLocation(player.Location, rolled);
+
+            return new Turn(turnOrder, new Player { Name = player.Name, Location = player.Location });
         }
     }
 }

@@ -1,13 +1,8 @@
-namespace Monopoly
+﻿namespace Monopoly
 {
     public class Player
     {
-        public string Name { get; }
+        public string Name { get; set;  }
         public int Location { get; set; } 
-
-        public Player(string name)
-        {
-            Name = name;
-        }
     }
 }
