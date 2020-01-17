@@ -5,6 +5,7 @@ namespace Monopoly
 {
     public class Board
     {
+        public const int Go = 0;
         private const int NumberOfLocations = 40;
 
         public IEnumerable<int> Locations { get; private set; }

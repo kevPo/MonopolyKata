@@ -16,7 +16,7 @@ namespace MonopolyTests
 
         public GameTests()
         {
-            players = new[] { new Player { Name = "Horse" }, new Player { Name = "Car" } };
+            players = new[] { new Player("Horse"), new Player("Car") };
 
             board = new Board();
             dice = new FakeDice();
@@ -61,7 +61,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCanBeCreatedWithTwoPlayers()
         {
-            var players = new[] { new Player { Name = "Horse" }, new Player { Name = "Car" } };
+            var players = new[] { new Player("Horse") , new Player("Car") };
 
             new Game(board, dice, players);
         }
@@ -69,7 +69,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithOnePlayer()
         {
-            var horse = new Player { Name = "Horse" };
+            var horse = new Player("Horse");
             var game = new Game(board, dice, new[] { horse });
 
             Assert.ThrowsException<Exception>(() => game.Play());
@@ -95,8 +95,8 @@ namespace MonopolyTests
         public void TheOrderOfPlayersIsRandomPer100Games()
         {
             var games = new List<Game>();
-            var horse = new Player { Name = "Horse" };
-            var car = new Player { Name = "Car" };
+            var horse = new Player("Horse");
+            var car = new Player("Car");
 
             for (var i = 0; i < 100; i++)
             {
