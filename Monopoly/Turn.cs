@@ -1,5 +1,6 @@
 ﻿namespace Monopoly
 {
+
     public class Turn
     {
         public int TurnOrder { get; set; }

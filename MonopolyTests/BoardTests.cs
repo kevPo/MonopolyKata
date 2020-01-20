@@ -7,32 +7,33 @@ namespace MonopolyTests
     [TestClass]
     public class BoardTests
     {
+        private Board board;
+
+        public BoardTests()
+        {
+            board = new Board();
+        }
+
         [TestMethod]
         public void BoardHas40Locations()
         {
-           var board = new Board();
-
            Assert.AreEqual(40, board.Locations.Count());
         }
 
         [TestMethod]
         public void MoveNewPlayer7LocationsReturns7()
         {
-            var board = new Board();
+            var result = board.MoveToLocation(0, 7);
 
-            Assert.AreEqual(7, board.MovePlayer("horse", 7));
+            Assert.AreEqual(7, result.CurrentLocation);
         }
 
         [TestMethod]
         public void CalculateNewLocationFrom39With6LocationsToMoveReturns5()
         {
-            var board = new Board();
-            var horse = "horse";
-            board.MovePlayer(horse, 39);
+            var result = board.MoveToLocation(39, 6);
 
-            var newLocation = board.MovePlayer(horse, 6);
-
-            Assert.AreEqual(5, newLocation);
+            Assert.AreEqual(5, result.CurrentLocation);
         }
     }
 }

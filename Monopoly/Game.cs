@@ -7,20 +7,18 @@ namespace Monopoly
     public class Game
     {
         private const int NumberOfRounds = 20;
-
-        public IDictionary<int, IEnumerable<Turn>> Rounds { get; private set; }
+        private const int MinimumPlayers = 2;
+        private const int MaximumPlayers = 8;
 
         private readonly Board board;
         private readonly IDice dice;
-        private readonly IDictionary<int, Player> players;
+        private readonly IDictionary<int, Player> playerOrder;
 
         public Game(Board board, IDice dice, IEnumerable<Player> players)
         {
             this.board = board;
             this.dice = dice;
-            this.players = ShufflePlayers(players);
-
-            Rounds = new Dictionary<int, IEnumerable<Turn>>();
+            this.playerOrder = ShufflePlayers(players);
         }
 
         private IDictionary<int, Player> ShufflePlayers(IEnumerable<Player> players)
@@ -31,36 +29,37 @@ namespace Monopoly
             return orderedPlayers.ToDictionary(p => playerOrder++, p => p);
         }
 
-        public Game Play()
+        public IDictionary<int, IEnumerable<Turn>> Play()
         {
             ValidateGameHasCorrectNumberOfPlayers();
+            var rounds = new Dictionary<int, IEnumerable<Turn>>();
 
             for (var round = 0; round < NumberOfRounds; round++)
             {
-                PlayRound(round);
+                rounds.Add(round, PlayRound());
             }
 
-            return this;
+            return rounds;
         }
 
         private void ValidateGameHasCorrectNumberOfPlayers()
         {
-            if (players.Count() < 2 || players.Count() > 8)
+            if (playerOrder.Count() < MinimumPlayers || playerOrder.Count() > MaximumPlayers)
             {
                 throw new Exception();
             }
         }
 
-        private void PlayRound(int round)
+        private IEnumerable<Turn> PlayRound()
         {
             var turns = new List<Turn>();
 
-            for (var i = 0; i < players.Count(); i++)
+            for (var i = 0; i < playerOrder.Count(); i++)
             {
-                turns.Add(players[i].TakeTurn(i, dice, board));
+                turns.Add(playerOrder[i].TakeTurn(i, dice, board));
             }
 
-            Rounds.Add(round, turns);
+            return turns;
         }
     }
 }

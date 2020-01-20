@@ -1,31 +1,37 @@
-﻿namespace Monopoly
+﻿using System.Linq;
+
+namespace Monopoly
 {
     public class Player
     {
+        public const int PassingGoReward = 200;
+
         public string Name { get; private set;  }
         public int Balance { get; private set; }
+        public int Location { get; private set; }
 
-        public Player(string name, int balance = 0)
+        public Player(string name, int balance = 0, int location = 0)
         {
             Name = name;
             Balance = balance;
+            Location = location;
         }
 
         public Turn TakeTurn(int turnOrder, IDice dice, Board board)
         {
             var rolled = dice.Roll();
-            var newLocation = board.MovePlayer(Name, rolled);
+            var result = board.MoveToLocation(Location, rolled);
 
-            if (newLocation == Board.Go)
-            {
-                Balance += 200;
-            }
+            var timesPassedGo = result.LocationHistory.Count(l => l == Board.Go);
+            Balance += (timesPassedGo * PassingGoReward);
+
+            Location = result.CurrentLocation;
 
             return new Turn
             {
                 TurnOrder = turnOrder,
                 Player = Name,
-                Location = newLocation
+                Location = Location
             };
         }
     }

@@ -10,27 +10,27 @@ namespace Monopoly
 
         public IEnumerable<int> Locations { get; private set; }
 
-        private IDictionary<string, int> playerLocations;
-
         public Board()
         {
             Locations = Enumerable.Range(0, NumberOfLocations);
-            playerLocations = new Dictionary<string, int>();
         }
 
-        public int MovePlayer(string name, int locationsToMove)
+        public MoveResult MoveToLocation(int currentLocation, int locationsToMove)
         {
-            if (!playerLocations.ContainsKey(name))
+            var locationHistory = new List<int>();
+
+            for (var i = 0; i < locationsToMove; i++)
             {
-                playerLocations[name] = 0;
+                currentLocation = CalculateNextLocation(currentLocation);
+                locationHistory.Add(currentLocation);
             }
 
-            return playerLocations[name] = CalculateNewLocation(playerLocations[name], locationsToMove);
+            return new MoveResult { CurrentLocation = currentLocation, LocationHistory = locationHistory };
         }
 
-        private int CalculateNewLocation(int currentLocation, int locationsToMove)
+        private int CalculateNextLocation(int location)
         {
-            return (currentLocation + locationsToMove) % NumberOfLocations;
+            return ++location % NumberOfLocations;
         }
     }
 }
