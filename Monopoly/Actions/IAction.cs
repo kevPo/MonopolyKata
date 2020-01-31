@@ -1,4 +1,4 @@
-﻿namespace Monopoly
+﻿namespace Monopoly.Actions
 {
     public interface IAction
     {

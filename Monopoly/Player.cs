@@ -23,10 +23,10 @@
 
             foreach (var location in result.LocationHistory)
             {
-                location.PassingAction.ProcessAction(this);
+                location.ProcessPassingAction(this);
             }
 
-            result.CurrentLocation.LandingAction.ProcessAction(this);
+            result.CurrentLocation.ProcessLandingAction(this);
 
             return new Turn
             {

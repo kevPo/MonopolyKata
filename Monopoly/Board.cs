@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Monopoly.Actions;
 using Monopoly.Locations;
 
 namespace Monopoly
 {
     public class Board
     {
-        public const int Go = 0;
-        public const int JustVisiting = 10;
-        public const int GoToJail = 30;
         private const int NumberOfLocations = 40;
 
         public IEnumerable<ILocation> Locations { get; private set; }
@@ -22,7 +20,7 @@ namespace Monopoly
         {
             return new ILocation[]
             {
-                new GoLocation(),
+                new Location(LocationConstants.GoLocationName, LocationConstants.GoLocationIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
                 new NullLocation("Empty", 1),
                 new NullLocation("Empty", 2),
                 new NullLocation("Empty", 3),
@@ -52,7 +50,7 @@ namespace Monopoly
                 new NullLocation("Empty", 27),
                 new NullLocation("Empty", 28),
                 new NullLocation("Empty", 29),
-                new GoToJailLocation(),
+                new Location(LocationConstants.GoToJailLocationName, LocationConstants.GoToJailLocationIndex, new NullAction(), new RelocateAction(LocationConstants.JustVisitingLocationIndex)),
                 new NullLocation("Empty", 31),
                 new NullLocation("Empty", 32),
                 new NullLocation("Empty", 33),

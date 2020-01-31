@@ -46,12 +46,13 @@
     <Compile Include="Actions\RelocateAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Locations\GoLocation.cs" />
-    <Compile Include="Locations\GoToJailLocation.cs" />
-    <Compile Include="IAction.cs" />
+    <Compile Include="Locations\Location.cs" />
+    <Compile Include="Actions\IAction.cs" />
     <Compile Include="IDice.cs" />
-    <Compile Include="ILocation.cs" />
+    <Compile Include="Locations\ILocation.cs" />
     <Compile Include="IPlayer.cs" />
+    <Compile Include="Locations\LocationConstants.cs" />
+    <Compile Include="MonopolyConstants.cs" />
     <Compile Include="MoveResult.cs" />
     <Compile Include="Locations\NullLocation.cs" />
     <Compile Include="Player.cs" />
