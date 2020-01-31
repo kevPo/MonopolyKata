@@ -4,14 +4,14 @@ namespace Monopoly.Locations
 {
     public class Location : ILocation
     {
-        private readonly IAction passingAction;
         private readonly IAction landingAction;
+        private readonly IAction passingAction;
 
-        public Location(int locationIndex, IAction passingAction, IAction landingAction)
+        public Location(int locationIndex, IAction landingAction = null, IAction passingAction = null)
         {
             LocationIndex = locationIndex;
-            this.passingAction = passingAction;
-            this.landingAction = landingAction;
+            this.landingAction = landingAction ?? new NullAction();
+            this.passingAction = passingAction ?? new NullAction();
         }
 
         public int LocationIndex { get; }

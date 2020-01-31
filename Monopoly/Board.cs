@@ -24,7 +24,7 @@ namespace Monopoly
                 new NullLocation(1),
                 new NullLocation(2),
                 new NullLocation(3),
-                new Location(LocationConstants.IncomeTaxLocationIndex, new NullAction(), new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
+                new Location(LocationConstants.IncomeTaxLocationIndex, new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
                 new NullLocation(5),
                 new NullLocation(6),
                 new NullLocation(7),
@@ -50,7 +50,7 @@ namespace Monopoly
                 new NullLocation(27),
                 new NullLocation(28),
                 new NullLocation(29),
-                new Location(LocationConstants.GoToJailLocationIndex, new NullAction(), new RelocateAction(LocationConstants.JustVisitingLocationIndex)),
+                new Location(LocationConstants.GoToJailLocationIndex, new RelocateAction(LocationConstants.JustVisitingLocationIndex)),
                 new NullLocation(31),
                 new NullLocation(32),
                 new NullLocation(33),
@@ -58,7 +58,7 @@ namespace Monopoly
                 new NullLocation(35),
                 new NullLocation(36),
                 new NullLocation(37),
-                new Location(LocationConstants.LuxuryTaxLocationIndex, new NullAction(), new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
+                new Location(LocationConstants.LuxuryTaxLocationIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
                 new NullLocation(39)
             };
         }

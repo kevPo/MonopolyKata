@@ -1,11 +1,19 @@
-﻿using Monopoly.Actions;
-
-namespace Monopoly.Locations
+﻿namespace Monopoly.Locations
 {
-    public class NullLocation : Location
+    public class NullLocation : ILocation
     {
         public NullLocation(int locationIndex)
-            : base(locationIndex, new NullAction(), new NullAction())
+        {
+            LocationIndex = locationIndex;
+        }
+
+        public int LocationIndex { get; }
+
+        public void ProcessLandingAction(IPlayer player)
+        {
+        }
+
+        public void ProcessPassingAction(IPlayer player)
         {
         }
     }
