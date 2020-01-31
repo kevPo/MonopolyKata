@@ -1,14 +1,12 @@
-﻿using System.Linq;
-
-namespace Monopoly
+﻿namespace Monopoly
 {
-    public class Player
+    public class Player : IPlayer
     {
         public const int PassingGoReward = 200;
 
-        public string Name { get; private set;  }
-        public int Balance { get; private set; }
-        public int Location { get; private set; }
+        public string Name { get; set;  }
+        public int Balance { get; set; }
+        public int Location { get; set; }
 
         public Player(string name, int balance = 0, int location = 0)
         {
@@ -21,11 +19,14 @@ namespace Monopoly
         {
             var rolled = dice.Roll();
             var result = board.MoveToLocation(Location, rolled);
+            Location = result.CurrentLocation.LocationIndex;
 
-            var timesPassedGo = result.LocationHistory.Count(l => l == Board.Go);
-            Balance += (timesPassedGo * PassingGoReward);
+            foreach (var location in result.LocationHistory)
+            {
+                location.PassingAction.ProcessAction(this);
+            }
 
-            Location = result.CurrentLocation;
+            result.CurrentLocation.LandingAction.ProcessAction(this);
 
             return new Turn
             {

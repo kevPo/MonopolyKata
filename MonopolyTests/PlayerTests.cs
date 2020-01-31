@@ -85,5 +85,31 @@ namespace MonopolyTests
 
             Assert.AreEqual(400, player.Balance);
         }
+
+        [TestMethod]
+        public void PlayerLandsOnGoToJailAndMovesDirectlyToJustVisiting()
+        {
+            dice.LoadRolls(new[] { 29, 1 });
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(10, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPassesOverGoToJailWithLocationAndBalanceUnchanged()
+        {
+            dice.LoadRolls(new[] { 29, 2 });
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(31, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
     }
 }

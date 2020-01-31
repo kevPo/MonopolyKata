@@ -4,7 +4,7 @@ namespace Monopoly
 {
     public class MoveResult
     {
-        public IEnumerable<int> LocationHistory { get; set; }
-        public int CurrentLocation { get; set; }
+        public IEnumerable<ILocation> LocationHistory { get; set; }
+        public ILocation CurrentLocation { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace MonopolyTests
         {
             var result = board.MoveToLocation(0, 7);
 
-            Assert.AreEqual(7, result.CurrentLocation);
+            Assert.AreEqual(7, result.CurrentLocation.LocationIndex);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace MonopolyTests
         {
             var result = board.MoveToLocation(39, 6);
 
-            Assert.AreEqual(5, result.CurrentLocation);
+            Assert.AreEqual(5, result.CurrentLocation.LocationIndex);
         }
     }
 }
