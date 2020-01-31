@@ -58,7 +58,7 @@ namespace Monopoly
                 new NullLocation(35),
                 new NullLocation(36),
                 new NullLocation(37),
-                new NullLocation(38),
+                new Location(LocationConstants.LuxuryTaxLocationIndex, new NullAction(), new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
                 new NullLocation(39)
             };
         }

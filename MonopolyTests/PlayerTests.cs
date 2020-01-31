@@ -180,5 +180,33 @@ namespace MonopolyTests
             Assert.AreEqual(5, player.Location);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
+
+        [TestMethod]
+        public void PlayerPays75WhenPlayerLandsOnLuxuryTax()
+        {
+            dice.LoadRolls(new[] { 37, 1 });
+            player.Balance = 100;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance - 75;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(38, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPassesOverLuxuryTaxAndNothingHappens()
+        {
+            dice.LoadRolls(new[] { 37, 2 });
+            player.Balance = 100;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(39, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
     }
 }
