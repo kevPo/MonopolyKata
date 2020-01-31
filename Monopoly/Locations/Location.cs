@@ -7,7 +7,7 @@ namespace Monopoly.Locations
         private readonly IAction passingAction;
         private readonly IAction landingAction;
 
-        public Location(string name, int locationIndex, IAction passingAction, IAction landingAction)
+        public Location(int locationIndex, IAction passingAction, IAction landingAction)
         {
             LocationIndex = locationIndex;
             this.passingAction = passingAction;

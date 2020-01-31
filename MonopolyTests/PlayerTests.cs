@@ -111,5 +111,74 @@ namespace MonopolyTests
             Assert.AreEqual(31, player.Location);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
+
+        [TestMethod]
+        public void PlayerPays180WhenPlayerLandsOnIncomeTaxAndBalanceIs1800()
+        {
+            dice.LoadRolls(new[] { 3, 1 });
+            player.Balance = 1800;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance - 180;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(4, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2200()
+        {
+            dice.LoadRolls(new[] { 3, 1 });
+            player.Balance = 2200;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance - 200;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(4, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPays0WhenPlayerLandsOnIncomeTaxAndBalanceIs0()
+        {
+            dice.LoadRolls(new[] { 3, 1 });
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(4, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2000()
+        {
+            dice.LoadRolls(new[] { 3, 1 });
+            player.Balance = 2000;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance - 200;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(4, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerPassesOverIncomeTaxAndNothingHappens()
+        {
+            dice.LoadRolls(new[] { 3, 2 });
+            player.Balance = 2000;
+            player.TakeTurn(0, dice, board);
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(5, player.Location);
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
     }
 }

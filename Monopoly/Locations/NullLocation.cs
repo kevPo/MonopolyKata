@@ -4,8 +4,8 @@ namespace Monopoly.Locations
 {
     public class NullLocation : Location
     {
-        public NullLocation(string name, int locationIndex)
-            :base(name, locationIndex, new NullAction(), new NullAction())
+        public NullLocation(int locationIndex)
+            : base(locationIndex, new NullAction(), new NullAction())
         {
         }
     }

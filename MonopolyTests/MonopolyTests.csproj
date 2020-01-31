@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\IncomeTaxActionTests.cs" />
     <Compile Include="Actions\PayoutActionTests.cs" />
     <Compile Include="Actions\RelocateActionTests.cs" />
     <Compile Include="BoardTests.cs" />
