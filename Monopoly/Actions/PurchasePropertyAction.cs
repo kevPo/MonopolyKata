@@ -4,22 +4,22 @@ namespace Monopoly.Actions
 {
     public class PurchasePropertyAction : IAction
     {
-        private readonly int cost;
+        private readonly IProperty property;
 
-        public PurchasePropertyAction(int cost)
+        public PurchasePropertyAction(IProperty property)
         {
-            this.cost = cost;
+            this.property = property;
         }
 
-        public void ProcessAction(IPlayer player, ILocation location)
+        public void ProcessAction(IPlayer player)
         {
-            if (location.Owner == null)
+            if (property.Owner == null)
             {
-                var newBalance = player.Balance - cost;
+                var newBalance = player.Balance - property.Cost;
                 if (newBalance >= 0)
                 {
-                    location.Owner = player;
-                    player.Balance -= cost;
+                    player.Balance = newBalance;
+                    property.PurchaseProperty(player);
                 }
             }
         }

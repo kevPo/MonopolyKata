@@ -21,7 +21,7 @@ namespace Monopoly
             return new ILocation[]
             {
                 new Location(LocationConstants.GoIndex, landingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount), passingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount)),
-                new Location(LocationConstants.MediterraneanAveIndex, landingAction: new PurchasePropertyAction(LocationConstants.MediterraneanAveLocationCost)),
+                new Property(LocationConstants.MediterraneanAveIndex, LocationConstants.MediterraneanAveLocationCost),
                 new NullLocation(2),
                 new NullLocation(3),
                 new Location(LocationConstants.IncomeTaxIndex, landingAction: new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),

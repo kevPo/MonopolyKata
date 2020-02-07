@@ -14,9 +14,8 @@ namespace MonopolyTests.Actions
             var payoutAmount = 1000;
             var payoutAction = new PayoutAction(payoutAmount);
             var player = new Player("Name", 0, 0);
-            var location = new FakeLocation();
 
-            payoutAction.ProcessAction(player, location);
+            payoutAction.ProcessAction(player);
 
             Assert.AreEqual(payoutAmount, player.Balance);
         }

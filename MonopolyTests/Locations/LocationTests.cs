@@ -1,19 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Monopoly;
-using Monopoly.Actions;
 using Monopoly.Locations;
 
 namespace MonopolyTests.Locations
 {
-    public class FakeAction : IAction
-    {
-        public bool WasCalled { get; private set; }
-
-        public void ProcessAction(IPlayer player, ILocation location)
-        {
-            WasCalled = true;
-        }
-    }
 
     [TestClass]
     public class LocationTests

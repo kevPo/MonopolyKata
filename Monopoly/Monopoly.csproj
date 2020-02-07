@@ -49,12 +49,14 @@
     <Compile Include="Actions\RelocateAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Locations\IProperty.cs" />
     <Compile Include="Locations\Location.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="IDice.cs" />
     <Compile Include="Locations\ILocation.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="Locations\LocationConstants.cs" />
+    <Compile Include="Locations\Property.cs" />
     <Compile Include="MonopolyConstants.cs" />
     <Compile Include="MoveResult.cs" />
     <Compile Include="Locations\NullLocation.cs" />

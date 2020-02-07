@@ -11,23 +11,23 @@ namespace MonopolyTests.Actions
         public void LocationIsOwnedByPlayerAfterPurchase()
         {
             var player = new Player("owner");
-            var action = new PurchasePropertyAction(0);
-            var location = new FakeLocation();
+            var property = new FakeProperty(cost: 0);
+            var action = new PurchasePropertyAction(property);
 
-            action.ProcessAction(player, location);
+            action.ProcessAction(player);
 
-            Assert.AreEqual(player.Name, location.Owner.Name);
+            Assert.AreEqual(player.Name, property.Owner.Name);
         }
 
         [TestMethod]
         public void PlayerBalanceIsDecreasedByCostOfProperty()
         {
             var player = new Player("owner", 500);
-            var action = new PurchasePropertyAction(100);
-            var location = new FakeLocation();
+            var property = new FakeProperty(cost: 100);
+            var action = new PurchasePropertyAction(property);
             var expectedBalance = 500 - 100;
 
-            action.ProcessAction(player, location);
+            action.ProcessAction(player);
 
             Assert.AreEqual(expectedBalance, player.Balance);
         }
@@ -36,24 +36,24 @@ namespace MonopolyTests.Actions
         public void PlayerDoesNotPurchasePropertyIfBalanceWouldDropBelow0()
         {
             var player = new Player("owner", 50);
-            var action = new PurchasePropertyAction(100);
-            var location = new FakeLocation();
+            var property = new FakeProperty(cost: 100);
+            var action = new PurchasePropertyAction(property);
 
-            action.ProcessAction(player, location);
+            action.ProcessAction(player);
 
-            Assert.AreEqual(null, location.Owner);
+            Assert.AreEqual(null, property.Owner);
         }
 
         [TestMethod]
         public void PlayerStillPurchasesPropertyIfBalanceWouldDropTo0()
         {
             var player = new Player("owner", 50);
-            var action = new PurchasePropertyAction(50);
-            var location = new FakeLocation();
+            var property = new FakeProperty(cost: 50);
+            var action = new PurchasePropertyAction(property);
 
-            action.ProcessAction(player, location);
+            action.ProcessAction(player);
 
-            Assert.AreEqual(player.Name, location.Owner.Name);
+            Assert.AreEqual(player.Name, property.Owner.Name);
         }
     }
 }

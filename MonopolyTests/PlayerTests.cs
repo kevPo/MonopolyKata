@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
+using Monopoly.Locations;
 
 namespace MonopolyTests
 {
@@ -218,14 +219,14 @@ namespace MonopolyTests
 
             player.TakeTurn(0, dice, board);
 
-            Assert.AreEqual(player.Name, board.Locations.ElementAt(1).Owner.Name);
+            Assert.AreEqual(player.Name, (board.Locations.ElementAt(1) as IProperty).Owner.Name);
         }
        
         [TestMethod]
         public void PlayerLandsOnOwnedPropertyAndNothingHappens()
         {
             dice.LoadRolls(new[] { 1 });
-            board.Locations.ElementAt(1).Owner = player;
+            (board.Locations.ElementAt(1) as IProperty).PurchaseProperty(player);
             player.Balance = 100;
             var expectedBalance = player.Balance;
 
@@ -239,11 +240,12 @@ namespace MonopolyTests
         {
             dice.LoadRolls(new[] { 2 });
             player.Balance = 100;
+            var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
 
-            Assert.IsNull(board.Locations.ElementAt(1).Owner);
-            Assert.AreEqual(100, player.Balance);
+            Assert.IsNull((board.Locations.ElementAt(1) as IProperty).Owner);
+            Assert.AreEqual(expectedBalance, player.Balance);
         }
     }
 }

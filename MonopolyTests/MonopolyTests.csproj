@@ -55,8 +55,9 @@
     <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="FakeDice.cs" />
-    <Compile Include="FakeLocation.cs" />
+    <Compile Include="FakeProperty.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="FakeAction.cs" />
     <Compile Include="Locations\LocationTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

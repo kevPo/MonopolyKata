@@ -1,6 +1,4 @@
-﻿using Monopoly.Locations;
-
-namespace Monopoly.Actions
+﻿namespace Monopoly.Actions
 {
     public class RelocateAction : IAction
     {
@@ -11,7 +9,7 @@ namespace Monopoly.Actions
             this.newLocationIndex = newLocationIndex;
         }
 
-        public void ProcessAction(IPlayer player, ILocation location)
+        public void ProcessAction(IPlayer player)
         {
             player.Location = newLocationIndex;
         }

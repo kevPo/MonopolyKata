@@ -13,9 +13,8 @@ namespace MonopolyTests.Actions
         {
             var player = new Player("Name", 0, 0);
             var action = new RelocateAction(LocationConstants.JustVisitingIndex);
-            var location = new FakeLocation();
 
-            action.ProcessAction(player, location);
+            action.ProcessAction(player);
 
             Assert.AreEqual(LocationConstants.JustVisitingIndex, player.Location);
         }
