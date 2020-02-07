@@ -12,11 +12,12 @@ namespace MonopolyTests.Actions
         public void PlayerLocationIsSetToNewLocation()
         {
             var player = new Player("Name", 0, 0);
-            var action = new RelocateAction(LocationConstants.JustVisitingLocationIndex);
+            var action = new RelocateAction(LocationConstants.JustVisitingIndex);
+            var location = new FakeLocation();
 
-            action.ProcessAction(player);
+            action.ProcessAction(player, location);
 
-            Assert.AreEqual(LocationConstants.JustVisitingLocationIndex, player.Location);
+            Assert.AreEqual(LocationConstants.JustVisitingIndex, player.Location);
         }
     }
 }

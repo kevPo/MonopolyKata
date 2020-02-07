@@ -1,4 +1,6 @@
-﻿namespace Monopoly.Actions
+﻿using Monopoly.Locations;
+
+namespace Monopoly.Actions
 {
     public class PayoutAction : IAction
     {
@@ -9,7 +11,7 @@
             this.amountToPayout = amountToPayout;
         }
 
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, ILocation location)
         {
             player.Balance += amountToPayout;
         }

@@ -52,8 +52,10 @@
     <Compile Include="Actions\IncomeTaxActionTests.cs" />
     <Compile Include="Actions\PayoutActionTests.cs" />
     <Compile Include="Actions\RelocateActionTests.cs" />
+    <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="FakeDice.cs" />
+    <Compile Include="FakeLocation.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="Locations\LocationTests.cs" />
     <Compile Include="PlayerTests.cs" />

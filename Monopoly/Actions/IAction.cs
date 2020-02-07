@@ -1,7 +1,9 @@
-﻿namespace Monopoly.Actions
+﻿using Monopoly.Locations;
+
+namespace Monopoly.Actions
 {
     public interface IAction
     {
-        void ProcessAction(IPlayer player);
+        void ProcessAction(IPlayer player, ILocation location);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Monopoly.Locations;
 
 namespace Monopoly.Actions
 {
@@ -13,7 +14,7 @@ namespace Monopoly.Actions
             this.incomeTaxMaxAmount = incomeTaxMaxAmount;
         }
 
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, ILocation location)
         {
             var taxAmount = (int)(player.Balance * (incomeTaxRate / 100));
             taxAmount = Math.Min(taxAmount, incomeTaxMaxAmount);

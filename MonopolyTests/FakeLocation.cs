@@ -1,15 +1,17 @@
-﻿namespace Monopoly.Locations
+﻿using Monopoly;
+using Monopoly.Locations;
+
+namespace MonopolyTests
 {
-    public class NullLocation : ILocation
+    public class FakeLocation : ILocation
     {
-        public NullLocation(int locationIndex)
+        public FakeLocation(int locationIndex = 0, IPlayer owner = null)
         {
             LocationIndex = locationIndex;
-            Cost = 0;
+            Owner = owner;
         }
 
-        public int LocationIndex { get; }
-        public int Cost { get; }
+        public int LocationIndex { get; set; }
         public IPlayer Owner { get; set; }
 
         public void ProcessLandingAction(IPlayer player)

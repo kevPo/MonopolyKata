@@ -45,6 +45,7 @@
     <Compile Include="Actions\NullAction.cs" />
     <Compile Include="Actions\IncomeTaxAction.cs" />
     <Compile Include="Actions\PayoutAction.cs" />
+    <Compile Include="Actions\PurchasePropertyAction.cs" />
     <Compile Include="Actions\RelocateAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Game.cs" />

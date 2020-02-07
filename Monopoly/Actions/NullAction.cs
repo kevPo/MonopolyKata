@@ -1,8 +1,10 @@
-﻿namespace Monopoly.Actions
+﻿using Monopoly.Locations;
+
+namespace Monopoly.Actions
 {
     public class NullAction : IAction
     {
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, ILocation location)
         {
         }
     }

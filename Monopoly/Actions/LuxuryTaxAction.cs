@@ -1,4 +1,6 @@
-﻿namespace Monopoly.Actions
+﻿using Monopoly.Locations;
+
+namespace Monopoly.Actions
 {
     public class LuxuryTaxAction : IAction
     {
@@ -9,7 +11,7 @@
             this.luxuryTaxMaxAmount = luxuryTaxMaxAmount;
         }
 
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, ILocation location)
         {
             player.Balance -= luxuryTaxMaxAmount;
         }

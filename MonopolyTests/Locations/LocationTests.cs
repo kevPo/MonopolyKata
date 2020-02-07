@@ -9,7 +9,7 @@ namespace MonopolyTests.Locations
     {
         public bool WasCalled { get; private set; }
 
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, ILocation location)
         {
             WasCalled = true;
         }

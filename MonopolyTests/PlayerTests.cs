@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 
 namespace MonopolyTests
@@ -57,12 +58,12 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoAndGets200DollarsAddedToBalance()
         {
-            dice.LoadRolls(new[] { 39, 2 });
+            dice.LoadRolls(new[] { 39, 3 });
             player.TakeTurn(0, dice, board);
 
             player.TakeTurn(0, dice, board);
 
-            Assert.AreEqual(1, player.Location);
+            Assert.AreEqual(2, player.Location);
             Assert.AreEqual(200, player.Balance);
         }
 
@@ -79,7 +80,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoTwiceInOneTurnAndGains400ToBalance()
         {
-            dice.LoadRoll(81);
+            dice.LoadRoll(82);
 
             player.TakeTurn(0, dice, board);
 
@@ -207,6 +208,42 @@ namespace MonopolyTests
 
             Assert.AreEqual(39, player.Location);
             Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerLandsOnUnownedPropertyAndBuysIt()
+        {
+            dice.LoadRolls(new[] { 1 });
+            player.Balance = 100;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(player.Name, board.Locations.ElementAt(1).Owner.Name);
+        }
+       
+        [TestMethod]
+        public void PlayerLandsOnOwnedPropertyAndNothingHappens()
+        {
+            dice.LoadRolls(new[] { 1 });
+            board.Locations.ElementAt(1).Owner = player;
+            player.Balance = 100;
+            var expectedBalance = player.Balance;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.AreEqual(expectedBalance, player.Balance);
+        }
+       
+        [TestMethod]
+        public void PlayerPassesOverUnownedPropertyAndNothingHappens()
+        {
+            dice.LoadRolls(new[] { 2 });
+            player.Balance = 100;
+
+            player.TakeTurn(0, dice, board);
+
+            Assert.IsNull(board.Locations.ElementAt(1).Owner);
+            Assert.AreEqual(100, player.Balance);
         }
     }
 }
