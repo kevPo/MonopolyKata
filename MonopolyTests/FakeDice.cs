@@ -21,11 +21,6 @@ namespace MonopolyTests
             rollQueue.Enqueue(numberToRoll);
         }
 
-        public void LoadRolls(IEnumerable<int> rolls)
-        {
-            rolls.ToList().ForEach(LoadRoll);
-        }
-
         public int Roll()
         {
             if (rollQueue.Count() == 0)

@@ -8,9 +8,10 @@ namespace Monopoly.Locations
         private IAction rentAction;
         private IAction currentAction;
 
-        public Property(int locationIndex, Money? cost = null, Money? rent = null)
+        public Property(int locationIndex, PropertyGroup propertyGroup, Money? cost = null, Money? rent = null)
         {
             LocationIndex = locationIndex;
+            PropertyGroup = propertyGroup;
             Cost = cost ?? new Money(0);
             Rent = rent ?? new Money(0);
 
@@ -21,6 +22,7 @@ namespace Monopoly.Locations
         }
 
         public int LocationIndex { get; }
+        public PropertyGroup PropertyGroup { get; }
         public IPlayer Owner { get; private set; }
         public Money Cost { get; } 
         public Money Rent { get; }

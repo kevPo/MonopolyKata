@@ -45,8 +45,8 @@
         public const int BoardwalkIndex = 39;
 
         // Costs
-        public static readonly Money MediterraneanAveLocationCost = new Money(60);
-        public static readonly Money BalticAveLocationCost = new Money(60);
+        public static readonly Money MediterraneanAveCost = new Money(60);
+        public static readonly Money BalticAveCost = new Money(60);
         public static readonly Money ReadingRailroadCost = new Money(200);
         public static readonly Money OrientalAveCost = new Money(100);
         public static readonly Money VermontAveCost = new Money(100);
@@ -67,41 +67,45 @@
         public static readonly Money VentnorAveCost = new Money(260);
         public static readonly Money WaterWorksCost = new Money(150);
         public static readonly Money MarvinGardensCost = new Money(280);
-        public static readonly Money PacificAveLocationCost = new Money(300);
-        public static readonly Money NorthCarolinaAveLocationCost = new Money(300);
-        public static readonly Money PennsylvaniaAveLocationCost = new Money(320);
-        public static readonly Money ShortLineRailroadLocationCost = new Money(150);
-        public static readonly Money ParkPlaceLocationCost = new Money(350);
-        public static readonly Money BoardwalkLocationCost = new Money(400);
+        public static readonly Money PacificAveCost = new Money(300);
+        public static readonly Money NorthCarolinaAveCost = new Money(300);
+        public static readonly Money PennsylvaniaAveCost = new Money(320);
+        public static readonly Money ShortLineRailroadCost = new Money(150);
+        public static readonly Money ParkPlaceCost = new Money(350);
+        public static readonly Money BoardwalkCost = new Money(400);
+
+        // Rents
+        public static readonly Money MediterraneanAveRent = new Money(2);
+        public static readonly Money BalticAveRent = new Money(4);
+        public static readonly Money OrientalAveRent = new Money(6);
+        public static readonly Money VermontAveRent = new Money(6);
+        public static readonly Money ConnecticutAveRent = new Money(8);
+        public static readonly Money StCharlesPlaceRent = new Money(10);
+        public static readonly Money StatesAveRent = new Money(10);
+        public static readonly Money VirginiaAveRent = new Money(12);
+        public static readonly Money StJamesPlaceRent = new Money(14);
+        public static readonly Money TennesseeAveRent = new Money(14);
+        public static readonly Money NewYorkAveRent = new Money(16);
+        public static readonly Money KentuckyAveRent = new Money(18);
+        public static readonly Money IndianaAveRent = new Money(18);
+        public static readonly Money IllinoisAveRent = new Money(20);
+        public static readonly Money AtlanticAveRent = new Money(22);
+        public static readonly Money VentnorAveRent = new Money(22);
+        public static readonly Money MarvinGardensRent = new Money(24);
+        public static readonly Money PacificAveRent = new Money(26);
+        public static readonly Money NorthCarolinaAveRent = new Money(26);
+        public static readonly Money PennsylvaniaAveRent = new Money(28);
+        public static readonly Money ParkPlaceRent = new Money(35);
+        public static readonly Money BoardwalkRent = new Money(50);
+
+        // Groups
+        public static readonly PropertyGroup PurplePropertyGroup = new PropertyGroup("Purple");
+        public static readonly PropertyGroup LightBluePropertyGroup = new PropertyGroup("LightBlue");
+        public static readonly PropertyGroup VioletPropertyGroup = new PropertyGroup("Violet");
+        public static readonly PropertyGroup OrangePropertyGroup = new PropertyGroup("Orange");
+        public static readonly PropertyGroup RedPropertyGroup = new PropertyGroup("Red");
+        public static readonly PropertyGroup YellowPropertyGroup = new PropertyGroup("Yellow");
+        public static readonly PropertyGroup DarkGreenPropertyGroup = new PropertyGroup("DarkGreen");
+        public static readonly PropertyGroup DarkBluePropertyGroup = new PropertyGroup("DarkBlue");
     }
 }
-/*
-Mediterranean Ave., 60, 2, Purple
-Baltic Ave., 60, 4, Purple
-Oriental Ave., 100, 6, Light-Blue
-Vermont Ave., 100, 6, Light-Blue
-Connecticut Ave., 120, 8, Light-Blue
-St. Charles Place, 140, 10, Violet
-States Ave., 140, 10, Violet
-Virginia Ave., 160, 12, Violet
-St. James Place, 180, 14, Orange
-Tennessee Ave., 180, 14, Orange
-New York Ave., 200, 16, Orange
-Kentucky Ave., 220, 18, Red
-Indiana Ave., 220, 18, Red
-Illinois Ave., 240, 20, Red
-Atlantic Ave., 260, 22, Yellow
-Ventnor Ave., 260, 22, Yellow
-Marvin Gardens, 280, 24, Yellow
-Pacific Ave., 300, 26, Dark-Green
-North Carolina Ave., 300, 26, Dark-Green
-Pennsylvania Ave., 320, 28, Dark-Green
-Park Place, 350, 35, Dark-Blue
-Boardwalk, 400, 50, Dark-Blue
-Electric Company, 150, *, Utilities
-Water Works, 150, *, Utilities
-Reading Railroad, 200, **, Railroad
-Pennsylvania Railroad, 200, **, Railroad
-B. & O.Railroad, 200, **, Railroad
-Short Line Railroad, 200, **, Railroad
-*/

@@ -8,13 +8,11 @@ namespace MonopolyTests
     [TestClass]
     public class PlayerTests
     {
-        private Player player;
         private Board board;
         private FakeDice dice;
 
         public PlayerTests()
         {
-            player = new Player("Horse");
             dice = new FakeDice();
             board = new Board();
         }
@@ -22,6 +20,7 @@ namespace MonopolyTests
         [TestMethod]
         public void TakeTurnReturnsNewTurnWithNewLocationFromBoard()
         {
+            var player = new Player("horse");
             var turnOrder = 0;
             var newLocation = 10;
             dice.LoadRoll(10);
@@ -36,8 +35,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnGoAndGets200DollarsAddedToBalance()
         {
-            dice.LoadRolls(new[] { 39, 1 });
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", location: 39);
+            dice.LoadRoll(1);
 
             player.TakeTurn(0, dice, board);
 
@@ -48,6 +47,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnNormalLocationAndBalanceDoesNotChange()
         {
+            var player = new Player("horse");
             dice.LoadRoll(11);
 
             player.TakeTurn(0, dice, board);
@@ -59,8 +59,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoAndGets200DollarsAddedToBalance()
         {
-            dice.LoadRolls(new[] { 39, 3 });
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", location: 39);
+            dice.LoadRoll(3);
 
             player.TakeTurn(0, dice, board);
 
@@ -71,6 +71,7 @@ namespace MonopolyTests
         [TestMethod]
         public void StartsOnGoDoesNotLandOrPassOnGoAndBalanceRemainsUnchanged()
         {
+            var player = new Player("horse");
             dice.LoadRoll(4);
 
             player.TakeTurn(0, dice, board);
@@ -81,8 +82,9 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoTwiceInOneTurnAndGains400ToBalance()
         {
-            var expectedBalance = MonopolyConstants.GoPayoutAmount.Add(MonopolyConstants.GoPayoutAmount);
+            var player = new Player("horse");
             dice.LoadRoll(82);
+            var expectedBalance = MonopolyConstants.GoPayoutAmount.Add(MonopolyConstants.GoPayoutAmount);
 
             player.TakeTurn(0, dice, board);
 
@@ -92,8 +94,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnGoToJailAndMovesDirectlyToJustVisiting()
         {
-            dice.LoadRolls(new[] { 29, 1 });
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", location: 29);
+            dice.LoadRoll(1);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -105,8 +107,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverGoToJailWithLocationAndBalanceUnchanged()
         {
-            dice.LoadRolls(new[] { 29, 2 });
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", location: 29);
+            dice.LoadRoll(2);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -118,9 +120,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays180WhenPlayerLandsOnIncomeTaxAndBalanceIs1800()
         {
-            dice.LoadRolls(new[] { 3, 1 });
-            player.DepositMoney(new Money(1800));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(1800));
+            dice.LoadRoll(4);
             var expectedBalance = player.Balance.Remove(new Money(180));
 
             player.TakeTurn(0, dice, board);
@@ -132,9 +133,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2200()
         {
-            dice.LoadRolls(new[] { 3, 1 });
-            player.DepositMoney(new Money(2200));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(2200));
+            dice.LoadRoll(4);
             var expectedBalance = player.Balance.Remove(new Money(200));
 
             player.TakeTurn(0, dice, board);
@@ -146,8 +146,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays0WhenPlayerLandsOnIncomeTaxAndBalanceIs0()
         {
-            dice.LoadRolls(new[] { 3, 1 });
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", location: 3);
+            dice.LoadRoll(1);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -159,9 +159,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2000()
         {
-            dice.LoadRolls(new[] { 3, 1 });
-            player.DepositMoney(new Money(2000));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(2000));
+            dice.LoadRoll(4);
             var expectedBalance = player.Balance.Remove(new Money(200));
 
             player.TakeTurn(0, dice, board);
@@ -173,9 +172,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverIncomeTaxAndNothingHappens()
         {
-            dice.LoadRolls(new[] { 3, 2 });
-            player.DepositMoney(new Money(2000));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(2000));
+            dice.LoadRoll(5);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -187,9 +185,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays75WhenPlayerLandsOnLuxuryTax()
         {
-            dice.LoadRolls(new[] { 37, 1 });
-            player.DepositMoney(new Money(100));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(100), 37);
+            dice.LoadRoll(1);
             var expectedBalance = player.Balance.Remove(new Money(75));
 
             player.TakeTurn(0, dice, board);
@@ -201,9 +198,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverLuxuryTaxAndNothingHappens()
         {
-            dice.LoadRolls(new[] { 37, 2 });
-            player.DepositMoney(new Money(100));
-            player.TakeTurn(0, dice, board);
+            var player = new Player("horse", new Money(100), 37);
+            dice.LoadRoll(2);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -215,8 +211,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnUnownedPropertyAndBuysIt()
         {
-            dice.LoadRolls(new[] { 1 });
-            player.DepositMoney(new Money(100));
+            var player = new Player("horse", new Money(100));
+            dice.LoadRoll(1);
 
             player.TakeTurn(0, dice, board);
 
@@ -226,10 +222,10 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnOwnedPropertyAndNothingHappens()
         {
-            dice.LoadRolls(new[] { 1 });
             var owner = new Player("owner", balance: new Money(100));
             (board.Locations.ElementAt(1) as IProperty).TransitionOwnership(owner);
-            player.DepositMoney(new Money(100));
+            var player = new Player("horse", new Money(100));
+            dice.LoadRoll(1);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -240,8 +236,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverUnownedPropertyAndNothingHappens()
         {
-            dice.LoadRolls(new[] { 2 });
-            player.DepositMoney(new Money(100));
+            var player = new Player("horse", new Money(100));
+            dice.LoadRoll(2);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);

@@ -63,6 +63,7 @@
     <Compile Include="Locations\NullLocation.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Locations\PropertyGroup.cs" />
     <Compile Include="Turn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
