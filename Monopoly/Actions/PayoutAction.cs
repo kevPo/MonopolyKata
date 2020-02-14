@@ -11,7 +11,7 @@
 
         public void ProcessAction(IPlayer player)
         {
-            player.Balance = player.Balance.Add(amountToPayout);
+            player.DepositMoney(amountToPayout);
         }
     }
 }

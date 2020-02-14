@@ -13,14 +13,10 @@ namespace Monopoly.Actions
 
         public void ProcessAction(IPlayer player)
         {
-            if (property.Owner == null)
+            if (property.IsUnowned() && player.HasAvailableFunds(property.Cost))
             {
-                var newBalance = player.Balance.Remove(property.Cost);
-                if (newBalance.Amount >= 0)
-                {
-                    player.Balance = newBalance;
-                    property.PurchaseProperty(player);
-                }
+                player.WithdrawMoney(property.Cost);
+                property.TransitionOwnership(player);
             }
         }
     }

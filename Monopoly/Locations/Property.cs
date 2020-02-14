@@ -25,7 +25,12 @@ namespace Monopoly.Locations
         public Money Cost { get; } 
         public Money Rent { get; }
 
-        public void PurchaseProperty(IPlayer player)
+        public bool IsUnowned()
+        {
+            return Owner == null;
+        }
+
+        public void TransitionOwnership(IPlayer player)
         {
             Owner = player;
             currentAction = rentAction;

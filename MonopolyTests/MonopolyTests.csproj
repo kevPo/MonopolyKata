@@ -59,6 +59,7 @@
     <Compile Include="GameTests.cs" />
     <Compile Include="FakeAction.cs" />
     <Compile Include="Locations\LocationTests.cs" />
+    <Compile Include="MoneyServicesTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

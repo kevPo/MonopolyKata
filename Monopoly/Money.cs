@@ -8,32 +8,12 @@
         }
 
         public int Amount { get; }
+
+        public override string ToString()
+        {
+            return $"Money: {Amount}";
+        }
     }
-
-    //public class Money
-    //{
-    //    public Money(int amount)
-    //    {
-    //        Amount = amount;
-    //    }
-
-    //    public int Amount { get; }
-
-    //    public override bool Equals(object obj)
-    //    {
-    //        if (obj is Money)
-    //        {
-    //            return (obj as Money).Amount == Amount;
-    //        }
-
-    //        return false;
-    //    }
-
-    //    public override int GetHashCode()
-    //    {
-    //        return base.GetHashCode();
-    //    }
-    //}
 
     public static class MoneyServices
     {

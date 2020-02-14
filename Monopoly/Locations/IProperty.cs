@@ -6,7 +6,7 @@
         Money Cost { get; }
         Money Rent { get; }
 
-        // TODO: move to player
-        void PurchaseProperty(IPlayer player);
+        bool IsUnowned();
+        void TransitionOwnership(IPlayer player);
     }
 }

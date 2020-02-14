@@ -18,7 +18,7 @@ namespace Monopoly.Actions
             // TODO: should we look into this?
             var taxAmount = (int)(player.Balance.Amount * (incomeTaxRate / 100));
             taxAmount = Math.Min(taxAmount, incomeTaxMaxAmount.Amount);
-            player.Balance = player.Balance.Remove(new Money(taxAmount));
+            player.WithdrawMoney(new Money(taxAmount));
         }
     }
 }

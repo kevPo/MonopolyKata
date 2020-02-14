@@ -119,7 +119,7 @@ namespace MonopolyTests
         public void PlayerPays180WhenPlayerLandsOnIncomeTaxAndBalanceIs1800()
         {
             dice.LoadRolls(new[] { 3, 1 });
-            player.Balance = new Money(1800);
+            player.DepositMoney(new Money(1800));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance.Remove(new Money(180));
 
@@ -133,7 +133,7 @@ namespace MonopolyTests
         public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2200()
         {
             dice.LoadRolls(new[] { 3, 1 });
-            player.Balance = new Money(2200);
+            player.DepositMoney(new Money(2200));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance.Remove(new Money(200));
 
@@ -160,7 +160,7 @@ namespace MonopolyTests
         public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2000()
         {
             dice.LoadRolls(new[] { 3, 1 });
-            player.Balance = new Money(2000);
+            player.DepositMoney(new Money(2000));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance.Remove(new Money(200));
 
@@ -174,7 +174,7 @@ namespace MonopolyTests
         public void PlayerPassesOverIncomeTaxAndNothingHappens()
         {
             dice.LoadRolls(new[] { 3, 2 });
-            player.Balance = new Money(2000);
+            player.DepositMoney(new Money(2000));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance;
 
@@ -188,7 +188,7 @@ namespace MonopolyTests
         public void PlayerPays75WhenPlayerLandsOnLuxuryTax()
         {
             dice.LoadRolls(new[] { 37, 1 });
-            player.Balance = new Money(100);
+            player.DepositMoney(new Money(100));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance.Remove(new Money(75));
 
@@ -202,7 +202,7 @@ namespace MonopolyTests
         public void PlayerPassesOverLuxuryTaxAndNothingHappens()
         {
             dice.LoadRolls(new[] { 37, 2 });
-            player.Balance = new Money(100);
+            player.DepositMoney(new Money(100));
             player.TakeTurn(0, dice, board);
             var expectedBalance = player.Balance;
 
@@ -216,7 +216,7 @@ namespace MonopolyTests
         public void PlayerLandsOnUnownedPropertyAndBuysIt()
         {
             dice.LoadRolls(new[] { 1 });
-            player.Balance = new Money(100);
+            player.DepositMoney(new Money(100));
 
             player.TakeTurn(0, dice, board);
 
@@ -227,8 +227,9 @@ namespace MonopolyTests
         public void PlayerLandsOnOwnedPropertyAndNothingHappens()
         {
             dice.LoadRolls(new[] { 1 });
-            (board.Locations.ElementAt(1) as IProperty).PurchaseProperty(player);
-            player.Balance = new Money(100);
+            var owner = new Player("owner", balance: new Money(100));
+            (board.Locations.ElementAt(1) as IProperty).TransitionOwnership(owner);
+            player.DepositMoney(new Money(100));
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
@@ -240,7 +241,7 @@ namespace MonopolyTests
         public void PlayerPassesOverUnownedPropertyAndNothingHappens()
         {
             dice.LoadRolls(new[] { 2 });
-            player.Balance = new Money(100);
+            player.DepositMoney(new Money(100));
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);

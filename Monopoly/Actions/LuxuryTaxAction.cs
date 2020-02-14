@@ -11,7 +11,7 @@
 
         public void ProcessAction(IPlayer player)
         {
-            player.Balance = player.Balance.Remove(luxuryTaxMaxAmount);
+            player.WithdrawMoney(luxuryTaxMaxAmount);
         }
     }
 }

@@ -4,7 +4,10 @@
     {
         string Name { get; }
         int Location { get; set; }
-        // TODO: refactor out this setter into add/remove methods
-        Money Balance { get; set; }
+        Money Balance { get; }
+
+        bool HasAvailableFunds(Money amount);
+        bool DepositMoney(Money amount);
+        bool WithdrawMoney(Money amount);
     }
 }
