@@ -57,6 +57,7 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="Locations\LocationConstants.cs" />
     <Compile Include="Locations\Property.cs" />
+    <Compile Include="Money.cs" />
     <Compile Include="MonopolyConstants.cs" />
     <Compile Include="MoveResult.cs" />
     <Compile Include="Locations\NullLocation.cs" />

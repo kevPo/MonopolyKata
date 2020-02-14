@@ -5,18 +5,18 @@ namespace MonopolyTests
 {
     public class FakeProperty : IProperty
     {
-        public FakeProperty(int locationIndex = 0, IPlayer owner = null, int cost = 0, int rent = 0)
+        public FakeProperty(int locationIndex = 0, IPlayer owner = null, Money? cost = null, Money? rent = null)
         {
             LocationIndex = locationIndex;
             Owner = owner;
-            Cost = cost;
-            Rent = rent;
+            Cost = cost ?? new Money(0);
+            Rent = rent ?? new Money(0);
         }
 
         public int LocationIndex { get; }
         public IPlayer Owner { get; private set; }
-        public int Cost { get; }
-        public int Rent { get; }
+        public Money Cost { get; }
+        public Money Rent { get; }
 
         public void PurchaseProperty(IPlayer player)
         {

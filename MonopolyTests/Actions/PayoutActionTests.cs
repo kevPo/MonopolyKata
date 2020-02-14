@@ -11,9 +11,9 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void ProcessActionAddsGivenAmountToPlayer()
         {
-            var payoutAmount = 1000;
+            var payoutAmount = new Money(1000);
             var payoutAction = new PayoutAction(payoutAmount);
-            var player = new Player("Name", 0, 0);
+            var player = new Player("Name");
 
             payoutAction.ProcessAction(player);
 

@@ -11,7 +11,7 @@ namespace MonopolyTests.Actions
         public void LocationIsOwnedByPlayerAfterPurchase()
         {
             var player = new Player("owner");
-            var property = new FakeProperty(cost: 0);
+            var property = new FakeProperty();
             var action = new PurchasePropertyAction(property);
 
             action.ProcessAction(player);
@@ -22,10 +22,12 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void PlayerBalanceIsDecreasedByCostOfProperty()
         {
-            var player = new Player("owner", 500);
-            var property = new FakeProperty(cost: 100);
+            var playerMoney = new Money(500);
+            var propertyCost = new Money(100);
+            var player = new Player("owner", playerMoney);
+            var property = new FakeProperty(cost: propertyCost);
             var action = new PurchasePropertyAction(property);
-            var expectedBalance = 500 - 100;
+            var expectedBalance = playerMoney.Remove(propertyCost);
 
             action.ProcessAction(player);
 
@@ -35,8 +37,8 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void PlayerDoesNotPurchasePropertyIfBalanceWouldDropBelow0()
         {
-            var player = new Player("owner", 50);
-            var property = new FakeProperty(cost: 100);
+            var player = new Player("owner", new Money(50));
+            var property = new FakeProperty(cost: new Money(100));
             var action = new PurchasePropertyAction(property);
 
             action.ProcessAction(player);
@@ -47,8 +49,8 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void PlayerStillPurchasesPropertyIfBalanceWouldDropTo0()
         {
-            var player = new Player("owner", 50);
-            var property = new FakeProperty(cost: 50);
+            var player = new Player("owner", new Money(50));
+            var property = new FakeProperty(cost: new Money(50));
             var action = new PurchasePropertyAction(property);
 
             action.ProcessAction(player);

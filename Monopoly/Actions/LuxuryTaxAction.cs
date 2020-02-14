@@ -2,16 +2,16 @@
 {
     public class LuxuryTaxAction : IAction
     {
-        private readonly int luxuryTaxMaxAmount;
+        private readonly Money luxuryTaxMaxAmount;
 
-        public LuxuryTaxAction(int luxuryTaxMaxAmount)
+        public LuxuryTaxAction(Money luxuryTaxMaxAmount)
         {
             this.luxuryTaxMaxAmount = luxuryTaxMaxAmount;
         }
 
         public void ProcessAction(IPlayer player)
         {
-            player.Balance -= luxuryTaxMaxAmount;
+            player.Balance = player.Balance.Remove(luxuryTaxMaxAmount);
         }
     }
 }

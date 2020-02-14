@@ -2,16 +2,16 @@
 {
     public class PayoutAction : IAction
     {
-        private readonly int amountToPayout;
+        private readonly Money amountToPayout;
 
-        public PayoutAction(int amountToPayout)
+        public PayoutAction(Money amountToPayout)
         {
             this.amountToPayout = amountToPayout;
         }
 
         public void ProcessAction(IPlayer player)
         {
-            player.Balance += amountToPayout;
+            player.Balance = player.Balance.Add(amountToPayout);
         }
     }
 }

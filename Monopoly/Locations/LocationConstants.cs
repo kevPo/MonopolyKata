@@ -45,34 +45,34 @@
         public const int BoardwalkIndex = 39;
 
         // Costs
-        public const int MediterraneanAveLocationCost = 60;
-        public const int BalticAveLocationCost = 60;
-        public const int ReadingRailroadCost = 200;
-        public const int OrientalAveCost = 100;
-        public const int VermontAveCost = 100;
-        public const int ConnecticutAveCost = 120;
-        public const int StCharlesPlaceCost = 140;
-        public const int ElectricCompanyCost = 140;
-        public const int StatesAveCost = 140;
-        public const int VirginiaAveCost = 160;
-        public const int PennsylvaniaRailroadCost = 200;
-        public const int StJamesPlaceCost = 180;
-        public const int TennesseeAveCost = 180;
-        public const int NewYorkAveCost = 200;
-        public const int KentuckyAveCost = 220;
-        public const int IndianaAveCost = 220;
-        public const int IllinoisAveCost = 240;
-        public const int BAndORailroadCost = 200;
-        public const int AtlanticAveCost = 260;
-        public const int VentnorAveCost = 260;
-        public const int WaterWorksCost = 150;
-        public const int MarvinGardensCost = 280;
-        public const int PacificAveLocationCost = 300;
-        public const int NorthCarolinaAveLocationCost = 300;
-        public const int PennsylvaniaAveLocationCost = 320;
-        public const int ShortLineRailroadLocationCost = 150;
-        public const int ParkPlaceLocationCost = 350;
-        public const int BoardwalkLocationCost = 400;
+        public static readonly Money MediterraneanAveLocationCost = new Money(60);
+        public static readonly Money BalticAveLocationCost = new Money(60);
+        public static readonly Money ReadingRailroadCost = new Money(200);
+        public static readonly Money OrientalAveCost = new Money(100);
+        public static readonly Money VermontAveCost = new Money(100);
+        public static readonly Money ConnecticutAveCost = new Money(120);
+        public static readonly Money StCharlesPlaceCost = new Money(140);
+        public static readonly Money ElectricCompanyCost = new Money(140);
+        public static readonly Money StatesAveCost = new Money(140);
+        public static readonly Money VirginiaAveCost = new Money(160);
+        public static readonly Money PennsylvaniaRailroadCost = new Money(200);
+        public static readonly Money StJamesPlaceCost = new Money(180);
+        public static readonly Money TennesseeAveCost = new Money(180);
+        public static readonly Money NewYorkAveCost = new Money(200);
+        public static readonly Money KentuckyAveCost = new Money(220);
+        public static readonly Money IndianaAveCost = new Money(220);
+        public static readonly Money IllinoisAveCost = new Money(240);
+        public static readonly Money BAndORailroadCost = new Money(200);
+        public static readonly Money AtlanticAveCost = new Money(260);
+        public static readonly Money VentnorAveCost = new Money(260);
+        public static readonly Money WaterWorksCost = new Money(150);
+        public static readonly Money MarvinGardensCost = new Money(280);
+        public static readonly Money PacificAveLocationCost = new Money(300);
+        public static readonly Money NorthCarolinaAveLocationCost = new Money(300);
+        public static readonly Money PennsylvaniaAveLocationCost = new Money(320);
+        public static readonly Money ShortLineRailroadLocationCost = new Money(150);
+        public static readonly Money ParkPlaceLocationCost = new Money(350);
+        public static readonly Money BoardwalkLocationCost = new Money(400);
     }
 }
 /*

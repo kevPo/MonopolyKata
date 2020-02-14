@@ -15,8 +15,8 @@ namespace Monopoly.Actions
         {
             if (property.Owner == null)
             {
-                var newBalance = player.Balance - property.Cost;
-                if (newBalance >= 0)
+                var newBalance = player.Balance.Remove(property.Cost);
+                if (newBalance.Amount >= 0)
                 {
                     player.Balance = newBalance;
                     property.PurchaseProperty(player);

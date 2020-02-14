@@ -5,9 +5,9 @@ namespace Monopoly.Actions
     public class IncomeTaxAction : IAction
     {
         private readonly decimal incomeTaxRate;
-        private readonly int incomeTaxMaxAmount;
+        private readonly Money incomeTaxMaxAmount;
 
-        public IncomeTaxAction(int incomeTaxRate, int incomeTaxMaxAmount)
+        public IncomeTaxAction(int incomeTaxRate, Money incomeTaxMaxAmount)
         {
             this.incomeTaxRate = incomeTaxRate;
             this.incomeTaxMaxAmount = incomeTaxMaxAmount;
@@ -15,9 +15,10 @@ namespace Monopoly.Actions
 
         public void ProcessAction(IPlayer player)
         {
-            var taxAmount = (int)(player.Balance * (incomeTaxRate / 100));
-            taxAmount = Math.Min(taxAmount, incomeTaxMaxAmount);
-            player.Balance -= taxAmount;
+            // TODO: should we look into this?
+            var taxAmount = (int)(player.Balance.Amount * (incomeTaxRate / 100));
+            taxAmount = Math.Min(taxAmount, incomeTaxMaxAmount.Amount);
+            player.Balance = player.Balance.Remove(new Money(taxAmount));
         }
     }
 }

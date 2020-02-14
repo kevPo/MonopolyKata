@@ -11,9 +11,11 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void ProcessActionAddsCharges180WhenPlayerBalanceIs1800()
         {
-            var player = new Player("Name", balance:1800);
-            var taxAction = new IncomeTaxAction(10, 200);
-            var expectedBalance = 1800 - 180;
+            var playerMoney = new Money(1800);
+            var expectedTaxAmount = new Money(180);
+            var player = new Player("Name", balance: playerMoney);
+            var taxAction = new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount);
+            var expectedBalance = playerMoney.Remove(expectedTaxAmount);
 
             taxAction.ProcessAction(player);
 
@@ -23,9 +25,11 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void ProcessActionAddsCharges200WhenPlayerBalanceIs2200()
         {
-            var player = new Player("Name", balance:2200);
-            var taxAction = new IncomeTaxAction(10, 200);
-            var expectedBalance = 2200 - 200;
+            var playerMoney = new Money(2200);
+            var expectedTaxAmount = new Money(200);
+            var player = new Player("Name", balance: playerMoney);
+            var taxAction = new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount);
+            var expectedBalance = playerMoney.Remove(expectedTaxAmount);
 
             taxAction.ProcessAction(player);
 

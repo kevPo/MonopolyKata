@@ -11,7 +11,7 @@ namespace MonopolyTests.Actions
         [TestMethod]
         public void PlayerLocationIsSetToNewLocation()
         {
-            var player = new Player("Name", 0, 0);
+            var player = new Player("Name");
             var action = new RelocateAction(LocationConstants.JustVisitingIndex);
 
             action.ProcessAction(player);

@@ -5,13 +5,13 @@
         public const int PassingGoReward = 200;
 
         public string Name { get; set; }
-        public int Balance { get; set; }
+        public Money Balance { get; set; }
         public int Location { get; set; }
 
-        public Player(string name, int balance = 0, int location = 0)
+        public Player(string name, Money? balance = null, int location = 0)
         {
             Name = name;
-            Balance = balance;
+            Balance = balance ?? new Money(0);
             Location = location;
         }
 

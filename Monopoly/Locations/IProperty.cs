@@ -3,9 +3,10 @@
     public interface IProperty : ILocation
     {
         IPlayer Owner { get; }
-        int Cost { get; }
-        int Rent { get; }
+        Money Cost { get; }
+        Money Rent { get; }
 
+        // TODO: move to player
         void PurchaseProperty(IPlayer player);
     }
 }
