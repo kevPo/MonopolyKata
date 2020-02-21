@@ -2,7 +2,7 @@
 {
     public interface IDice
     {
-        int LastRoll { get; }
-        int Roll();
+        RollResult LastRoll { get; }
+        RollResult Roll();
     }
 }

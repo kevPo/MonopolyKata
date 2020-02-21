@@ -15,9 +15,9 @@ namespace MonopolyTests.Actions
             var player = new Player("horse", startingMoney);
             var fakeProperty = new FakeProperty(owner: owner);
             var fakeDice = new FakeDice();
-            fakeDice.LoadRoll(10);
+            fakeDice.LoadRoll((3, 7));
             fakeDice.Roll();
-            var expectedRent = new Money(4 * fakeDice.LastRoll);
+            var expectedRent = new Money(4 * fakeDice.LastRoll.Total);
             var expectedOwnerMoney = startingMoney.Add(expectedRent);
             var expectedPlayerMoney = startingMoney.Remove(expectedRent);
             var rentAction = new UtilityRentAction(new FakeBoard(numberOfUtilitiesOwned: 1), fakeDice);
@@ -36,9 +36,9 @@ namespace MonopolyTests.Actions
             var player = new Player("horse", startingMoney);
             var fakeProperty = new FakeProperty(owner: owner);
             var fakeDice = new FakeDice();
-            fakeDice.LoadRoll(10);
+            fakeDice.LoadRoll((3, 7));
             fakeDice.Roll();
-            var expectedRent = new Money(10 * fakeDice.LastRoll);
+            var expectedRent = new Money(10 * fakeDice.LastRoll.Total);
             var expectedOwnerMoney = startingMoney.Add(expectedRent);
             var expectedPlayerMoney = startingMoney.Remove(expectedRent);
             var rentAction = new UtilityRentAction(new FakeBoard(numberOfUtilitiesOwned: 2), fakeDice);

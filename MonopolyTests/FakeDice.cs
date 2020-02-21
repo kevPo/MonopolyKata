@@ -7,27 +7,33 @@ namespace MonopolyTests
 {
     public class FakeDice : IDice
     {
-        private readonly Queue<int> rollQueue;
+        private readonly Queue<RollResult> rollQueue;
         private readonly Random random;
 
         public FakeDice()
         {
-            this.rollQueue = new Queue<int>();
+            this.rollQueue = new Queue<RollResult>();
             this.random = new Random();
         }
 
-        public int LastRoll { get; private set; }
+        public RollResult LastRoll { get; private set; }
 
-        public void LoadRoll(int numberToRoll)
+
+        public void LoadRoll(RollResult rollResult)
         {
-            rollQueue.Enqueue(numberToRoll);
+            rollQueue.Enqueue(rollResult);
         }
 
-        public int Roll()
+        public void LoadRoll((int, int) rollResult)
+        {
+            rollQueue.Enqueue(new RollResult(rollResult.Item1, rollResult.Item2));
+        }
+
+        public RollResult Roll()
         {
             if (rollQueue.Count() == 0)
             {
-                LastRoll = random.Next(2, 12);
+                LastRoll = new RollResult(random.Next(1, 6), random.Next(1, 6));
                 return LastRoll;
             }
 

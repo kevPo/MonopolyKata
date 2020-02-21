@@ -17,7 +17,7 @@ namespace Monopoly.Actions
 
         public void ProcessAction(IPlayer player, IProperty property)
         {
-            var rent = new Money(dice.LastRoll * GetMultiplierForNumberOfUtilitiesOwned());
+            var rent = new Money(dice.LastRoll.Total * GetMultiplierForNumberOfUtilitiesOwned());
 
             player.WithdrawMoney(rent);
             property.Owner.DepositMoney(rent);   
