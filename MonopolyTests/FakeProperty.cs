@@ -14,6 +14,7 @@ namespace MonopolyTests
         }
 
         public int LocationIndex { get; }
+        public PropertyGroup PropertyGroup { get; }
         public IPlayer Owner { get; private set; }
         public Money Cost { get; }
         public Money Rent { get; }

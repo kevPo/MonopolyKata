@@ -8,13 +8,13 @@ namespace MonopolyTests
     [TestClass]
     public class PlayerTests
     {
-        private Board board;
         private FakeDice dice;
+        private Board board;
 
         public PlayerTests()
         {
             dice = new FakeDice();
-            board = new Board();
+            board = new Board(dice);
         }
 
         [TestMethod]
@@ -170,15 +170,14 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void PlayerPassesOverIncomeTaxAndNothingHappens()
+        public void PlayerPassesOverIncomeTaxAndBalanceIsUnchanged()
         {
             var player = new Player("horse", new Money(2000));
-            dice.LoadRoll(5);
+            dice.LoadRoll(10);
             var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
 
-            Assert.AreEqual(5, player.Location);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
 
@@ -220,17 +219,17 @@ namespace MonopolyTests
         }
        
         [TestMethod]
-        public void PlayerLandsOnOwnedPropertyAndNothingHappens()
+        public void PlayerLandsOnOwnedPropertyAndDoesNotBuyIt()
         {
             var owner = new Player("owner", balance: new Money(100));
-            (board.Locations.ElementAt(1) as IProperty).TransitionOwnership(owner);
+            var property = (board.Locations.ElementAt(1) as IProperty);
+            property.TransitionOwnership(owner);
             var player = new Player("horse", new Money(100));
             dice.LoadRoll(1);
-            var expectedBalance = player.Balance;
 
             player.TakeTurn(0, dice, board);
 
-            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(owner, property.Owner);
         }
        
         [TestMethod]

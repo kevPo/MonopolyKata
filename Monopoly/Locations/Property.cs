@@ -4,19 +4,19 @@ namespace Monopoly.Locations
 {
     public class Property : IProperty
     {
-        private IAction purchaseAction;
-        private IAction rentAction;
-        private IAction currentAction;
+        private readonly IPropertyAction purchaseAction;
+        private readonly IPropertyAction rentAction;
+        private IPropertyAction currentAction;
 
-        public Property(int locationIndex, PropertyGroup propertyGroup, Money? cost = null, Money? rent = null)
+        public Property(int locationIndex, PropertyGroup propertyGroup, IPropertyAction rentAction, Money? cost = null, Money? rent = null)
         {
             LocationIndex = locationIndex;
             PropertyGroup = propertyGroup;
             Cost = cost ?? new Money(0);
             Rent = rent ?? new Money(0);
 
-            purchaseAction = new PurchasePropertyAction(this);
-            rentAction = new NullAction();
+            purchaseAction = new PurchasePropertyAction();
+            this.rentAction = rentAction;
 
             currentAction = purchaseAction;
         }
@@ -40,7 +40,7 @@ namespace Monopoly.Locations
 
         public void ProcessLandingAction(IPlayer player)
         {
-            currentAction.ProcessAction(player);
+            currentAction.ProcessAction(player, this);
         }
 
         public void ProcessPassingAction(IPlayer player)

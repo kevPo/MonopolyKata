@@ -47,32 +47,28 @@
         // Costs
         public static readonly Money MediterraneanAveCost = new Money(60);
         public static readonly Money BalticAveCost = new Money(60);
-        public static readonly Money ReadingRailroadCost = new Money(200);
         public static readonly Money OrientalAveCost = new Money(100);
         public static readonly Money VermontAveCost = new Money(100);
         public static readonly Money ConnecticutAveCost = new Money(120);
         public static readonly Money StCharlesPlaceCost = new Money(140);
-        public static readonly Money ElectricCompanyCost = new Money(140);
         public static readonly Money StatesAveCost = new Money(140);
         public static readonly Money VirginiaAveCost = new Money(160);
-        public static readonly Money PennsylvaniaRailroadCost = new Money(200);
         public static readonly Money StJamesPlaceCost = new Money(180);
         public static readonly Money TennesseeAveCost = new Money(180);
         public static readonly Money NewYorkAveCost = new Money(200);
         public static readonly Money KentuckyAveCost = new Money(220);
         public static readonly Money IndianaAveCost = new Money(220);
         public static readonly Money IllinoisAveCost = new Money(240);
-        public static readonly Money BAndORailroadCost = new Money(200);
         public static readonly Money AtlanticAveCost = new Money(260);
         public static readonly Money VentnorAveCost = new Money(260);
-        public static readonly Money WaterWorksCost = new Money(150);
         public static readonly Money MarvinGardensCost = new Money(280);
         public static readonly Money PacificAveCost = new Money(300);
         public static readonly Money NorthCarolinaAveCost = new Money(300);
         public static readonly Money PennsylvaniaAveCost = new Money(320);
-        public static readonly Money ShortLineRailroadCost = new Money(150);
         public static readonly Money ParkPlaceCost = new Money(350);
         public static readonly Money BoardwalkCost = new Money(400);
+        public static readonly Money RailroadCost = new Money(200);
+        public static readonly Money UtilityCost = new Money(150);
 
         // Rents
         public static readonly Money MediterraneanAveRent = new Money(2);
@@ -107,5 +103,7 @@
         public static readonly PropertyGroup YellowPropertyGroup = new PropertyGroup("Yellow");
         public static readonly PropertyGroup DarkGreenPropertyGroup = new PropertyGroup("DarkGreen");
         public static readonly PropertyGroup DarkBluePropertyGroup = new PropertyGroup("DarkBlue");
+        public static readonly PropertyGroup RailroadGroup = new PropertyGroup("Railroad");
+        public static readonly PropertyGroup UtilityGroup = new PropertyGroup("Utility");
     }
 }

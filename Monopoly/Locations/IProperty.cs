@@ -2,6 +2,7 @@
 {
     public interface IProperty : ILocation
     {
+        PropertyGroup PropertyGroup { get; }
         IPlayer Owner { get; }
         Money Cost { get; }
         Money Rent { get; }

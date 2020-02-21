@@ -18,8 +18,8 @@ namespace MonopolyTests
         {
             players = new[] { new Player("Horse"), new Player("Car") };
 
-            board = new Board();
             dice = new FakeDice();
+            board = new Board(dice);
             game = new Game(board, dice, players.ToArray());
         }
 

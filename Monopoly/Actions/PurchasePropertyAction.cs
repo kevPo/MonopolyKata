@@ -2,16 +2,9 @@
 
 namespace Monopoly.Actions
 {
-    public class PurchasePropertyAction : IAction
+    public class PurchasePropertyAction : IPropertyAction
     {
-        private readonly IProperty property;
-
-        public PurchasePropertyAction(IProperty property)
-        {
-            this.property = property;
-        }
-
-        public void ProcessAction(IPlayer player)
+        public void ProcessAction(IPlayer player, IProperty property)
         {
             if (property.IsUnowned() && player.HasAvailableFunds(property.Cost))
             {

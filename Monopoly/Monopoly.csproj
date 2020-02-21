@@ -41,14 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\IPropertyAction.cs" />
     <Compile Include="Actions\LuxuryTaxAction.cs" />
     <Compile Include="Actions\NullAction.cs" />
     <Compile Include="Actions\IncomeTaxAction.cs" />
     <Compile Include="Actions\PayoutAction.cs" />
     <Compile Include="Actions\PurchasePropertyAction.cs" />
+    <Compile Include="Actions\UtilityRentAction.cs" />
+    <Compile Include="Actions\RailroadRentAction.cs" />
+    <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\RelocateAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IBoard.cs" />
     <Compile Include="Locations\IProperty.cs" />
     <Compile Include="Locations\Location.cs" />
     <Compile Include="Actions\IAction.cs" />

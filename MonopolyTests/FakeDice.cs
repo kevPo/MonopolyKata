@@ -16,6 +16,8 @@ namespace MonopolyTests
             this.random = new Random();
         }
 
+        public int LastRoll { get; private set; }
+
         public void LoadRoll(int numberToRoll)
         {
             rollQueue.Enqueue(numberToRoll);
@@ -25,10 +27,12 @@ namespace MonopolyTests
         {
             if (rollQueue.Count() == 0)
             {
-                return random.Next(2, 12);
+                LastRoll = random.Next(2, 12);
+                return LastRoll;
             }
 
-            return rollQueue.Dequeue();
+            LastRoll = rollQueue.Dequeue();
+            return LastRoll;
         }
     }
 }
