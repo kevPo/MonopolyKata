@@ -12,12 +12,11 @@ namespace MonopolyTests
 
         public FakeDice()
         {
-            this.rollQueue = new Queue<RollResult>();
-            this.random = new Random();
+            rollQueue = new Queue<RollResult>();
+            random = new Random();
         }
 
         public RollResult LastRoll { get; private set; }
-
 
         public void LoadRoll(RollResult rollResult)
         {
@@ -31,13 +30,14 @@ namespace MonopolyTests
 
         public RollResult Roll()
         {
-            if (rollQueue.Count() == 0)
+            if (!rollQueue.Any())
             {
                 LastRoll = new RollResult(random.Next(1, 6), random.Next(1, 6));
                 return LastRoll;
             }
 
             LastRoll = rollQueue.Dequeue();
+
             return LastRoll;
         }
     }
