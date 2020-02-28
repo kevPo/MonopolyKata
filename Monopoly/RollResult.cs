@@ -1,20 +1,17 @@
-﻿using System;
-
-namespace Monopoly
+﻿namespace Monopoly
 {
-    public class RollResult : Tuple<int, int>
+    public class RollResult
     {
-        public RollResult((int, int) tuple)
-            : base(tuple.Item1, tuple.Item2)
-        {
-        }
+        private readonly int roll1;
+        private readonly int roll2;
 
         public RollResult(int roll1, int roll2)
-            : base(roll1, roll2)
         {
+            this.roll1 = roll1;
+            this.roll2 = roll2;
         }
 
-        public int Total => Item1 + Item2;
-        public bool IsDoubles => Item1 == Item2;
+        public int Total => roll1 + roll2;
+        public bool IsDoubles => roll1 == roll2;
     }
 }
