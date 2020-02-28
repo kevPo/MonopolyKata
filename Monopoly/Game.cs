@@ -10,14 +10,16 @@ namespace Monopoly
         private const int MinimumPlayers = 2;
         private const int MaximumPlayers = 8;
 
-        private readonly Board board;
+        private readonly IBoard board;
         private readonly IDice dice;
+        private readonly ITurnService turnService;
         private readonly IDictionary<int, Player> playerOrder;
 
-        public Game(Board board, IDice dice, IEnumerable<Player> players)
+        public Game(IEnumerable<Player> players, IBoard board, IDice dice, ITurnService turnService)
         {
             this.board = board;
             this.dice = dice;
+            this.turnService = turnService;
             this.playerOrder = ShufflePlayers(players);
         }
 
@@ -29,10 +31,10 @@ namespace Monopoly
             return orderedPlayers.ToDictionary(p => playerOrder++, p => p);
         }
 
-        public IDictionary<int, IEnumerable<Turn>> Play()
+        public IDictionary<int, IEnumerable<TurnResult>> Play()
         {
             ValidateGameHasCorrectNumberOfPlayers();
-            var rounds = new Dictionary<int, IEnumerable<Turn>>();
+            var rounds = new Dictionary<int, IEnumerable<TurnResult>>();
 
             for (var round = 0; round < NumberOfRounds; round++)
             {
@@ -50,13 +52,13 @@ namespace Monopoly
             }
         }
 
-        private IEnumerable<Turn> PlayRound()
+        private IEnumerable<TurnResult> PlayRound()
         {
-            var turns = new List<Turn>();
+            var turns = new List<TurnResult>();
 
             for (var i = 0; i < playerOrder.Count(); i++)
             {
-                turns.Add(playerOrder[i].TakeTurn(i, dice, board));
+                turns.Add(turnService.Take(i, playerOrder[i], board, dice));
             }
 
             return turns;

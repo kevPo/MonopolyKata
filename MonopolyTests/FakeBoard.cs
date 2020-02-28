@@ -1,4 +1,6 @@
-﻿using Monopoly;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Monopoly;
 using Monopoly.Locations;
 
 namespace MonopolyTests
@@ -14,6 +16,13 @@ namespace MonopolyTests
             this.numberOfRailroadsOwnedByPlayer = numberOfRailroadsOwnedByPlayer;
             this.numberOfUtilitiesOwned = numberOfUtilitiesOwned;
             this.playerOwnsPropertyGroup = playerOwnsPropertyGroup;
+        }
+
+        public IList<ILocation> Locations => Enumerable.Empty<ILocation>().ToList();
+
+        public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
+        {
+            throw new System.NotImplementedException();
         }
 
         public int NumberOfRailRoadsOwnedByPlayer(IPlayer player)

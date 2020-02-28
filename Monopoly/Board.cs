@@ -9,16 +9,11 @@ namespace Monopoly
     {
         private const int NumberOfLocations = 40;
 
-        public IEnumerable<ILocation> Locations { get; private set; }
+        public IList<ILocation> Locations { get; }
 
         public Board(IDice dice)
         {
-            Locations = PopulateLocations(dice);
-        }
-
-        private IEnumerable<ILocation> PopulateLocations(IDice dice)
-        {
-            return new ILocation[]
+            Locations = new ILocation[]
             {
                 new Location(LocationConstants.GoIndex, landingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount), passingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount)),
                 new Property(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, new RealEstateRentAction(this), LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),

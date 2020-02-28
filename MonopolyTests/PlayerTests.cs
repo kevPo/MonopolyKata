@@ -1,248 +1,72 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
-using Monopoly.Locations;
 
 namespace MonopolyTests
 {
     [TestClass]
     public class PlayerTests
     {
-        private FakeDice dice;
-        private Board board;
+        private readonly IPlayer player;
 
         public PlayerTests()
         {
-            dice = new FakeDice();
-            board = new Board(dice);
+            player = new Player("horse");
         }
 
         [TestMethod]
-        public void TakeTurnReturnsNewTurnWithNewLocationFromBoard()
+        public void DepositMoneyAddsMoneyToPlayerBalanceAndReturnsTrue()
         {
-            var player = new Player("horse");
-            var turnOrder = 0;
-            var newLocation = 10;
-            dice.LoadRoll(4, 6);
+            var expectedBalance = new Money(100);
 
-            var turn = player.TakeTurn(turnOrder, dice, board);
+            var result = player.DepositMoney(expectedBalance);
 
-            Assert.AreEqual(turnOrder, turn.TurnOrder);
-            Assert.AreEqual(player.Name, turn.Player);
-            Assert.AreEqual(newLocation, turn.Location);
-        }
-
-        [TestMethod]
-        public void PlayerLandsOnGoAndGets200DollarsAddedToBalance()
-        {
-            var player = new Player("horse", location: 39);
-            dice.LoadRoll(1, 0);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(0, player.Location);
-            Assert.AreEqual(MonopolyConstants.GoPayoutAmount, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerLandsOnNormalLocationAndBalanceDoesNotChange()
-        {
-            var player = new Player("horse");
-            dice.LoadRoll(5, 6);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(11, player.Location);
-            Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPassesGoAndGets200DollarsAddedToBalance()
-        {
-            var player = new Player("horse", location: 39);
-            dice.LoadRoll(1, 2);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(2, player.Location);
-            Assert.AreEqual(MonopolyConstants.GoPayoutAmount, player.Balance);
-        }
-
-        [TestMethod]
-        public void StartsOnGoDoesNotLandOrPassOnGoAndBalanceRemainsUnchanged()
-        {
-            var player = new Player("horse");
-            dice.LoadRoll(1, 3);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPassesGoTwiceInOneTurnAndGains400ToBalance()
-        {
-            var player = new Player("horse");
-            dice.LoadRoll(1, 81);
-            var expectedBalance = MonopolyConstants.GoPayoutAmount.Add(MonopolyConstants.GoPayoutAmount);
-
-            player.TakeTurn(0, dice, board);
-
+            Assert.IsTrue(result);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
 
         [TestMethod]
-        public void PlayerLandsOnGoToJailAndMovesDirectlyToJustVisiting()
+        public void WithdrawMoneySubtractsMoneyFromPlayerBalanceAndReturnsTrueWhenPlayerHasAvailableFunds()
         {
-            var player = new Player("horse", location: 29);
-            dice.LoadRoll(1, 0);
-            var expectedBalance = player.Balance;
+            var expectedBalance = new Money(100);
+            player.DepositMoney(new Money(200));
 
-            player.TakeTurn(0, dice, board);
+            var result = player.WithdrawMoney(expectedBalance);
 
-            Assert.AreEqual(10, player.Location);
+            Assert.IsTrue(result);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
 
         [TestMethod]
-        public void PlayerPassesOverGoToJailWithLocationAndBalanceUnchanged()
+        public void WithdrawMoneyDoesNotSubtractMoneyFromPlayerBalanceAndReturnsFalseWhenPlayerDoesNotHaveAvailableFunds()
         {
-            var player = new Player("horse", location: 29);
-            dice.LoadRoll(1, 1);
-            var expectedBalance = player.Balance;
+            var expectedBalance = new Money(50);
+            player.DepositMoney(expectedBalance);
 
-            player.TakeTurn(0, dice, board);
+            var result = player.WithdrawMoney(new Money(51));
 
-            Assert.AreEqual(31, player.Location);
+            Assert.IsFalse(result);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
 
         [TestMethod]
-        public void PlayerPays180WhenPlayerLandsOnIncomeTaxAndBalanceIs1800()
+        public void HasAvailableFundsReturnsTrueWhenPlayerBalanceIsGreaterThanAmount()
         {
-            var player = new Player("horse", new Money(1800));
-            dice.LoadRoll(1, 3);
-            var expectedBalance = player.Balance.Remove(new Money(180));
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(4, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
+            player.DepositMoney(new Money(1000));
+            Assert.IsTrue(player.HasAvailableFunds(new Money(500)));
         }
 
         [TestMethod]
-        public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2200()
+        public void HasAvailableFundsReturnsFalseWhenPlayerBalanceIsLessThanAmount()
         {
-            var player = new Player("horse", new Money(2200));
-            dice.LoadRoll(1, 3);
-            var expectedBalance = player.Balance.Remove(new Money(200));
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(4, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
+            player.DepositMoney(new Money(500));
+            Assert.IsFalse(player.HasAvailableFunds(new Money(600)));
         }
 
         [TestMethod]
-        public void PlayerPays0WhenPlayerLandsOnIncomeTaxAndBalanceIs0()
+        public void HasAvailableFundsReturnsFalseWhenPlayerBalanceIsEqualToAmount()
         {
-            var player = new Player("horse", location: 3);
-            dice.LoadRoll(1, 0);
-            var expectedBalance = player.Balance;
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(4, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPays200WhenPlayerLandsOnIncomeTaxAndBalanceIs2000()
-        {
-            var player = new Player("horse", new Money(2000));
-            dice.LoadRoll(1, 3);
-            var expectedBalance = player.Balance.Remove(new Money(200));
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(4, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPassesOverIncomeTaxAndBalanceIsUnchanged()
-        {
-            var player = new Player("horse", new Money(2000));
-            dice.LoadRoll(4, 6);
-            var expectedBalance = player.Balance;
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPays75WhenPlayerLandsOnLuxuryTax()
-        {
-            var player = new Player("horse", new Money(100), 37);
-            dice.LoadRoll(1, 0);
-            var expectedBalance = player.Balance.Remove(new Money(75));
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(38, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPassesOverLuxuryTaxAndNothingHappens()
-        {
-            var player = new Player("horse", new Money(100), 37);
-            dice.LoadRoll(1, 1);
-            var expectedBalance = player.Balance;
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(39, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerLandsOnUnownedPropertyAndBuysIt()
-        {
-            var player = new Player("horse", new Money(100));
-            dice.LoadRoll(1, 0);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(player.Name, (board.Locations.ElementAt(1) as IProperty).Owner.Name);
-        }
-       
-        [TestMethod]
-        public void PlayerLandsOnOwnedPropertyAndDoesNotBuyIt()
-        {
-            var owner = new Player("owner", balance: new Money(100));
-            var property = (board.Locations.ElementAt(1) as IProperty);
-            property.TransitionOwnership(owner);
-            var player = new Player("horse", new Money(100));
-            dice.LoadRoll(1, 0);
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.AreEqual(owner, property.Owner);
-        }
-       
-        [TestMethod]
-        public void PlayerPassesOverUnownedPropertyAndNothingHappens()
-        {
-            var player = new Player("horse", new Money(100));
-            dice.LoadRoll(1, 1);
-            var expectedBalance = player.Balance;
-
-            player.TakeTurn(0, dice, board);
-
-            Assert.IsNull((board.Locations.ElementAt(1) as IProperty).Owner);
-            Assert.AreEqual(expectedBalance, player.Balance);
+            player.DepositMoney(new Money(500));
+            Assert.IsTrue(player.HasAvailableFunds(new Money(500)));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace MonopolyTests
         private readonly Board board;
         private readonly FakeDice dice;
         private readonly IEnumerable<Player> players;
+        private readonly ITurnService turnService;
         private Game game;
 
         public GameTests()
@@ -20,7 +21,8 @@ namespace MonopolyTests
 
             dice = new FakeDice();
             board = new Board(dice);
-            game = new Game(board, dice, players.ToArray());
+            turnService = new TurnService();
+            game = new Game(players.ToArray(), board, dice, turnService);
         }
 
         [TestMethod]
@@ -63,14 +65,14 @@ namespace MonopolyTests
         {
             var players = new[] { new Player("Horse") , new Player("Car") };
 
-            new Game(board, dice, players);
+            new Game(players, board, dice, turnService);
         }
 
         [TestMethod]
         public void GameCannotBeCreatedWithOnePlayer()
         {
             var horse = new Player("Horse");
-            var game = new Game(board, dice, new[] { horse });
+            var game = new Game(new[] { horse }, board, dice, turnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -78,7 +80,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithMoreThanEightPlayers()
         {
-            var game = new Game(board, dice, new Player[9]);
+            var game = new Game(new Player[9], board, dice, turnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -86,7 +88,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithZeroPlayers()
         {
-            var game = new Game(board, dice, Enumerable.Empty<Player>().ToArray());
+            var game = new Game(Enumerable.Empty<Player>().ToArray(), board, dice, turnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -94,18 +96,18 @@ namespace MonopolyTests
         [TestMethod]
         public void TheOrderOfPlayersIsRandomPer100Games()
         {
-            var gameRounds = new List<IDictionary<int, IEnumerable<Turn>>>();
+            var gameRounds = new List<IDictionary<int, IEnumerable<TurnResult>>>();
             var horse = new Player("Horse");
             var car = new Player("Car");
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(board, dice, new[] { horse, car });
+                var game = new Game(new[] { horse, car }, board, dice, turnService);
                 gameRounds.Add(game.Play());
             }
 
-            Assert.IsTrue(gameRounds.Any(r => r[0].First().Player == horse.Name));
-            Assert.IsTrue(gameRounds.Any(r => r[0].First().Player == car.Name));
+            Assert.IsTrue(gameRounds.Any(r => r[0].First().PlayerName == horse.Name));
+            Assert.IsTrue(gameRounds.Any(r => r[0].First().PlayerName == car.Name));
         }
 
         [TestMethod]
@@ -121,11 +123,11 @@ namespace MonopolyTests
         {
             var rounds = game.Play();
 
-            var carTurnOrder = rounds[0].Where(t => t.Player == "Car").First().TurnOrder;
-            var horseTurnOrder = rounds[0].Where(t => t.Player == "Horse").First().TurnOrder;
+            var carTurnOrder = rounds[0].Where(t => t.PlayerName == "Car").First().TurnOrder;
+            var horseTurnOrder = rounds[0].Where(t => t.PlayerName == "Horse").First().TurnOrder;
 
-            Assert.IsTrue(rounds.SelectMany(r => r.Value).Where(t => t.Player == "Car").All(t => t.TurnOrder == carTurnOrder));
-            Assert.IsTrue(rounds.SelectMany(r => r.Value).Where(t => t.Player == "Horse").All(t => t.TurnOrder == horseTurnOrder));
+            Assert.IsTrue(rounds.SelectMany(r => r.Value).Where(t => t.PlayerName == "Car").All(t => t.TurnOrder == carTurnOrder));
+            Assert.IsTrue(rounds.SelectMany(r => r.Value).Where(t => t.PlayerName == "Horse").All(t => t.TurnOrder == horseTurnOrder));
         }
     }
 }

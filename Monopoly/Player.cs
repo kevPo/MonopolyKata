@@ -34,26 +34,5 @@
 
             return false;
         }
-
-        public Turn TakeTurn(int turnOrder, IDice dice, Board board)
-        {
-            var rollResult = dice.Roll();
-            var moveResult = board.MoveToLocation(Location, rollResult.Total);
-            Location = moveResult.CurrentLocation.LocationIndex;
-
-            foreach (var location in moveResult.LocationHistory)
-            {
-                location.ProcessPassingAction(this);
-            }
-
-            moveResult.CurrentLocation.ProcessLandingAction(this);
-            
-            return new Turn
-            {
-                TurnOrder = turnOrder,
-                Player = Name,
-                Location = Location
-            };
-        }
     }
 }

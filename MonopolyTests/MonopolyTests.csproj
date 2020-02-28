@@ -67,6 +67,7 @@
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RollResultTests.cs" />
+    <Compile Include="TurnServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
