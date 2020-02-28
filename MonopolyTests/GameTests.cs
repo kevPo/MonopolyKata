@@ -26,8 +26,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerOnBeginningLocationIsAtLocation0()
         {
-            dice.LoadRoll((0, 0));
-            dice.LoadRoll((0, 0));
+            dice.LoadRoll(0, 0);
+            dice.LoadRoll(0, 0);
 
             var rounds = game.Play();
 
@@ -37,8 +37,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerOnBeginningLocationRolls7AndEndsOnLocation7()
         {
-            dice.LoadRoll((3, 4));
-            dice.LoadRoll((3, 4));
+            dice.LoadRoll(3, 4);
+            dice.LoadRoll(3, 4);
 
             var rounds = game.Play();
 
@@ -48,10 +48,10 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerOnLocation39Rolls6AndEndsUpOnLocation5()
         {
-            dice.LoadRoll((2, 37));
-            dice.LoadRoll((2, 37));
-            dice.LoadRoll((2, 4));
-            dice.LoadRoll((2, 4));
+            dice.LoadRoll(2, 37);
+            dice.LoadRoll(2, 37);
+            dice.LoadRoll(2, 4);
+            dice.LoadRoll(2, 4);
 
             var rounds = game.Play();
 

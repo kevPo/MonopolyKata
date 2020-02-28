@@ -24,9 +24,9 @@ namespace MonopolyTests
             rollQueue.Enqueue(rollResult);
         }
 
-        public void LoadRoll((int, int) rollResult)
+        public void LoadRoll(int roll1, int roll2)
         {
-            rollQueue.Enqueue(new RollResult(rollResult.Item1, rollResult.Item2));
+            rollQueue.Enqueue(new RollResult(roll1, roll2));
         }
 
         public RollResult Roll()

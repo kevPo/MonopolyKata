@@ -15,7 +15,7 @@ namespace MonopolyTests.Actions
             var player = new Player("horse", startingMoney);
             var fakeProperty = new FakeProperty(owner: owner);
             var fakeDice = new FakeDice();
-            fakeDice.LoadRoll((3, 7));
+            fakeDice.LoadRoll(3, 7);
             fakeDice.Roll();
             var expectedRent = new Money(4 * fakeDice.LastRoll.Total);
             var expectedOwnerMoney = startingMoney.Add(expectedRent);
@@ -36,7 +36,7 @@ namespace MonopolyTests.Actions
             var player = new Player("horse", startingMoney);
             var fakeProperty = new FakeProperty(owner: owner);
             var fakeDice = new FakeDice();
-            fakeDice.LoadRoll((3, 7));
+            fakeDice.LoadRoll(3, 7);
             fakeDice.Roll();
             var expectedRent = new Money(10 * fakeDice.LastRoll.Total);
             var expectedOwnerMoney = startingMoney.Add(expectedRent);
