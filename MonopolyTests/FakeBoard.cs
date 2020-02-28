@@ -18,7 +18,7 @@ namespace MonopolyTests
             this.playerOwnsPropertyGroup = playerOwnsPropertyGroup;
         }
 
-        public IList<ILocation> Locations => Enumerable.Empty<ILocation>().ToList();
+        public IList<ILocation> Locations => Enumerable.Range(0, 40).Select(i => new FakeProperty(i)).ToList<ILocation>();
 
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
         {

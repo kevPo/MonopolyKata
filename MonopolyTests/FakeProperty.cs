@@ -1,4 +1,5 @@
-﻿using Monopoly;
+﻿using System.Collections.Generic;
+using Monopoly;
 using Monopoly.Locations;
 
 namespace MonopolyTests
@@ -11,6 +12,7 @@ namespace MonopolyTests
             Owner = owner;
             Cost = cost ?? new Money(0);
             Rent = rent ?? new Money(0);
+            LandedPlayers = new List<string>();
         }
 
         public int LocationIndex { get; }
@@ -18,6 +20,7 @@ namespace MonopolyTests
         public IPlayer Owner { get; private set; }
         public Money Cost { get; }
         public Money Rent { get; }
+        public IList<string> LandedPlayers { get; }
 
         public bool IsUnowned()
         {
@@ -31,6 +34,7 @@ namespace MonopolyTests
 
         public void ProcessLandingAction(IPlayer player)
         {
+            LandedPlayers.Add(player.Name);
         }
 
         public void ProcessPassingAction(IPlayer player)
