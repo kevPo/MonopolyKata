@@ -9,5 +9,6 @@ namespace Monopoly
         public int StartingLocation { get; set; }
         public int EndingLocation { get; set; }
         public IList<int> Locations { get; set; }
+        public int NumberOfDoubles { get; set; }
     }
 }
