@@ -258,6 +258,18 @@ namespace MonopolyTests
 
             Assert.IsTrue(result.Locations.Contains(6));
             Assert.IsTrue(result.Locations.Contains(10));
+            Assert.AreEqual(2, result.Locations.Count);
+        }
+
+        [TestMethod]
+        public void PlayerOnlyMovesForOneRollWhenNotRollingDoubles()
+        {
+            fakeDice.LoadRoll(1, 3);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(result.Locations.Contains(4));
+            Assert.AreEqual(1, result.Locations.Count);
         }
     }
 }
