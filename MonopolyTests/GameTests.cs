@@ -28,12 +28,9 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerOnBeginningLocationIsAtLocation0()
         {
-            dice.LoadRoll(0, 0);
-            dice.LoadRoll(0, 0);
-
             var rounds = game.Play();
 
-            Assert.IsTrue(rounds[0].All(turn => turn.Location == 0));
+            Assert.IsTrue(rounds[0].All(turn => turn.StartingLocation == 0));
         }
 
         [TestMethod]
@@ -44,7 +41,7 @@ namespace MonopolyTests
 
             var rounds = game.Play();
 
-            Assert.IsTrue(rounds[0].All(turn => turn.Location == 7));
+            Assert.IsTrue(rounds[0].All(turn => turn.EndingLocation == 7));
         }
 
         [TestMethod]
@@ -57,7 +54,7 @@ namespace MonopolyTests
 
             var rounds = game.Play();
 
-            Assert.IsTrue(rounds[1].All(turn => turn.Location == 5));
+            Assert.IsTrue(rounds[1].All(turn => turn.EndingLocation == 5));
         }
 
         [TestMethod]

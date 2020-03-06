@@ -10,9 +10,9 @@ namespace MonopolyTests
         private const int TurnOrder = 0;
 
         private readonly FakeDice fakeDice;
-        private readonly IBoard board;
         private readonly IPlayer player;
         private readonly ITurnService turnService;
+        private readonly IBoard board;
 
         public TurnServiceTests()
         {
@@ -33,7 +33,7 @@ namespace MonopolyTests
 
             Assert.AreEqual(turnOrder, turn.TurnOrder);
             Assert.AreEqual(player.Name, turn.PlayerName);
-            Assert.AreEqual(newLocation, turn.Location);
+            Assert.AreEqual(newLocation, turn.EndingLocation);
         }
 
         [TestMethod]
@@ -95,8 +95,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnGoToJailAndMovesDirectlyToJustVisiting()
         {
-            player.Location = 29;
-            fakeDice.LoadRoll(1, 0);
+            player.Location = 27;
+            fakeDice.LoadRoll(1, 2);
             var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
@@ -108,8 +108,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverGoToJailWithLocationAndBalanceUnchanged()
         {
-            player.Location = 29;
-            fakeDice.LoadRoll(1, 1);
+            player.Location = 28;
+            fakeDice.LoadRoll(2, 1);
             var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
@@ -199,9 +199,9 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverLuxuryTaxAndNothingHappens()
         {
-            player.Location = 37;
+            player.Location = 36;
             player.DepositMoney(new Money(100));
-            fakeDice.LoadRoll(1, 1);
+            fakeDice.LoadRoll(2, 1);
             var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
@@ -239,13 +239,25 @@ namespace MonopolyTests
         public void PlayerPassesOverUnownedPropertyAndNothingHappens()
         {
             player.DepositMoney(new Money(100));
-            fakeDice.LoadRoll(1, 1);
+            fakeDice.LoadRoll(4, 6);
             var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
 
             Assert.IsNull((board.Locations[1] as IProperty).Owner);
             Assert.AreEqual(expectedBalance, player.Balance);
+        }
+
+        [TestMethod]
+        public void PlayerGetAdditionalTurnWhenRollingDoubles()
+        {
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(1, 3);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(result.Locations.Contains(6));
+            Assert.IsTrue(result.Locations.Contains(10));
         }
     }
 }
