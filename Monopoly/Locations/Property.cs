@@ -8,12 +8,13 @@ namespace Monopoly.Locations
         private readonly IPropertyAction rentAction;
         private IPropertyAction currentAction;
 
-        public Property(int locationIndex, PropertyGroup propertyGroup, IPropertyAction rentAction, Money? cost = null, Money? rent = null)
+        public Property(int locationIndex, PropertyGroup propertyGroup, IPropertyAction rentAction, Money? cost = null, Money? rent = null, bool isMortgaged = false)
         {
             LocationIndex = locationIndex;
             PropertyGroup = propertyGroup;
             Cost = cost ?? new Money(0);
             Rent = rent ?? new Money(0);
+            IsMortgaged = isMortgaged;
 
             purchaseAction = new PurchasePropertyAction();
             this.rentAction = rentAction;
@@ -26,6 +27,7 @@ namespace Monopoly.Locations
         public IPlayer Owner { get; private set; }
         public Money Cost { get; } 
         public Money Rent { get; }
+        public bool IsMortgaged { get; private set; }
 
         public bool IsUnowned()
         {
@@ -46,6 +48,11 @@ namespace Monopoly.Locations
         public void ProcessPassingAction(IPlayer player)
         {
             // never going to do anything
+        }
+
+        public void MortgageProperty()
+        {
+            IsMortgaged = true;
         }
     }
 }

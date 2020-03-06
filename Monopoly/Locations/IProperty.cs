@@ -6,8 +6,10 @@
         IPlayer Owner { get; }
         Money Cost { get; }
         Money Rent { get; }
+        bool IsMortgaged { get; }
 
         bool IsUnowned();
         void TransitionOwnership(IPlayer player);
+        void MortgageProperty();
     }
 }

@@ -6,13 +6,14 @@ namespace MonopolyTests
 {
     public class FakeProperty : IProperty
     {
-        public FakeProperty(int locationIndex = 0, IPlayer owner = null, Money? cost = null, Money? rent = null)
+        public FakeProperty(int locationIndex = 0, IPlayer owner = null, Money? cost = null, Money? rent = null, bool isMortgaged = false)
         {
             LocationIndex = locationIndex;
             Owner = owner;
             Cost = cost ?? new Money(0);
             Rent = rent ?? new Money(0);
             LandedPlayers = new List<string>();
+            IsMortgaged = isMortgaged;
         }
 
         public int LocationIndex { get; }
@@ -21,6 +22,7 @@ namespace MonopolyTests
         public Money Cost { get; }
         public Money Rent { get; }
         public IList<string> LandedPlayers { get; }
+        public bool IsMortgaged { get; private set; }
 
         public bool IsUnowned()
         {
@@ -39,6 +41,11 @@ namespace MonopolyTests
 
         public void ProcessPassingAction(IPlayer player)
         {
+        }
+
+        public void MortgageProperty()
+        {
+            IsMortgaged = true;
         }
     }
 }

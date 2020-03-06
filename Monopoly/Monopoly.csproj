@@ -52,7 +52,9 @@
     <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\RelocateAction.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="IMortgageBroker.cs" />
     <Compile Include="ITurnService.cs" />
+    <Compile Include="MortgageBroker.cs" />
     <Compile Include="TurnService.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IBoard.cs" />
