@@ -54,5 +54,10 @@ namespace Monopoly.Locations
         {
             IsMortgaged = true;
         }
+
+        public void UnmortgageProperty()
+        {
+            IsMortgaged = false;
+        }
     }
 }

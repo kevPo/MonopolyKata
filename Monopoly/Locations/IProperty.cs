@@ -11,5 +11,6 @@
         bool IsUnowned();
         void TransitionOwnership(IPlayer player);
         void MortgageProperty();
+        void UnmortgageProperty();
     }
 }

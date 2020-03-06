@@ -47,5 +47,10 @@ namespace MonopolyTests
         {
             IsMortgaged = true;
         }
+
+        public void UnmortgageProperty()
+        {
+            IsMortgaged = false;
+        }
     }
 }
