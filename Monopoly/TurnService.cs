@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Monopoly
 {
@@ -7,11 +8,7 @@ namespace Monopoly
         public TurnResult Take(int turnOrder, IPlayer player, IBoard board, IDice dice)
         {
             var startingLocation = player.Location;
-            return Take(turnOrder, player, board, dice, startingLocation, new List<int>());
-        }
-
-        private TurnResult Take(int turnOrder, IPlayer player, IBoard board, IDice dice, int startingLocation, IList<int> landedLocations)
-        {
+            var landedLocations = new List<int>();
             var rollResult = dice.Roll();
             var moveResult = board.MoveToLocation(player.Location, rollResult.Total);
 
@@ -25,18 +22,32 @@ namespace Monopoly
 
             moveResult.CurrentLocation.ProcessLandingAction(player);
 
-            if (rollResult.IsDoubles)
-            {
-                return Take(turnOrder, player, board, dice, startingLocation, landedLocations);
-            }
-
-            return new TurnResult
+            var result = new TurnResult
             {
                 TurnOrder = turnOrder,
                 PlayerName = player.Name,
                 Locations = landedLocations,
-                StartingLocation = startingLocation,
+                StartingLocation = startingLocation, 
                 EndingLocation = player.Location
+            };
+
+            if (rollResult.IsDoubles)
+            {
+                result = Combine(result, Take(turnOrder, player, board, dice));
+            }
+
+            return result;
+        }
+
+        private TurnResult Combine(TurnResult firstResult, TurnResult nextResult)
+        {
+            return new TurnResult
+            {
+                TurnOrder = firstResult.TurnOrder,
+                PlayerName = firstResult.PlayerName,
+                Locations = firstResult.Locations.Union(nextResult.Locations).ToList(),
+                StartingLocation = firstResult.StartingLocation,
+                EndingLocation = nextResult.EndingLocation
             };
         }
     }
