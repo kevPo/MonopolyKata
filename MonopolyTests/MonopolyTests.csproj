@@ -63,6 +63,7 @@
     <Compile Include="GameTests.cs" />
     <Compile Include="FakeAction.cs" />
     <Compile Include="Locations\LocationTests.cs" />
+    <Compile Include="Locations\PropertyTests.cs" />
     <Compile Include="MoneyServicesTests.cs" />
     <Compile Include="MortgageBrokerTests.cs" />
     <Compile Include="PlayerTests.cs" />
