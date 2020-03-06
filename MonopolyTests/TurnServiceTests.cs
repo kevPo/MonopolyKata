@@ -271,5 +271,20 @@ namespace MonopolyTests
             Assert.IsTrue(result.Locations.Contains(4));
             Assert.AreEqual(1, result.Locations.Count);
         }
+
+        [TestMethod]
+        public void PlayerGetsTwoAdditionalTurnsWhenRollingDoublesTwice()
+        {
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(1, 3);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(result.Locations.Contains(6));
+            Assert.IsTrue(result.Locations.Contains(12));
+            Assert.IsTrue(result.Locations.Contains(16));
+            Assert.AreEqual(3, result.Locations.Count);
+        }
     }
 }
