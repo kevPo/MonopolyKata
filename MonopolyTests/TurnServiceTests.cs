@@ -256,9 +256,10 @@ namespace MonopolyTests
 
             var result = turnService.Take(0, player, board, fakeDice);
 
-            Assert.IsTrue(result.Locations.Contains(6));
-            Assert.IsTrue(result.Locations.Contains(10));
+            Assert.AreEqual(6, result.Locations[0]);
+            Assert.AreEqual(10, result.Locations[1]);
             Assert.AreEqual(2, result.Locations.Count);
+            Assert.AreEqual(10, result.EndingLocation);
         }
 
         [TestMethod]
@@ -268,8 +269,9 @@ namespace MonopolyTests
 
             var result = turnService.Take(0, player, board, fakeDice);
 
-            Assert.IsTrue(result.Locations.Contains(4));
+            Assert.AreEqual(4, result.Locations[0]);
             Assert.AreEqual(1, result.Locations.Count);
+            Assert.AreEqual(4, result.EndingLocation);
         }
 
         [TestMethod]
@@ -281,10 +283,27 @@ namespace MonopolyTests
 
             var result = turnService.Take(0, player, board, fakeDice);
 
-            Assert.IsTrue(result.Locations.Contains(6));
-            Assert.IsTrue(result.Locations.Contains(12));
-            Assert.IsTrue(result.Locations.Contains(16));
+            Assert.AreEqual(6, result.Locations[0]);
+            Assert.AreEqual(12, result.Locations[1]);
+            Assert.AreEqual(16, result.Locations[2]);
             Assert.AreEqual(3, result.Locations.Count);
+            Assert.AreEqual(16, result.EndingLocation);
+        }
+
+        [TestMethod]
+        public void PlayerEndsUpOnJustVisitingWhenRollingDoublesThreeTimes()
+        {
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.AreEqual(6, result.Locations[0]);
+            Assert.AreEqual(12, result.Locations[1]);
+            Assert.AreEqual(LocationConstants.JustVisitingIndex, result.Locations[2]);
+            Assert.AreEqual(3, result.Locations.Count);
+            Assert.AreEqual(LocationConstants.JustVisitingIndex, result.EndingLocation);
         }
     }
 }
