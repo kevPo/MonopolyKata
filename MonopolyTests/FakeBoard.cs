@@ -16,9 +16,10 @@ namespace MonopolyTests
             this.numberOfRailroadsOwnedByPlayer = numberOfRailroadsOwnedByPlayer;
             this.numberOfUtilitiesOwned = numberOfUtilitiesOwned;
             this.playerOwnsPropertyGroup = playerOwnsPropertyGroup;
+            Locations = Enumerable.Range(0, 40).Select(i => new FakeProperty(i)).ToList<ILocation>();
         }
 
-        public IList<ILocation> Locations => Enumerable.Range(0, 40).Select(i => new FakeProperty(i)).ToList<ILocation>();
+        public IList<ILocation> Locations { get; }
 
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
         {

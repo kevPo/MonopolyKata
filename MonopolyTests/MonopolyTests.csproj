@@ -59,6 +59,7 @@
     <Compile Include="BoardTests.cs" />
     <Compile Include="FakeBoard.cs" />
     <Compile Include="FakeDice.cs" />
+    <Compile Include="FakeMortgageAdvisor.cs" />
     <Compile Include="FakeProperty.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="FakeAction.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RollResultTests.cs" />
     <Compile Include="TurnServiceTests.cs" />
+    <Compile Include="MortgageServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
