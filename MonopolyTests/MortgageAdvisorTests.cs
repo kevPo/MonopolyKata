@@ -66,5 +66,58 @@ namespace MonopolyTests
 
             Assert.IsFalse(mortgageAdvisor.PlayerShouldMortgageProperty(horse, property));
         }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsFalseWhenPlayerDoesNotOwn()
+        {
+            var car = new Player("car");
+            var property = new FakeProperty(owner: car);
+
+            Assert.IsFalse(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsFalseWhenPropertyIsNotOwned()
+        {
+            var property = new FakeProperty();
+
+            Assert.IsFalse(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsTrueWhenBalanceIsGreaterThanOneThousand()
+        {
+            horse.DepositMoney(new Money(1200));
+            var property = new FakeProperty(owner: horse, isMortgaged: true);
+
+            Assert.IsTrue(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsFalseWhenBalanceIsLessThanOneThousand()
+        {
+            horse.DepositMoney(new Money(200));
+            var property = new FakeProperty(owner: horse, isMortgaged: true);
+
+            Assert.IsFalse(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsFalseWhenBalanceIsEqualToOneThousand()
+        {
+            horse.DepositMoney(new Money(1000));
+            var property = new FakeProperty(owner: horse, isMortgaged: true);
+
+            Assert.IsFalse(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
+
+        [TestMethod]
+        public void PlayerShouldPayOffMortgageReturnsFalseWhenPropertyIsNotMortgaged()
+        {
+            horse.DepositMoney(new Money(1001));
+            var property = new FakeProperty(owner: horse);
+
+            Assert.IsFalse(mortgageAdvisor.PlayerShouldPayOffMortgage(horse, property));
+        }
     }
 }
