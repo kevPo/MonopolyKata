@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 using Monopoly.Locations;
 
@@ -19,7 +20,10 @@ namespace MonopolyTests
             fakeDice = new FakeDice();
             board = new Board(fakeDice);
             player = new Player("horse");
-            turnService = new TurnService();
+            var mortgageBroker = new MortgageBroker();
+            var mortgageAdvisor = new MortgageAdvisor();
+            var mortgageService = new MortgageService(board, mortgageAdvisor, mortgageBroker);
+            turnService = new TurnService(mortgageService);
         }
 
         [TestMethod]
@@ -304,6 +308,126 @@ namespace MonopolyTests
             Assert.AreEqual(LocationConstants.JustVisitingIndex, result.Locations[2]);
             Assert.AreEqual(3, result.Locations.Count);
             Assert.AreEqual(LocationConstants.JustVisitingIndex, result.EndingLocation);
+        }
+
+        [TestMethod]
+        public void PlayerMortgagesPropertyAtTheBeginningOfTurn()
+        {
+            player.DepositMoney(new Money(500));
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(property.IsMortgaged);
+            Assert.AreEqual(1, result.PreTurnMortgageActivity[0].MortgagedProperties.Count(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerDoesNotMortgagePropertyAtTheBeginningOfTurn()
+        {
+            player.DepositMoney(new Money(1250));
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(property.IsMortgaged);
+            Assert.IsFalse(result.PreTurnMortgageActivity[0].MortgagedProperties.Any(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerMortgagesPropertyAtTheEndOfTurn()
+        {
+            player.DepositMoney(new Money(1001));
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(property.IsMortgaged);
+            Assert.AreEqual(1, result.PostTurnMortgageActivity[0].MortgagedProperties.Count(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerDoesNotMortgagePropertyAtTheEndOfTurn()
+        {
+            player.DepositMoney(new Money(1250));
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(property.IsMortgaged);
+            Assert.IsFalse(result.PostTurnMortgageActivity[0].MortgagedProperties.Any(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerPaysOffMortgageAtTheBeginningOfTurn()
+        {
+            player.DepositMoney(new Money(1001));
+            player.Location = 38;
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            property.MortgageProperty();
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(property.IsMortgaged);
+            Assert.AreEqual(1, result.PreTurnMortgageActivity[0].PaidOffProperties.Count(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerDoesNotPayOffMortgageAtTheBeginningOfTurn()
+        {
+            player.DepositMoney(new Money(600));
+            player.Location = 38;
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            property.MortgageProperty();
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(property.IsMortgaged);
+            Assert.IsFalse(result.PreTurnMortgageActivity[0].PaidOffProperties.Any(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerPaysOffMortgageAtTheEndOfTurn()
+        {
+            player.DepositMoney(new Money(999));
+            player.Location = 38;
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            property.MortgageProperty();
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(property.IsMortgaged);
+            Assert.AreEqual(1, result.PostTurnMortgageActivity[0].PaidOffProperties.Count(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerDoesNotPayOffMortgageAtTheEndOfTurn()
+        {
+            player.DepositMoney(new Money(600));
+            player.Location = 38;
+            var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
+            property.TransitionOwnership(player);
+            property.MortgageProperty();
+            fakeDice.LoadRoll(1, 2);
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(property.IsMortgaged);
+            Assert.IsFalse(result.PostTurnMortgageActivity[0].PaidOffProperties.Any(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
         }
     }
 }

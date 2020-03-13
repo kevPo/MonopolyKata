@@ -21,10 +21,10 @@ namespace Monopoly
         {
             var properties = GetPropertiesOwnedByPlayer(player);
 
-            var propertiesToMortgage = properties.Where(p => mortgageAdvisor.PlayerShouldMortgageProperty(player, p));
-            propertiesToMortgage.ForEach(p => mortgageBroker.TakeOutMortgage(player, p));
+            var propertiesToMortgage = properties.Where(p => mortgageAdvisor.PlayerShouldMortgageProperty(player, p)).ToList();
+            var propertiesToPayOff = properties.Where(p => mortgageAdvisor.PlayerShouldPayOffMortgage(player, p)).ToList();
 
-            var propertiesToPayOff = properties.Where(p => mortgageAdvisor.PlayerShouldPayOffMortgage(player, p));
+            propertiesToMortgage.ForEach(p => mortgageBroker.TakeOutMortgage(player, p));
             propertiesToPayOff.ForEach(p => mortgageBroker.PayOffMortgage(player, p));
 
             return new MortgageResult { MortgagedProperties = propertiesToMortgage, PaidOffProperties = propertiesToPayOff };

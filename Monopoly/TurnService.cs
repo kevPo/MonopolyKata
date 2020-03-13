@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Monopoly.Locations;
 
 namespace Monopoly
@@ -7,6 +7,13 @@ namespace Monopoly
     public class TurnService : ITurnService
     {
         private const int MaxNumberOfDoubles = 3;
+
+        private readonly IMortgageService mortgageService;
+
+        public TurnService(IMortgageService mortgageService)
+        {
+            this.mortgageService = mortgageService;
+        }
 
         public TurnResult Take(int turnOrder, IPlayer player, IBoard board, IDice dice)
         {
@@ -16,14 +23,18 @@ namespace Monopoly
                 PlayerName = player.Name,
                 Locations = new List<int>(),
                 StartingLocation = player.Location,
-                NumberOfDoubles = 0
+                NumberOfDoubles = 0,
+                PreTurnMortgageActivity = new List<MortgageResult>(),
+                PostTurnMortgageActivity = new List<MortgageResult>()
             };
 
             return Take(initialResult, player, board, dice);
         }
 
-        private static TurnResult Take(TurnResult result, IPlayer player, IBoard board, IDice dice)
+        private TurnResult Take(TurnResult result, IPlayer player, IBoard board, IDice dice)
         {
+            result.PreTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
+
             var rollResult = dice.Roll();
             var playerRolledMaxDoubles = rollResult.IsDoubles && ++result.NumberOfDoubles == MaxNumberOfDoubles;
 
@@ -33,6 +44,8 @@ namespace Monopoly
             }
 
             result = MovePlayerToLocation(result, player, board, rollResult);
+
+            result.PostTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
 
             if (rollResult.IsDoubles)
             {
@@ -77,7 +90,9 @@ namespace Monopoly
                 PlayerName = firstResult.PlayerName,
                 Locations = firstResult.Locations.Union(nextResult.Locations).ToList(),
                 StartingLocation = firstResult.StartingLocation,
-                EndingLocation = nextResult.EndingLocation
+                EndingLocation = nextResult.EndingLocation,
+                PreTurnMortgageActivity = firstResult.PreTurnMortgageActivity.Union(nextResult.PreTurnMortgageActivity).ToList(),
+                PostTurnMortgageActivity = firstResult.PostTurnMortgageActivity.Union(nextResult.PostTurnMortgageActivity).ToList()
             };
         }
     }

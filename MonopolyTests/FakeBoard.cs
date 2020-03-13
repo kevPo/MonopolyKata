@@ -21,6 +21,10 @@ namespace MonopolyTests
 
         public IList<ILocation> Locations { get; }
 
+        public IDictionary<int, ILocation> LocationDictionary => Locations.ToDictionary(l => l.LocationIndex);
+
+        public IDictionary<int, IProperty> PropertyDictionary => Locations.OfType<IProperty>().ToDictionary(l => l.LocationIndex);
+
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
         {
             throw new System.NotImplementedException();

@@ -10,5 +10,7 @@ namespace Monopoly
         public int EndingLocation { get; set; }
         public IList<int> Locations { get; set; }
         public int NumberOfDoubles { get; set; }
+        public IList<MortgageResult> PreTurnMortgageActivity { get; set; }
+        public IList<MortgageResult> PostTurnMortgageActivity { get; set; }
     }
 }

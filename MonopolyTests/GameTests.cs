@@ -13,6 +13,9 @@ namespace MonopolyTests
         private readonly FakeDice dice;
         private readonly IEnumerable<Player> players;
         private readonly ITurnService turnService;
+        private readonly IMortgageBroker mortgageBroker;
+        private readonly IMortgageAdvisor mortgageAdvisor;
+        private readonly IMortgageService mortgageService;
         private Game game;
 
         public GameTests()
@@ -21,7 +24,10 @@ namespace MonopolyTests
 
             dice = new FakeDice();
             board = new Board(dice);
-            turnService = new TurnService();
+            mortgageBroker = new MortgageBroker();
+            mortgageAdvisor = new MortgageAdvisor();
+            mortgageService = new MortgageService(board, mortgageAdvisor, mortgageBroker);
+            turnService = new TurnService(mortgageService);
             game = new Game(players.ToArray(), board, dice, turnService);
         }
 
