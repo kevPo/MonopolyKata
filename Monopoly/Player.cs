@@ -1,11 +1,13 @@
-﻿namespace Monopoly
+﻿using Monopoly.Locations;
+
+namespace Monopoly
 {
     public class Player : IPlayer
     {
         public string Name { get;  }
         public Money Balance { get; private set; }
-        public int Location { get; set; }
-        public bool IsInJail { get; set; }
+        public int Location { get; private set; }
+        public bool IsInJail { get; private set; }
 
         public Player(string name, Money? balance = null, int location = 0)
         {
@@ -34,6 +36,25 @@
             }
 
             return false;
+        }
+
+        public void MoveToLocation(int location)
+        {
+            if (!IsInJail)
+            {
+                Location = location;
+            }
+        }
+
+        public void GoToJail()
+        {
+            Location = LocationConstants.JailIndex;
+            IsInJail = true;
+        }
+
+        public void GetOutOfJail()
+        {
+            IsInJail = false;
         }
     }
 }

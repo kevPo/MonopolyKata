@@ -6,8 +6,7 @@ namespace Monopoly.Actions
     {
         public void ProcessAction(IPlayer player)
         {
-            player.Location = LocationConstants.JailIndex;
-            player.IsInJail = true;
+            player.GoToJail();
         }
     }
 }

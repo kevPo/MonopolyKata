@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Monopoly.Locations;
 
 namespace Monopoly
 {
@@ -76,7 +75,7 @@ namespace Monopoly
         {
             var moveResult = board.MoveToLocation(player.Location, rollResult.Total);
 
-            player.Location = moveResult.CurrentLocation.LocationIndex;
+            player.MoveToLocation(moveResult.CurrentLocation.LocationIndex);
             result.Locations.Add(moveResult.CurrentLocation.LocationIndex);
             result.EndingLocation = player.Location;
 
@@ -92,8 +91,7 @@ namespace Monopoly
 
         private static TurnResult MovePlayerToJail(TurnResult result, IPlayer player)
         {
-            player.Location = LocationConstants.JailIndex;
-            player.IsInJail = true;
+            player.GoToJail();
             result.Locations.Add(player.Location);
             result.EndingLocation = player.Location;
 

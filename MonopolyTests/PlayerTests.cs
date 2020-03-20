@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
+using Monopoly.Locations;
 
 namespace MonopolyTests
 {
     [TestClass]
     public class PlayerTests
     {
-        private readonly IPlayer player;
+        private IPlayer player;
 
         public PlayerTests()
         {
@@ -28,7 +29,7 @@ namespace MonopolyTests
         public void WithdrawMoneySubtractsMoneyFromPlayerBalanceAndReturnsTrueWhenPlayerHasAvailableFunds()
         {
             var expectedBalance = new Money(100);
-            player.DepositMoney(new Money(200));
+            player = new Player("horse", balance: new Money(200));
 
             var result = player.WithdrawMoney(expectedBalance);
 
@@ -67,6 +68,52 @@ namespace MonopolyTests
         {
             player.DepositMoney(new Money(500));
             Assert.IsTrue(player.HasAvailableFunds(new Money(500)));
+        }
+
+        [TestMethod]
+        public void GetOutOfJailGetsPlayersOutOfJail()
+        {
+            player.GoToJail();
+            
+            player.GetOutOfJail();
+            
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void GoToJailPutsPlayerInJail()
+        {
+            player.GoToJail();
+
+            Assert.IsTrue(player.IsInJail);
+        }
+
+        [TestMethod]
+        public void GoToJailPutsPlayerAtLocationJail()
+        {
+            player.GoToJail();
+
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void MoveToLocationDoesNotChangePlayerLocationWhenPlayerIsInJail()
+        {
+            player.GoToJail();
+            
+            player.MoveToLocation(LocationConstants.AtlanticAveIndex);
+
+            Assert.IsTrue(player.IsInJail);
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void MoveToLocationChangesPlayerLocationWhenPlayerIsNotInJail()
+        {
+            player.MoveToLocation(LocationConstants.OrientalAveIndex);
+
+            Assert.AreEqual(LocationConstants.OrientalAveIndex, player.Location);
         }
     }
 }

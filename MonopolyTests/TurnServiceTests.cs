@@ -43,7 +43,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerLandsOnGoAndGets200DollarsAddedToBalance()
         {
-            player.Location = 39;
+            player.MoveToLocation(39);
             fakeDice.LoadRoll(1, 0);
 
             turnService.Take(0, player, board, fakeDice);
@@ -66,7 +66,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoAndGets200DollarsAddedToBalance()
         {
-            player.Location = 39;
+            player.MoveToLocation(39);
             fakeDice.LoadRoll(1, 2);
 
             turnService.Take(0, player, board, fakeDice);
@@ -125,7 +125,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays0WhenPlayerLandsOnIncomeTaxAndBalanceIs0()
         {
-            player.Location = 3;
+            player.MoveToLocation(3);
             fakeDice.LoadRoll(1, 0);
             var expectedBalance = player.Balance;
 
@@ -163,7 +163,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPays75WhenPlayerLandsOnLuxuryTax()
         {
-            player.Location = 37;
+            player.MoveToLocation(37);
             player.DepositMoney(new Money(100));
             fakeDice.LoadRoll(1, 0);
             var expectedBalance = player.Balance.Remove(new Money(75));
@@ -177,7 +177,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverLuxuryTaxAndNothingHappens()
         {
-            player.Location = 36;
+            player.MoveToLocation(36);
             player.DepositMoney(new Money(100));
             fakeDice.LoadRoll(2, 1);
             var expectedBalance = player.Balance;
@@ -347,7 +347,7 @@ namespace MonopolyTests
         public void PlayerPaysOffMortgageAtTheBeginningOfTurn()
         {
             player.DepositMoney(new Money(1001));
-            player.Location = 38;
+            player.MoveToLocation(38);
             var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
             property.TransitionOwnership(player);
             property.MortgageProperty();
@@ -363,7 +363,7 @@ namespace MonopolyTests
         public void PlayerDoesNotPayOffMortgageAtTheBeginningOfTurn()
         {
             player.DepositMoney(new Money(600));
-            player.Location = 38;
+            player.MoveToLocation(38);
             var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
             property.TransitionOwnership(player);
             property.MortgageProperty();
@@ -379,7 +379,7 @@ namespace MonopolyTests
         public void PlayerPaysOffMortgageAtTheEndOfTurn()
         {
             player.DepositMoney(new Money(999));
-            player.Location = 38;
+            player.MoveToLocation(38);
             var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
             property.TransitionOwnership(player);
             property.MortgageProperty();
@@ -395,7 +395,7 @@ namespace MonopolyTests
         public void PlayerDoesNotPayOffMortgageAtTheEndOfTurn()
         {
             player.DepositMoney(new Money(600));
-            player.Location = 38;
+            player.MoveToLocation(38);
             var property = board.PropertyDictionary[LocationConstants.MediterraneanAveIndex];
             property.TransitionOwnership(player);
             property.MortgageProperty();
@@ -410,7 +410,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerIsInJailAfterLandingOnGoToJailAndBalanceIsUnchanged()
         {
-            player.Location = 27;
+            player.MoveToLocation(27);
             fakeDice.LoadRoll(1, 2);
             var expectedBalance = player.Balance;
 
@@ -424,7 +424,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerIsInJailAfterLandingOnGoToJailAndBalanceIsUnchangedWhenRollingDoubles()
         {
-            player.Location = 26;
+            player.MoveToLocation(26);
             fakeDice.LoadRoll(2, 2);
             var expectedBalance = player.Balance;
 
@@ -438,7 +438,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesOverGoToJailAndPlayerIsNotInJailAndBalanceUnchanged()
         {
-            player.Location = 27;
+            player.MoveToLocation(27);
             fakeDice.LoadRoll(1, 3);
             var expectedBalance = player.Balance;
 
