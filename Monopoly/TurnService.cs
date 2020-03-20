@@ -93,6 +93,7 @@ namespace Monopoly
         private static TurnResult MovePlayerToJail(TurnResult result, IPlayer player)
         {
             player.Location = LocationConstants.JailIndex;
+            player.IsInJail = true;
             result.Locations.Add(player.Location);
             result.EndingLocation = player.Location;
 

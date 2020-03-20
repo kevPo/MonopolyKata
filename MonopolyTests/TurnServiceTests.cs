@@ -97,32 +97,6 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void PlayerLandsOnGoToJailAndMovesDirectlyToJustVisiting()
-        {
-            player.Location = 27;
-            fakeDice.LoadRoll(1, 2);
-            var expectedBalance = player.Balance;
-
-            turnService.Take(0, player, board, fakeDice);
-
-            Assert.AreEqual(10, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
-        public void PlayerPassesOverGoToJailWithLocationAndBalanceUnchanged()
-        {
-            player.Location = 28;
-            fakeDice.LoadRoll(2, 1);
-            var expectedBalance = player.Balance;
-
-            turnService.Take(0, player, board, fakeDice);
-
-            Assert.AreEqual(31, player.Location);
-            Assert.AreEqual(expectedBalance, player.Balance);
-        }
-
-        [TestMethod]
         public void PlayerPays180WhenPlayerLandsOnIncomeTaxAndBalanceIs1800()
         {
             player.DepositMoney(new Money(1800));
@@ -300,14 +274,17 @@ namespace MonopolyTests
             fakeDice.LoadRoll(3, 3);
             fakeDice.LoadRoll(3, 3);
             fakeDice.LoadRoll(3, 3);
+            var expectedBalance = player.Balance;
 
             var result = turnService.Take(0, player, board, fakeDice);
 
-            Assert.AreEqual(6, result.Locations[0]);
-            Assert.AreEqual(12, result.Locations[1]);
+            Assert.AreEqual(LocationConstants.OrientalAveIndex, result.Locations[0]);
+            Assert.AreEqual(LocationConstants.ElectricCompanyIndex, result.Locations[1]);
             Assert.AreEqual(LocationConstants.JailIndex, result.Locations[2]);
             Assert.AreEqual(3, result.Locations.Count);
             Assert.AreEqual(LocationConstants.JailIndex, result.EndingLocation);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.IsTrue(player.IsInJail);
         }
 
         [TestMethod]
@@ -431,39 +408,45 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void PlayerIsInJailAfterLandingOnGoToJail()
+        public void PlayerIsInJailAfterLandingOnGoToJailAndBalanceIsUnchanged()
         {
             player.Location = 27;
             fakeDice.LoadRoll(1, 2);
+            var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
 
             Assert.AreEqual(LocationConstants.JailIndex, player.Location);
             Assert.IsTrue(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
         }
 
         [TestMethod]
-        public void PlayerIsInJailAfterLandingOnGoToJailWhenRollingDoubles()
+        public void PlayerIsInJailAfterLandingOnGoToJailAndBalanceIsUnchangedWhenRollingDoubles()
         {
             player.Location = 26;
             fakeDice.LoadRoll(2, 2);
+            var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
 
             Assert.AreEqual(LocationConstants.JailIndex, player.Location);
             Assert.IsTrue(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
         }
 
         [TestMethod]
-        public void PlayerPassesOverGoToJailAndPlayerIsNotInJail()
+        public void PlayerPassesOverGoToJailAndPlayerIsNotInJailAndBalanceUnchanged()
         {
             player.Location = 27;
             fakeDice.LoadRoll(1, 3);
+            var expectedBalance = player.Balance;
 
             turnService.Take(0, player, board, fakeDice);
 
             Assert.AreEqual(LocationConstants.PacificAveIndex, player.Location);
             Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
         }
     }
 }
