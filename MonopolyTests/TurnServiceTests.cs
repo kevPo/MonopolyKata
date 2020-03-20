@@ -441,5 +441,17 @@ namespace MonopolyTests
             Assert.AreEqual(LocationConstants.JailIndex, player.Location);
             Assert.IsTrue(player.IsInJail);
         }
+
+        [TestMethod]
+        public void PlayerIsInJailAfterLandingOnGoToJailWhenRollingDoubles()
+        {
+            player.Location = 26;
+            fakeDice.LoadRoll(2, 2);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+            Assert.IsTrue(player.IsInJail);
+        }
     }
 }

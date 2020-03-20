@@ -64,7 +64,7 @@ namespace Monopoly
 
             result.PostTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
 
-            if (rollResult.IsDoubles)
+            if (rollResult.IsDoubles && !player.IsInJail)
             {
                 result = Combine(result, Take(result, player, board, dice));
             }
