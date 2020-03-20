@@ -5,6 +5,7 @@
         public string Name { get;  }
         public Money Balance { get; private set; }
         public int Location { get; set; }
+        public bool IsInJail { get; set; }
 
         public Player(string name, Money? balance = null, int location = 0)
         {

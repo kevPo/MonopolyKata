@@ -54,7 +54,7 @@
     <Compile Include="Actions\UtilityRentActionTests.cs" />
     <Compile Include="Actions\RailroadRentActionTests.cs" />
     <Compile Include="Actions\RealEstateRentActionTests.cs" />
-    <Compile Include="Actions\RelocateActionTests.cs" />
+    <Compile Include="Actions\GoToJailActionTests.cs" />
     <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="FakeBoard.cs" />

@@ -33,6 +33,23 @@ namespace Monopoly
 
         private TurnResult Take(TurnResult result, IPlayer player, IBoard board, IDice dice)
         {
+            if (player.IsInJail)
+            {
+                return TakeInJailTurn(result, player, board, dice);
+            }
+            else
+            {
+                return TakeTurn(result, player, board, dice);
+            }
+        }
+
+        private TurnResult TakeInJailTurn(TurnResult result, IPlayer player, IBoard board, IDice dice)
+        {
+            return result;
+        }
+
+        private TurnResult TakeTurn(TurnResult result, IPlayer player, IBoard board, IDice dice)
+        {
             result.PreTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
 
             var rollResult = dice.Roll();
@@ -40,7 +57,7 @@ namespace Monopoly
 
             if (playerRolledMaxDoubles)
             {
-                return MovePlayerToJustVisiting(result, player);
+                return MovePlayerToJail(result, player);
             }
 
             result = MovePlayerToLocation(result, player, board, rollResult);
@@ -73,9 +90,9 @@ namespace Monopoly
             return result;
         }
 
-        private static TurnResult MovePlayerToJustVisiting(TurnResult result, IPlayer player)
+        private static TurnResult MovePlayerToJail(TurnResult result, IPlayer player)
         {
-            player.Location = LocationConstants.JustVisitingIndex;
+            player.Location = LocationConstants.JailIndex;
             result.Locations.Add(player.Location);
             result.EndingLocation = player.Location;
 

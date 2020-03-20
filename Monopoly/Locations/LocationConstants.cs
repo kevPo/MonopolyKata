@@ -13,7 +13,7 @@
         // Chance
         public const int VermontAveIndex = 8;
         public const int ConnecticutAveIndex = 9;
-        public const int JustVisitingIndex = 10;
+        public const int JailIndex = 10;
         public const int StCharlesPlaceIndex = 11;
         public const int ElectricCompanyIndex = 12;
         public const int StatesAveIndex = 13;

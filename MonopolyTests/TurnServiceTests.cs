@@ -295,7 +295,7 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void PlayerEndsUpOnJustVisitingWhenRollingDoublesThreeTimes()
+        public void PlayerEndsUpInJailWhenRollingDoublesThreeTimes()
         {
             fakeDice.LoadRoll(3, 3);
             fakeDice.LoadRoll(3, 3);
@@ -305,9 +305,9 @@ namespace MonopolyTests
 
             Assert.AreEqual(6, result.Locations[0]);
             Assert.AreEqual(12, result.Locations[1]);
-            Assert.AreEqual(LocationConstants.JustVisitingIndex, result.Locations[2]);
+            Assert.AreEqual(LocationConstants.JailIndex, result.Locations[2]);
             Assert.AreEqual(3, result.Locations.Count);
-            Assert.AreEqual(LocationConstants.JustVisitingIndex, result.EndingLocation);
+            Assert.AreEqual(LocationConstants.JailIndex, result.EndingLocation);
         }
 
         [TestMethod]
@@ -428,6 +428,18 @@ namespace MonopolyTests
 
             Assert.IsTrue(property.IsMortgaged);
             Assert.IsFalse(result.PostTurnMortgageActivity[0].PaidOffProperties.Any(p => p.LocationIndex == LocationConstants.MediterraneanAveIndex));
+        }
+
+        [TestMethod]
+        public void PlayerIsInJailAfterLandingOnGoToJail()
+        {
+            player.Location = 27;
+            fakeDice.LoadRoll(1, 2);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+            Assert.IsTrue(player.IsInJail);
         }
     }
 }

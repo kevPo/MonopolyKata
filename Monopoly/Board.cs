@@ -49,7 +49,7 @@ namespace Monopoly
                 new Property(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, new RealEstateRentAction(this), LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
                 new Property(LocationConstants.WaterWorksIndex, LocationConstants.UtilityGroup, new UtilityRentAction(this, dice), LocationConstants.UtilityCost),
                 new Property(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, new RealEstateRentAction(this), LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
-                new Location(LocationConstants.GoToJailIndex, landingAction: new RelocateAction(LocationConstants.JustVisitingIndex)),
+                new Location(LocationConstants.GoToJailIndex, landingAction: new GoToJailAction()),
                 new Property(LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, new RealEstateRentAction(this), LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
                 new Property(LocationConstants.NorthCarolinaAveIndex, LocationConstants.DarkGreenPropertyGroup, new RealEstateRentAction(this), LocationConstants.NorthCarolinaAveCost, LocationConstants.NorthCarolinaAveRent),
                 new NullLocation(33),

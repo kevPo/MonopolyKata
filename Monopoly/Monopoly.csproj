@@ -50,7 +50,7 @@
     <Compile Include="Actions\UtilityRentAction.cs" />
     <Compile Include="Actions\RailroadRentAction.cs" />
     <Compile Include="Actions\RealEstateRentAction.cs" />
-    <Compile Include="Actions\RelocateAction.cs" />
+    <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="IMortgageAdvisor.cs" />
     <Compile Include="IMortgageBroker.cs" />
