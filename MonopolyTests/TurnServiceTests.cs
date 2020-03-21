@@ -288,6 +288,30 @@ namespace MonopolyTests
         }
 
         [TestMethod]
+        public void PlayerEndsUpInJailWhenRollingDoublesThreeTimesAndCollects200WhenPassingGo()
+        {
+            player.MoveToLocation(LocationConstants.ParkPlaceIndex);
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+            var expectedBalance = MonopolyConstants.GoPayoutAmount
+                .Remove(LocationConstants.BalticAveCost)
+                .Add(LocationConstants.BalticAveCost.ApplyRate(MortgageBroker.MortgageRate))
+                .Remove(LocationConstants.ConnecticutAveCost)
+                .Add(LocationConstants.ConnecticutAveCost.ApplyRate(MortgageBroker.MortgageRate));
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.AreEqual(LocationConstants.BalticAveIndex, result.Locations[0]);
+            Assert.AreEqual(LocationConstants.ConnecticutAveIndex, result.Locations[1]);
+            Assert.AreEqual(LocationConstants.JailIndex, result.Locations[2]);
+            Assert.AreEqual(3, result.Locations.Count);
+            Assert.AreEqual(LocationConstants.JailIndex, result.EndingLocation);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.IsTrue(player.IsInJail);
+        }
+
+        [TestMethod]
         public void PlayerMortgagesPropertyAtTheBeginningOfTurn()
         {
             player.DepositMoney(new Money(500));

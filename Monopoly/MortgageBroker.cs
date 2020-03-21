@@ -1,5 +1,4 @@
-﻿using System;
-using Monopoly.Locations;
+﻿using Monopoly.Locations;
 
 namespace Monopoly
 {
@@ -14,8 +13,7 @@ namespace Monopoly
                 return false;
             }
 
-            var mortgageAmount = Convert.ToInt32(Math.Floor(property.Cost.Amount * MortgageRate));
-            player.DepositMoney(new Money(mortgageAmount));
+            player.DepositMoney(property.Cost.ApplyRate(MortgageRate));
             property.MortgageProperty();
 
             return true;

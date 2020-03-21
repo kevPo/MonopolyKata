@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 
 namespace MonopolyTests
@@ -27,6 +28,18 @@ namespace MonopolyTests
             var expectedAmount = 500 - 250;
 
             var result = new Money(amount1).Remove(new Money(amount2));
+
+            Assert.AreEqual(expectedAmount, result.Amount);
+        }
+
+        [TestMethod]
+        public void ApplyRateReturnsCorrectAmount()
+        {
+            var rate = .9;
+            var amount1 = 192;
+            var expectedAmount = Convert.ToInt32(Math.Floor(amount1 * rate));
+
+            var result = new Money(amount1).ApplyRate(rate);
 
             Assert.AreEqual(expectedAmount, result.Amount);
         }

@@ -1,4 +1,6 @@
-﻿namespace Monopoly
+﻿using System;
+
+namespace Monopoly
 {
     public struct Money
     {
@@ -25,6 +27,11 @@
         public static Money Remove(this Money money, Money moneyToRemove)
         {
             return new Money(money.Amount - moneyToRemove.Amount);
+        }
+
+        public static Money ApplyRate(this Money money, double rate)
+        {
+            return new Money(Convert.ToInt32(Math.Floor(money.Amount * rate)));
         }
     }
 }
