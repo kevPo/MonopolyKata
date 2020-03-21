@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Monopoly
 {
@@ -104,11 +103,11 @@ namespace Monopoly
             {
                 TurnOrder = firstResult.TurnOrder,
                 PlayerName = firstResult.PlayerName,
-                Locations = firstResult.Locations.Union(nextResult.Locations).ToList(),
+                Locations = nextResult.Locations,
                 StartingLocation = firstResult.StartingLocation,
                 EndingLocation = nextResult.EndingLocation,
-                PreTurnMortgageActivity = firstResult.PreTurnMortgageActivity.Union(nextResult.PreTurnMortgageActivity).ToList(),
-                PostTurnMortgageActivity = firstResult.PostTurnMortgageActivity.Union(nextResult.PostTurnMortgageActivity).ToList()
+                PreTurnMortgageActivity = nextResult.PreTurnMortgageActivity,
+                PostTurnMortgageActivity = nextResult.PostTurnMortgageActivity
             };
         }
     }
