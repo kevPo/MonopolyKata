@@ -312,6 +312,25 @@ namespace MonopolyTests
         }
 
         [TestMethod]
+        public void PlayerIsNotInJailAfterRollingDoubles2Times()
+        {
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(3, 4);
+            var expectedBalance = player.Balance;
+
+            var result = turnService.Take(0, player, board, fakeDice);
+
+            Assert.AreEqual(LocationConstants.OrientalAveIndex, result.Locations[0]);
+            Assert.AreEqual(LocationConstants.ElectricCompanyIndex, result.Locations[1]);
+            Assert.AreEqual(LocationConstants.NewYorkAveIndex, result.Locations[2]);
+            Assert.AreEqual(3, result.Locations.Count);
+            Assert.AreEqual(LocationConstants.NewYorkAveIndex, result.EndingLocation);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.IsFalse(player.IsInJail);
+        }
+
+        [TestMethod]
         public void PlayerMortgagesPropertyAtTheBeginningOfTurn()
         {
             player.DepositMoney(new Money(500));
