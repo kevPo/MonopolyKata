@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Monopoly.Actions;
 using Monopoly.Locations;
@@ -26,45 +26,45 @@ namespace Monopoly
             Locations = new[]
             {
                 genericLocationFactory.Create(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
-                realEstateFactory.Create(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),
+                realEstateFactory.Create(LocationConstants.MediterraneanAveIndex),
                 nullLocationFactory.Create(2),
-                realEstateFactory.Create(LocationConstants.BalticAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.BalticAveCost, LocationConstants.BalticAveRent),
+                realEstateFactory.Create(LocationConstants.BalticAveIndex),
                 genericLocationFactory.Create(LocationConstants.IncomeTaxIndex, new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
                 railroadFactory.Create(LocationConstants.ReadingRailroadIndex),
-                realEstateFactory.Create(LocationConstants.OrientalAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.OrientalAveCost, LocationConstants.OrientalAveRent),
+                realEstateFactory.Create(LocationConstants.OrientalAveIndex),
                 nullLocationFactory.Create(7),
-                realEstateFactory.Create(LocationConstants.VermontAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.VermontAveCost, LocationConstants.VermontAveRent),
-                realEstateFactory.Create(LocationConstants.ConnecticutAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.ConnecticutAveCost, LocationConstants.ConnecticutAveRent),
+                realEstateFactory.Create(LocationConstants.VermontAveIndex),
+                realEstateFactory.Create(LocationConstants.ConnecticutAveIndex),
                 nullLocationFactory.Create(10),
-                realEstateFactory.Create(LocationConstants.StCharlesPlaceIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StCharlesPlaceCost, LocationConstants.StCharlesPlaceRent),
+                realEstateFactory.Create(LocationConstants.StCharlesPlaceIndex),
                 utilityFactory.Create(LocationConstants.ElectricCompanyIndex),
-                realEstateFactory.Create(LocationConstants.StatesAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StatesAveCost, LocationConstants.StatesAveRent),
-                realEstateFactory.Create(LocationConstants.VirginiaAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.VirginiaAveCost, LocationConstants.VirginiaAveRent),
+                realEstateFactory.Create(LocationConstants.StatesAveIndex),
+                realEstateFactory.Create(LocationConstants.VirginiaAveIndex),
                 railroadFactory.Create(LocationConstants.PennsylvaniaRailroadIndex),
-                realEstateFactory.Create(LocationConstants.StJamesPlaceIndex, LocationConstants.OrangePropertyGroup, LocationConstants.StJamesPlaceCost, LocationConstants.StJamesPlaceRent),
+                realEstateFactory.Create(LocationConstants.StJamesPlaceIndex),
                 nullLocationFactory.Create(17),
-                realEstateFactory.Create(LocationConstants.TennesseeAveIndex, LocationConstants.OrangePropertyGroup, LocationConstants.TennesseeAveCost, LocationConstants.TennesseeAveRent),
-                realEstateFactory.Create(LocationConstants.NewYorkAveIndex, LocationConstants.OrangePropertyGroup, LocationConstants.NewYorkAveCost, LocationConstants.NewYorkAveRent),
+                realEstateFactory.Create(LocationConstants.TennesseeAveIndex),
+                realEstateFactory.Create(LocationConstants.NewYorkAveIndex),
                 nullLocationFactory.Create(20),
-                realEstateFactory.Create(LocationConstants.KentuckyAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.KentuckyAveCost, LocationConstants.KentuckyAveRent),
+                realEstateFactory.Create(LocationConstants.KentuckyAveIndex),
                 nullLocationFactory.Create(22),
-                realEstateFactory.Create(LocationConstants.IndianaAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.IndianaAveCost, LocationConstants.IndianaAveRent),
-                realEstateFactory.Create(LocationConstants.IllinoisAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.IllinoisAveCost, LocationConstants.IllinoisAveRent),
+                realEstateFactory.Create(LocationConstants.IndianaAveIndex),
+                realEstateFactory.Create(LocationConstants.IllinoisAveIndex),
                 railroadFactory.Create(LocationConstants.BAndORailroadIndex),
-                realEstateFactory.Create(LocationConstants.AtlanticAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.AtlanticAveCost, LocationConstants.AtlanticAveRent),
-                realEstateFactory.Create(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
+                realEstateFactory.Create(LocationConstants.AtlanticAveIndex),
+                realEstateFactory.Create(LocationConstants.VentnorAveIndex),
                 utilityFactory.Create(LocationConstants.WaterWorksIndex),
-                realEstateFactory.Create(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
+                realEstateFactory.Create(LocationConstants.MarvinGardensIndex),
                 genericLocationFactory.Create(LocationConstants.GoToJailIndex, new GoToJailAction()),
-                realEstateFactory.Create(LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
-                realEstateFactory.Create(LocationConstants.NorthCarolinaAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.NorthCarolinaAveCost, LocationConstants.NorthCarolinaAveRent),
+                realEstateFactory.Create(LocationConstants.PacificAveIndex),
+                realEstateFactory.Create(LocationConstants.NorthCarolinaAveIndex),
                 nullLocationFactory.Create(33),
-                realEstateFactory.Create(LocationConstants.PennsylvaniaAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PennsylvaniaAveCost, LocationConstants.PennsylvaniaAveRent),
+                realEstateFactory.Create(LocationConstants.PennsylvaniaAveIndex),
                 railroadFactory.Create(LocationConstants.ShortLineRailroadIndex),
                 nullLocationFactory.Create(36),
-                realEstateFactory.Create(LocationConstants.ParkPlaceIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.ParkPlaceCost, LocationConstants.ParkPlaceRent),
+                realEstateFactory.Create(LocationConstants.ParkPlaceIndex),
                 genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
-                realEstateFactory.Create(LocationConstants.BoardwalkIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.BoardwalkCost, LocationConstants.BoardwalkRent)
+                realEstateFactory.Create(LocationConstants.BoardwalkIndex)
             };
         }
 

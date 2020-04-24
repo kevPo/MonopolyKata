@@ -1,4 +1,6 @@
-﻿namespace Monopoly.Locations
+﻿using System.Collections.Generic;
+
+namespace Monopoly.Locations
 {
     public static class LocationConstants
     {
@@ -105,5 +107,83 @@
         public static readonly PropertyGroup DarkBluePropertyGroup = new PropertyGroup("DarkBlue");
         public static readonly PropertyGroup RailroadGroup = new PropertyGroup("Railroad");
         public static readonly PropertyGroup UtilityGroup = new PropertyGroup("Utility");
+
+        public static readonly IDictionary<int, PropertyGroup> PropertyGroupDictionary = new Dictionary<int, PropertyGroup>
+        {
+            {MediterraneanAveIndex, PurplePropertyGroup},
+            {BalticAveIndex, PurplePropertyGroup},
+            {OrientalAveIndex, LightBluePropertyGroup},
+            {VermontAveIndex, LightBluePropertyGroup},
+            {ConnecticutAveIndex, LightBluePropertyGroup},
+            {StCharlesPlaceIndex, VioletPropertyGroup},
+            {StatesAveIndex, VioletPropertyGroup},
+            {VirginiaAveIndex, VioletPropertyGroup},
+            {StJamesPlaceIndex, OrangePropertyGroup},
+            {TennesseeAveIndex, OrangePropertyGroup},
+            {NewYorkAveIndex, OrangePropertyGroup},
+            {KentuckyAveIndex, RedPropertyGroup},
+            {IndianaAveIndex, RedPropertyGroup},
+            {IllinoisAveIndex, RedPropertyGroup},
+            {AtlanticAveIndex, YellowPropertyGroup},
+            {VentnorAveIndex, YellowPropertyGroup},
+            {MarvinGardensIndex, YellowPropertyGroup},
+            {PacificAveIndex, DarkGreenPropertyGroup},
+            {NorthCarolinaAveIndex, DarkGreenPropertyGroup},
+            {PennsylvaniaAveIndex, DarkGreenPropertyGroup},
+            {ParkPlaceIndex, DarkBluePropertyGroup},
+            {BoardwalkIndex, DarkBluePropertyGroup}
+        };
+
+        public static readonly IDictionary<int, Money> PropertyCostDictionary = new Dictionary<int, Money>
+        {
+            {MediterraneanAveIndex, MediterraneanAveCost},
+            {BalticAveIndex, BalticAveCost},
+            {OrientalAveIndex, OrientalAveCost},
+            {VermontAveIndex, VermontAveCost},
+            {ConnecticutAveIndex, ConnecticutAveCost},
+            {StCharlesPlaceIndex, StCharlesPlaceCost},
+            {StatesAveIndex, StatesAveCost},
+            {VirginiaAveIndex, VirginiaAveCost},
+            {StJamesPlaceIndex, StJamesPlaceCost},
+            {TennesseeAveIndex, TennesseeAveCost},
+            {NewYorkAveIndex, NewYorkAveCost},
+            {KentuckyAveIndex, KentuckyAveCost},
+            {IndianaAveIndex, IndianaAveCost},
+            {IllinoisAveIndex, IllinoisAveCost},
+            {AtlanticAveIndex, AtlanticAveCost},
+            {VentnorAveIndex, VentnorAveCost},
+            {MarvinGardensIndex, MarvinGardensCost},
+            {PacificAveIndex, PacificAveCost},
+            {NorthCarolinaAveIndex, NorthCarolinaAveCost},
+            {PennsylvaniaAveIndex, PennsylvaniaAveCost},
+            {ParkPlaceIndex, ParkPlaceCost},
+            {BoardwalkIndex, BoardwalkCost}
+        };
+
+        public static readonly IDictionary<int, Money> PropertyRentDictionary = new Dictionary<int, Money>
+        {
+            {MediterraneanAveIndex, MediterraneanAveRent},
+            {BalticAveIndex, BalticAveRent},
+            {OrientalAveIndex, OrientalAveRent},
+            {VermontAveIndex, VermontAveRent},
+            {ConnecticutAveIndex, ConnecticutAveRent},
+            {StCharlesPlaceIndex, StCharlesPlaceRent},
+            {StatesAveIndex, StatesAveRent},
+            {VirginiaAveIndex, VirginiaAveRent},
+            {StJamesPlaceIndex, StJamesPlaceRent},
+            {TennesseeAveIndex, TennesseeAveRent},
+            {NewYorkAveIndex, NewYorkAveRent},
+            {KentuckyAveIndex, KentuckyAveRent},
+            {IndianaAveIndex, IndianaAveRent},
+            {IllinoisAveIndex, IllinoisAveRent},
+            {AtlanticAveIndex, AtlanticAveRent},
+            {VentnorAveIndex, VentnorAveRent},
+            {MarvinGardensIndex, MarvinGardensRent},
+            {PacificAveIndex, PacificAveRent},
+            {NorthCarolinaAveIndex, NorthCarolinaAveRent},
+            {PennsylvaniaAveIndex, PennsylvaniaAveRent},
+            {ParkPlaceIndex, ParkPlaceRent},
+            {BoardwalkIndex, BoardwalkRent}
+        };
     }
 }
