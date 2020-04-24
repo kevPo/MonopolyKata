@@ -7,6 +7,7 @@ namespace Monopoly
 {
     public class Board : IBoard
     {
+        private readonly UtilityFactory utilityFactory;
         private const int NumberOfLocations = 40;
 
         public IList<ILocation> Locations { get; }
@@ -18,7 +19,9 @@ namespace Monopoly
 
         public Board(IDice dice)
         {
-            Locations = new ILocation[]
+            utilityFactory = new UtilityFactory(this, dice);
+
+            Locations = new[]
             {
                 CreateLocation(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
                 CreateRealEstate(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),
@@ -32,7 +35,7 @@ namespace Monopoly
                 CreateRealEstate(LocationConstants.ConnecticutAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.ConnecticutAveCost, LocationConstants.ConnecticutAveRent),
                 CreateNullLocation(10),
                 CreateRealEstate(LocationConstants.StCharlesPlaceIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StCharlesPlaceCost, LocationConstants.StCharlesPlaceRent),
-                CreateUtility(LocationConstants.ElectricCompanyIndex, LocationConstants.UtilityGroup, LocationConstants.UtilityCost, dice),
+                utilityFactory.Create(LocationConstants.ElectricCompanyIndex),
                 CreateRealEstate(LocationConstants.StatesAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StatesAveCost, LocationConstants.StatesAveRent),
                 CreateRealEstate(LocationConstants.VirginiaAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.VirginiaAveCost, LocationConstants.VirginiaAveRent),
                 CreateRailroad(LocationConstants.PennsylvaniaRailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
@@ -48,7 +51,7 @@ namespace Monopoly
                 CreateRailroad(LocationConstants.BAndORailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
                 CreateRealEstate(LocationConstants.AtlanticAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.AtlanticAveCost, LocationConstants.AtlanticAveRent),
                 CreateRealEstate(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
-                CreateUtility(LocationConstants.WaterWorksIndex, LocationConstants.UtilityGroup, LocationConstants.UtilityCost, dice),
+                utilityFactory.Create(LocationConstants.WaterWorksIndex),
                 CreateRealEstate(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
                 CreateLocation(LocationConstants.GoToJailIndex, landingAction: new GoToJailAction()),
                 CreateRealEstate( LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
@@ -88,12 +91,6 @@ namespace Monopoly
         {
             var railroadRentAction = new RailroadRentAction(this);
             return new Property(locationIndex, propertyGroup, railroadRentAction, cost);
-        }
-
-        private ILocation CreateUtility(int locationIndex, PropertyGroup propertyGroup, Money cost, IDice dice)
-        {
-            var utilityRentAction = new UtilityRentAction(this, dice);
-            return new Property(locationIndex, propertyGroup, utilityRentAction, cost);
         }
 
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
