@@ -55,6 +55,7 @@
     <Compile Include="IMortgageAdvisor.cs" />
     <Compile Include="IMortgageBroker.cs" />
     <Compile Include="IMortgageService.cs" />
+    <Compile Include="INullLocationFactory.cs" />
     <Compile Include="IRailroadFactory.cs" />
     <Compile Include="IRealEstateFactory.cs" />
     <Compile Include="ITurnService.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="MortgageBroker.cs" />
     <Compile Include="MortgageResult.cs" />
     <Compile Include="MortgageService.cs" />
+    <Compile Include="NullLocationFactory.cs" />
     <Compile Include="RailroadFactory.cs" />
     <Compile Include="RealEstateFactory.cs" />
     <Compile Include="TurnService.cs" />
