@@ -21,14 +21,15 @@ namespace Monopoly
             var railroadFactory = new RailroadFactory(this);
             var realEstateFactory = new RealEstateFactory(this);
             var nullLocationFactory = new NullLocationFactory();
+            var genericLocationFactory = new GenericLocationFactory();
 
             Locations = new[]
             {
-                CreateLocation(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
+                genericLocationFactory.Create(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
                 realEstateFactory.Create(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),
                 nullLocationFactory.Create(2),
                 realEstateFactory.Create(LocationConstants.BalticAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.BalticAveCost, LocationConstants.BalticAveRent),
-                CreateLocation(LocationConstants.IncomeTaxIndex, new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
+                genericLocationFactory.Create(LocationConstants.IncomeTaxIndex, new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
                 railroadFactory.Create(LocationConstants.ReadingRailroadIndex),
                 realEstateFactory.Create(LocationConstants.OrientalAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.OrientalAveCost, LocationConstants.OrientalAveRent),
                 nullLocationFactory.Create(7),
@@ -54,7 +55,7 @@ namespace Monopoly
                 realEstateFactory.Create(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
                 utilityFactory.Create(LocationConstants.WaterWorksIndex),
                 realEstateFactory.Create(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
-                CreateLocation(LocationConstants.GoToJailIndex, new GoToJailAction()),
+                genericLocationFactory.Create(LocationConstants.GoToJailIndex, new GoToJailAction()),
                 realEstateFactory.Create(LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
                 realEstateFactory.Create(LocationConstants.NorthCarolinaAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.NorthCarolinaAveCost, LocationConstants.NorthCarolinaAveRent),
                 nullLocationFactory.Create(33),
@@ -62,19 +63,9 @@ namespace Monopoly
                 railroadFactory.Create(LocationConstants.ShortLineRailroadIndex),
                 nullLocationFactory.Create(36),
                 realEstateFactory.Create(LocationConstants.ParkPlaceIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.ParkPlaceCost, LocationConstants.ParkPlaceRent),
-                CreateLocation(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
+                genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
                 realEstateFactory.Create(LocationConstants.BoardwalkIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.BoardwalkCost, LocationConstants.BoardwalkRent)
             };
-        }
-
-        private static ILocation CreateLocation(int locationIndex, IAction landingAction)
-        {
-            return new Location(locationIndex, landingAction, new NullAction());
-        }
-
-        private static ILocation CreateLocation(int locationIndex, IAction landingAction, IAction passingAction)
-        {
-            return new Location(locationIndex, landingAction, passingAction);
         }
 
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
@@ -125,16 +116,14 @@ namespace Monopoly
         public int NumberOfRailRoadsOwnedByPlayer(IPlayer player)
         {
             return Locations.OfType<IProperty>()
-                .Where(p => p.PropertyGroup.Value ==
-                            LocationConstants.RailroadGroup.Value) // could be done with struct operator
+                .Where(p => p.PropertyGroup.Value == LocationConstants.RailroadGroup.Value) // could be done with struct operator
                 .Count(p => p.Owner == player);
         }
 
         public int NumberOfUtilitiesOwned()
         {
             return Locations.OfType<IProperty>()
-                .Where(p => p.PropertyGroup.Value ==
-                            LocationConstants.UtilityGroup.Value) // could be done with struct operator
+                .Where(p => p.PropertyGroup.Value == LocationConstants.UtilityGroup.Value) // could be done with struct operator
                 .Count(p => p.Owner != null);
         }
     }

@@ -52,6 +52,8 @@
     <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="GenericLocationFactory.cs" />
+    <Compile Include="IGenericLocationFactory.cs" />
     <Compile Include="IMortgageAdvisor.cs" />
     <Compile Include="IMortgageBroker.cs" />
     <Compile Include="IMortgageService.cs" />
