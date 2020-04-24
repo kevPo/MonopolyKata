@@ -11,7 +11,7 @@ namespace MonopolyTests.Locations
         public void ProcessPassingActionCallsPassingAction()
         {
             var passingAction = new FakeAction();
-            var location = new Location(0, passingAction: passingAction);
+            var location = new Location(0, null, passingAction);
 
             location.ProcessPassingAction(null);
 
@@ -22,7 +22,7 @@ namespace MonopolyTests.Locations
         public void ProcessLandingActionCallsPassingAction()
         {
             var landingAction = new FakeAction();
-            var location = new Location(0, landingAction: landingAction);
+            var location = new Location(0, landingAction, null);
 
             location.ProcessLandingAction(null);
 

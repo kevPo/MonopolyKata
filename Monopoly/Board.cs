@@ -13,53 +13,87 @@ namespace Monopoly
 
         public IDictionary<int, ILocation> LocationDictionary => Locations.ToDictionary(l => l.LocationIndex);
 
-        public IDictionary<int, IProperty> PropertyDictionary => Locations.OfType<IProperty>().ToDictionary(l => l.LocationIndex);
+        public IDictionary<int, IProperty> PropertyDictionary =>
+            Locations.OfType<IProperty>().ToDictionary(l => l.LocationIndex);
 
         public Board(IDice dice)
         {
             Locations = new ILocation[]
             {
-                new Location(LocationConstants.GoIndex, landingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount), passingAction: new PayoutAction(MonopolyConstants.GoPayoutAmount)),
-                new Property(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, new RealEstateRentAction(this), LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),
-                new NullLocation(2),
-                new Property(LocationConstants.BalticAveIndex, LocationConstants.PurplePropertyGroup, new RealEstateRentAction(this), LocationConstants.BalticAveCost, LocationConstants.BalticAveRent),
-                new Location(LocationConstants.IncomeTaxIndex, landingAction: new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
-                new Property(LocationConstants.ReadingRailroadIndex, LocationConstants.RailroadGroup, new RailroadRentAction(this), LocationConstants.RailroadCost),
-                new Property(LocationConstants.OrientalAveIndex, LocationConstants.LightBluePropertyGroup, new RealEstateRentAction(this), LocationConstants.OrientalAveCost, LocationConstants.OrientalAveRent),
-                new NullLocation(7),
-                new Property(LocationConstants.VermontAveIndex, LocationConstants.LightBluePropertyGroup, new RealEstateRentAction(this), LocationConstants.VermontAveCost, LocationConstants.VermontAveRent),
-                new Property(LocationConstants.ConnecticutAveIndex, LocationConstants.LightBluePropertyGroup, new RealEstateRentAction(this), LocationConstants.ConnecticutAveCost, LocationConstants.ConnecticutAveRent),
-                new NullLocation(10),
-                new Property(LocationConstants.StCharlesPlaceIndex, LocationConstants.VioletPropertyGroup, new RealEstateRentAction(this), LocationConstants.StCharlesPlaceCost, LocationConstants.StCharlesPlaceRent),
-                new Property(LocationConstants.ElectricCompanyIndex, LocationConstants.UtilityGroup, new UtilityRentAction(this, dice), LocationConstants.UtilityCost),
-                new Property(LocationConstants.StatesAveIndex, LocationConstants.VioletPropertyGroup, new RealEstateRentAction(this), LocationConstants.StatesAveCost, LocationConstants.StatesAveRent),
-                new Property(LocationConstants.VirginiaAveIndex, LocationConstants.VioletPropertyGroup, new RealEstateRentAction(this), LocationConstants.VirginiaAveCost, LocationConstants.VirginiaAveRent),
-                new Property(LocationConstants.PennsylvaniaRailroadIndex, LocationConstants.RailroadGroup, new RailroadRentAction(this), LocationConstants.RailroadCost),
-                new Property(LocationConstants.StJamesPlaceIndex, LocationConstants.OrangePropertyGroup, new RealEstateRentAction(this), LocationConstants.StJamesPlaceCost, LocationConstants.StJamesPlaceRent),
-                new NullLocation(17),
-                new Property(LocationConstants.TennesseeAveIndex, LocationConstants.OrangePropertyGroup, new RealEstateRentAction(this), LocationConstants.TennesseeAveCost, LocationConstants.TennesseeAveRent),
-                new Property(LocationConstants.NewYorkAveIndex, LocationConstants.OrangePropertyGroup, new RealEstateRentAction(this), LocationConstants.NewYorkAveCost, LocationConstants.NewYorkAveRent),
-                new NullLocation(20),
-                new Property(LocationConstants.KentuckyAveIndex, LocationConstants.RedPropertyGroup, new RealEstateRentAction(this), LocationConstants.KentuckyAveCost, LocationConstants.KentuckyAveRent),
-                new NullLocation(22),
-                new Property(LocationConstants.IndianaAveIndex, LocationConstants.RedPropertyGroup, new RealEstateRentAction(this), LocationConstants.IndianaAveCost, LocationConstants.IndianaAveRent),
-                new Property(LocationConstants.IllinoisAveIndex, LocationConstants.RedPropertyGroup, new RealEstateRentAction(this), LocationConstants.IllinoisAveCost, LocationConstants.IllinoisAveRent),
-                new Property(LocationConstants.BAndORailroadIndex, LocationConstants.RailroadGroup, new RailroadRentAction(this), LocationConstants.RailroadCost),
-                new Property(LocationConstants.AtlanticAveIndex, LocationConstants.YellowPropertyGroup, new RealEstateRentAction(this), LocationConstants.AtlanticAveCost, LocationConstants.AtlanticAveRent),
-                new Property(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, new RealEstateRentAction(this), LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
-                new Property(LocationConstants.WaterWorksIndex, LocationConstants.UtilityGroup, new UtilityRentAction(this, dice), LocationConstants.UtilityCost),
-                new Property(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, new RealEstateRentAction(this), LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
-                new Location(LocationConstants.GoToJailIndex, landingAction: new GoToJailAction()),
-                new Property(LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, new RealEstateRentAction(this), LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
-                new Property(LocationConstants.NorthCarolinaAveIndex, LocationConstants.DarkGreenPropertyGroup, new RealEstateRentAction(this), LocationConstants.NorthCarolinaAveCost, LocationConstants.NorthCarolinaAveRent),
-                new NullLocation(33),
-                new Property(LocationConstants.PennsylvaniaAveIndex, LocationConstants.DarkGreenPropertyGroup, new RealEstateRentAction(this), LocationConstants.PennsylvaniaAveCost, LocationConstants.PennsylvaniaAveRent),
-                new Property(LocationConstants.ShortLineRailroadIndex, LocationConstants.RailroadGroup, new RailroadRentAction(this), LocationConstants.RailroadCost),
-                new NullLocation(36),
-                new Property(LocationConstants.ParkPlaceIndex, LocationConstants.DarkBluePropertyGroup, new RealEstateRentAction(this), LocationConstants.ParkPlaceCost, LocationConstants.ParkPlaceRent),
-                new Location(LocationConstants.LuxuryTaxIndex, landingAction: new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
-                new Property(LocationConstants.BoardwalkIndex, LocationConstants.DarkBluePropertyGroup, new RealEstateRentAction(this), LocationConstants.BoardwalkCost, LocationConstants.BoardwalkRent),
+                CreateLocation(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
+                CreateRealEstate(LocationConstants.MediterraneanAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.MediterraneanAveCost, LocationConstants.MediterraneanAveRent),
+                CreateNullLocation(2),
+                CreateRealEstate(LocationConstants.BalticAveIndex, LocationConstants.PurplePropertyGroup, LocationConstants.BalticAveCost, LocationConstants.BalticAveRent),
+                CreateLocation(LocationConstants.IncomeTaxIndex, landingAction: new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
+                CreateRailroad(LocationConstants.ReadingRailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
+                CreateRealEstate(LocationConstants.OrientalAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.OrientalAveCost, LocationConstants.OrientalAveRent),
+                CreateNullLocation(7),
+                CreateRealEstate(LocationConstants.VermontAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.VermontAveCost, LocationConstants.VermontAveRent),
+                CreateRealEstate(LocationConstants.ConnecticutAveIndex, LocationConstants.LightBluePropertyGroup, LocationConstants.ConnecticutAveCost, LocationConstants.ConnecticutAveRent),
+                CreateNullLocation(10),
+                CreateRealEstate(LocationConstants.StCharlesPlaceIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StCharlesPlaceCost, LocationConstants.StCharlesPlaceRent),
+                CreateUtility(LocationConstants.ElectricCompanyIndex, LocationConstants.UtilityGroup, LocationConstants.UtilityCost, dice),
+                CreateRealEstate(LocationConstants.StatesAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.StatesAveCost, LocationConstants.StatesAveRent),
+                CreateRealEstate(LocationConstants.VirginiaAveIndex, LocationConstants.VioletPropertyGroup, LocationConstants.VirginiaAveCost, LocationConstants.VirginiaAveRent),
+                CreateRailroad(LocationConstants.PennsylvaniaRailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
+                CreateRealEstate(LocationConstants.StJamesPlaceIndex, LocationConstants.OrangePropertyGroup, LocationConstants.StJamesPlaceCost, LocationConstants.StJamesPlaceRent),
+                CreateNullLocation(17), 
+                CreateRealEstate(LocationConstants.TennesseeAveIndex, LocationConstants.OrangePropertyGroup, LocationConstants.TennesseeAveCost, LocationConstants.TennesseeAveRent),
+                CreateRealEstate(LocationConstants.NewYorkAveIndex, LocationConstants.OrangePropertyGroup, LocationConstants.NewYorkAveCost, LocationConstants.NewYorkAveRent),
+                CreateNullLocation(20), 
+                CreateRealEstate(LocationConstants.KentuckyAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.KentuckyAveCost, LocationConstants.KentuckyAveRent),
+                CreateNullLocation(22), 
+                CreateRealEstate(LocationConstants.IndianaAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.IndianaAveCost, LocationConstants.IndianaAveRent),
+                CreateRealEstate(LocationConstants.IllinoisAveIndex, LocationConstants.RedPropertyGroup, LocationConstants.IllinoisAveCost, LocationConstants.IllinoisAveRent),
+                CreateRailroad(LocationConstants.BAndORailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
+                CreateRealEstate(LocationConstants.AtlanticAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.AtlanticAveCost, LocationConstants.AtlanticAveRent),
+                CreateRealEstate(LocationConstants.VentnorAveIndex, LocationConstants.YellowPropertyGroup, LocationConstants.VentnorAveCost, LocationConstants.VentnorAveRent),
+                CreateUtility(LocationConstants.WaterWorksIndex, LocationConstants.UtilityGroup, LocationConstants.UtilityCost, dice),
+                CreateRealEstate(LocationConstants.MarvinGardensIndex, LocationConstants.YellowPropertyGroup, LocationConstants.MarvinGardensCost, LocationConstants.MarvinGardensRent),
+                CreateLocation(LocationConstants.GoToJailIndex, landingAction: new GoToJailAction()),
+                CreateRealEstate( LocationConstants.PacificAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PacificAveCost, LocationConstants.PacificAveRent),
+                CreateRealEstate(LocationConstants.NorthCarolinaAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.NorthCarolinaAveCost, LocationConstants.NorthCarolinaAveRent),
+                CreateNullLocation(33), 
+                CreateRealEstate(LocationConstants.PennsylvaniaAveIndex, LocationConstants.DarkGreenPropertyGroup, LocationConstants.PennsylvaniaAveCost, LocationConstants.PennsylvaniaAveRent),
+                CreateRailroad(LocationConstants.ShortLineRailroadIndex, LocationConstants.RailroadGroup, LocationConstants.RailroadCost),
+                CreateNullLocation(36), 
+                CreateRealEstate(LocationConstants.ParkPlaceIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.ParkPlaceCost, LocationConstants.ParkPlaceRent),
+                CreateLocation(LocationConstants.LuxuryTaxIndex, landingAction: new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
+                CreateRealEstate(LocationConstants.BoardwalkIndex, LocationConstants.DarkBluePropertyGroup, LocationConstants.BoardwalkCost, LocationConstants.BoardwalkRent),
             };
+        }
+
+        private static ILocation CreateLocation(int locationIndex, IAction landingAction)
+        {
+            return new Location(locationIndex, landingAction, new NullAction());
+        }
+
+        private static ILocation CreateLocation(int locationIndex, IAction landingAction, IAction passingAction)
+        {
+            return new Location(locationIndex, landingAction, passingAction);
+        }
+
+        private static ILocation CreateNullLocation(int locationIndex)
+        {
+            return new NullLocation(locationIndex);
+        }
+
+        private ILocation CreateRealEstate(int locationIndex, PropertyGroup propertyGroup, Money cost, Money rent)
+        {
+            var realEstateRentAction = new RealEstateRentAction(this);
+            return new Property(locationIndex, propertyGroup, realEstateRentAction, cost, rent);
+        }
+
+        private ILocation CreateRailroad(int locationIndex, PropertyGroup propertyGroup, Money cost)
+        {
+            var railroadRentAction = new RailroadRentAction(this);
+            return new Property(locationIndex, propertyGroup, railroadRentAction, cost);
+        }
+
+        private ILocation CreateUtility(int locationIndex, PropertyGroup propertyGroup, Money cost, IDice dice)
+        {
+            var utilityRentAction = new UtilityRentAction(this, dice);
+            return new Property(locationIndex, propertyGroup, utilityRentAction, cost);
         }
 
         public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
@@ -68,7 +102,10 @@ namespace Monopoly
 
             RemoveLastLocation(locationHistory);
 
-            return new MoveResult { CurrentLocation = Locations.ElementAt(newLocationIndex), LocationHistory = locationHistory };
+            return new MoveResult
+            {
+                CurrentLocation = Locations.ElementAt(newLocationIndex), LocationHistory = locationHistory
+            };
         }
 
         private (List<ILocation>, int) BuildLocationHistory(int currentLocationIndex, int locationsToMove)
@@ -107,14 +144,16 @@ namespace Monopoly
         public int NumberOfRailRoadsOwnedByPlayer(IPlayer player)
         {
             return Locations.OfType<IProperty>()
-                .Where(p => p.PropertyGroup.Value == LocationConstants.RailroadGroup.Value) // could be done with struct operator
+                .Where(p => p.PropertyGroup.Value ==
+                            LocationConstants.RailroadGroup.Value) // could be done with struct operator
                 .Count(p => p.Owner == player);
         }
 
         public int NumberOfUtilitiesOwned()
         {
             return Locations.OfType<IProperty>()
-                .Where(p => p.PropertyGroup.Value == LocationConstants.UtilityGroup.Value) // could be done with struct operator
+                .Where(p => p.PropertyGroup.Value ==
+                            LocationConstants.UtilityGroup.Value) // could be done with struct operator
                 .Count(p => p.Owner != null);
         }
     }
