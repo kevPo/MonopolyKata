@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace System.Linq
+namespace Monopoly
 {
     public static class LinqExtensions
     {
