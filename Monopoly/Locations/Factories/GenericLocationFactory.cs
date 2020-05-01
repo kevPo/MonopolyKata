@@ -1,7 +1,6 @@
 ﻿using Monopoly.Actions;
-using Monopoly.Locations;
 
-namespace Monopoly
+namespace Monopoly.Locations.Factories
 {
     public class GenericLocationFactory : IGenericLocationFactory
     {

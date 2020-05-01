@@ -1,6 +1,4 @@
-﻿using Monopoly.Locations;
-
-namespace Monopoly
+﻿namespace Monopoly.Locations.Factories
 {
     public interface INullLocationFactory
     {

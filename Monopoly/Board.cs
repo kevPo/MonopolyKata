@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Monopoly.Actions;
 using Monopoly.Locations;
+using Monopoly.Locations.Factories;
 
 namespace Monopoly
 {

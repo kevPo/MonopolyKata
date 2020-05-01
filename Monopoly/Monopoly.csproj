@@ -52,25 +52,25 @@
     <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="GenericLocationFactory.cs" />
+    <Compile Include="Locations\Factories\GenericLocationFactory.cs" />
     <Compile Include="IBailAdvisor.cs" />
-    <Compile Include="IGenericLocationFactory.cs" />
+    <Compile Include="Locations\Factories\IGenericLocationFactory.cs" />
     <Compile Include="IMortgageAdvisor.cs" />
     <Compile Include="IMortgageBroker.cs" />
     <Compile Include="IMortgageService.cs" />
-    <Compile Include="INullLocationFactory.cs" />
-    <Compile Include="IRailroadFactory.cs" />
-    <Compile Include="IRealEstateFactory.cs" />
+    <Compile Include="Locations\Factories\INullLocationFactory.cs" />
+    <Compile Include="Locations\Factories\IRailroadFactory.cs" />
+    <Compile Include="Locations\Factories\IRealEstateFactory.cs" />
     <Compile Include="ITurnService.cs" />
-    <Compile Include="IUtilityFactory.cs" />
+    <Compile Include="Locations\Factories\IUtilityFactory.cs" />
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="MortgageAdvisor.cs" />
     <Compile Include="MortgageBroker.cs" />
     <Compile Include="MortgageResult.cs" />
     <Compile Include="MortgageService.cs" />
-    <Compile Include="NullLocationFactory.cs" />
-    <Compile Include="RailroadFactory.cs" />
-    <Compile Include="RealEstateFactory.cs" />
+    <Compile Include="Locations\Factories\NullLocationFactory.cs" />
+    <Compile Include="Locations\Factories\RailroadFactory.cs" />
+    <Compile Include="Locations\Factories\RealEstateFactory.cs" />
     <Compile Include="TurnService.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IBoard.cs" />
@@ -91,7 +91,8 @@
     <Compile Include="Locations\PropertyGroup.cs" />
     <Compile Include="RollResult.cs" />
     <Compile Include="TurnResult.cs" />
-    <Compile Include="UtilityFactory.cs" />
+    <Compile Include="Locations\Factories\UtilityFactory.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
