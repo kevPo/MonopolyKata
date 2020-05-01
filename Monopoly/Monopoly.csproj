@@ -53,6 +53,7 @@
     <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="GenericLocationFactory.cs" />
+    <Compile Include="IBailAdvisor.cs" />
     <Compile Include="IGenericLocationFactory.cs" />
     <Compile Include="IMortgageAdvisor.cs" />
     <Compile Include="IMortgageBroker.cs" />

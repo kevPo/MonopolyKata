@@ -12,5 +12,6 @@ namespace Monopoly
         public int NumberOfDoubles { get; set; }
         public IList<MortgageResult> PreTurnMortgageActivity { get; set; }
         public IList<MortgageResult> PostTurnMortgageActivity { get; set; }
+        public bool PlayerPaidBail { get; set; }
     }
 }

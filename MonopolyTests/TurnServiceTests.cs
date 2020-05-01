@@ -11,6 +11,7 @@ namespace MonopolyTests
         private const int TurnOrder = 0;
 
         private readonly FakeDice fakeDice;
+        private readonly FakeBailAdvisor fakeBailAdvisor;
         private readonly IPlayer player;
         private readonly ITurnService turnService;
         private readonly IBoard board;
@@ -18,12 +19,13 @@ namespace MonopolyTests
         public TurnServiceTests()
         {
             fakeDice = new FakeDice();
+            fakeBailAdvisor = new FakeBailAdvisor();
             board = new Board(fakeDice);
             player = new Player("horse");
             var mortgageBroker = new MortgageBroker();
             var mortgageAdvisor = new MortgageAdvisor();
             var mortgageService = new MortgageService(board, mortgageAdvisor, mortgageBroker);
-            turnService = new TurnService(mortgageService);
+            turnService = new TurnService(mortgageService, fakeBailAdvisor);
         }
 
         [TestMethod]
@@ -495,6 +497,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerGetsOutOfJailByPaying50()
         {
+            fakeBailAdvisor.ShouldPayBail = true;
             player.DepositMoney(MonopolyConstants.BailMoney);
             player.GoToJail();
             fakeDice.LoadRoll(1, 3);
@@ -509,6 +512,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerGetsOutOfJailByPaying50AndStillWithdrawsMoneyWhenDoublesAreRolled()
         {
+            fakeBailAdvisor.ShouldPayBail = true;
             player.DepositMoney(MonopolyConstants.BailMoney);
             player.GoToJail();
             fakeDice.LoadRoll(3, 3);
@@ -519,6 +523,21 @@ namespace MonopolyTests
             Assert.IsFalse(player.IsInJail);
             Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
             Assert.AreEqual(LocationConstants.FreeParkingIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerGetsOutOfJailByRollingDoublesOnFirstTurn()
+        {
+            player.DepositMoney(new Money(25));
+            var expectedBalance = player.Balance;
+            player.GoToJail();
+            fakeDice.LoadRoll(3, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(LocationConstants.StJamesPlaceIndex, player.Location);
         }
     }
 }

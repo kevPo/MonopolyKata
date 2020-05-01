@@ -57,6 +57,7 @@
     <Compile Include="Actions\GoToJailActionTests.cs" />
     <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
+    <Compile Include="FakeBailAdvisor.cs" />
     <Compile Include="FakeBoard.cs" />
     <Compile Include="FakeDice.cs" />
     <Compile Include="FakeMortgageAdvisor.cs" />

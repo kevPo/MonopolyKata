@@ -7,10 +7,12 @@ namespace Monopoly
         private const int MaxNumberOfDoubles = 3;
 
         private readonly IMortgageService mortgageService;
+        private readonly IBailAdvisor bailAdvisor;
 
-        public TurnService(IMortgageService mortgageService)
+        public TurnService(IMortgageService mortgageService, IBailAdvisor bailAdvisor)
         {
             this.mortgageService = mortgageService;
+            this.bailAdvisor = bailAdvisor;
         }
 
         public TurnResult Take(int turnOrder, IPlayer player, IBoard board, IDice dice)
@@ -31,31 +33,8 @@ namespace Monopoly
 
         private TurnResult Take(TurnResult result, IPlayer player, IBoard board, IDice dice)
         {
-            if (player.IsInJail)
-            {
-                return TakeInJailTurn(result, player, board, dice);
-            }
-            else
-            {
-                return TakeTurn(result, player, board, dice);
-            }
-        }
-
-        private TurnResult TakeInJailTurn(TurnResult result, IPlayer player, IBoard board, IDice dice)
-        {
-            player.WithdrawMoney(MonopolyConstants.BailMoney);
-            player.GetOutOfJail();
-
-            result = Combine(result, Take(result, player, board, dice));
-
-            return result;
-        }
-
-        private TurnResult TakeTurn(TurnResult result, IPlayer player, IBoard board, IDice dice)
-        {
-            result.PreTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
-
             var rollResult = dice.Roll();
+
             var playerRolledMaxDoubles = rollResult.IsDoubles && ++result.NumberOfDoubles == MaxNumberOfDoubles;
 
             if (playerRolledMaxDoubles)
@@ -63,14 +42,50 @@ namespace Monopoly
                 return MovePlayerToJail(result, player);
             }
 
-            result = MovePlayerToLocation(result, player, board, rollResult);
+            var playerStartedInJail = player.IsInJail;
 
-            result.PostTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
+            if (player.IsInJail)
+            {
+                result = TakeInJailTurn(result, player, board, rollResult);
+            }
+            else
+            {
+                result = TakeTurn(result, player, board, rollResult);
+            }
 
-            if (rollResult.IsDoubles && !player.IsInJail)
+            if (rollResult.IsDoubles && !player.IsInJail && (!playerStartedInJail || result.PlayerPaidBail))
             {
                 result = Combine(result, Take(result, player, board, dice));
             }
+
+            return result;
+        }
+
+        private TurnResult TakeInJailTurn(TurnResult result, IPlayer player, IBoard board, RollResult rollResult)
+        {
+            if (bailAdvisor.PlayerShouldPayBail(player))
+            {
+                player.WithdrawMoney(MonopolyConstants.BailMoney);
+                player.GetOutOfJail();
+                result.PlayerPaidBail = true;
+                result = TakeTurn(result, player, board, rollResult);
+            }
+            else if (rollResult.IsDoubles)
+            {
+                player.GetOutOfJail();
+                result = TakeTurn(result, player, board, rollResult);
+            }
+
+            return result;
+        }
+
+        private TurnResult TakeTurn(TurnResult result, IPlayer player, IBoard board, RollResult rollResult)
+        {
+            result.PreTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
+
+            result = MovePlayerToLocation(result, player, board, rollResult);
+
+            result.PostTurnMortgageActivity.Add(mortgageService.ProcessMortgageTransactions(player));
 
             return result;
         }
@@ -112,7 +127,8 @@ namespace Monopoly
                 StartingLocation = firstResult.StartingLocation,
                 EndingLocation = nextResult.EndingLocation,
                 PreTurnMortgageActivity = nextResult.PreTurnMortgageActivity,
-                PostTurnMortgageActivity = nextResult.PostTurnMortgageActivity
+                PostTurnMortgageActivity = nextResult.PostTurnMortgageActivity,
+                PlayerPaidBail = nextResult.PlayerPaidBail
             };
         }
     }
