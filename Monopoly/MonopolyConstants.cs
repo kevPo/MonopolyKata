@@ -6,6 +6,7 @@
         public static readonly Money GoPayoutAmount = new Money(200);
         public static readonly Money IncomeTaxMaximumAmount = new Money(200);
         public static readonly Money LuxuryTaxAmount = new Money(75);
+        public static readonly Money BailMoney = new Money(50);
         public const int IncomeTaxRate = 10;
     }
 }

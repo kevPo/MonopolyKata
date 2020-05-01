@@ -491,5 +491,19 @@ namespace MonopolyTests
             Assert.IsFalse(player.IsInJail);
             Assert.AreEqual(expectedBalance, player.Balance);
         }
+
+        [TestMethod]
+        public void PlayerGetsOutOfJailByPaying50()
+        {
+            player.DepositMoney(MonopolyConstants.BailMoney);
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
+            Assert.AreEqual(LocationConstants.VirginiaAveIndex, player.Location);
+        }
     }
 }

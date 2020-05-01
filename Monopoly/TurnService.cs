@@ -43,6 +43,11 @@ namespace Monopoly
 
         private TurnResult TakeInJailTurn(TurnResult result, IPlayer player, IBoard board, IDice dice)
         {
+            player.WithdrawMoney(MonopolyConstants.BailMoney);
+            player.GetOutOfJail();
+
+            result = Combine(result, Take(result, player, board, dice));
+
             return result;
         }
 
