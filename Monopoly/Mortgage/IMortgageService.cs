@@ -1,4 +1,4 @@
-﻿namespace Monopoly
+﻿namespace Monopoly.Mortgage
 {
     public interface IMortgageService
     {

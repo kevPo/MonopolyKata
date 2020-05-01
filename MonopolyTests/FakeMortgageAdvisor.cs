@@ -1,5 +1,6 @@
 ﻿using Monopoly;
 using Monopoly.Locations;
+using Monopoly.Mortgage;
 
 namespace MonopolyTests
 {

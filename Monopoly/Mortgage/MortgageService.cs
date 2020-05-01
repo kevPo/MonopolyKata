@@ -2,7 +2,7 @@
 using System.Linq;
 using Monopoly.Locations;
 
-namespace Monopoly
+namespace Monopoly.Mortgage
 {
     public class MortgageService : IMortgageService
     {

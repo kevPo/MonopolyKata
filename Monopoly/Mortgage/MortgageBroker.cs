@@ -1,6 +1,6 @@
 ﻿using Monopoly.Locations;
 
-namespace Monopoly
+namespace Monopoly.Mortgage
 {
     public class MortgageBroker : IMortgageBroker
     {

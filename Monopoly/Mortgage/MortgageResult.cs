@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Monopoly.Locations;
 
-namespace Monopoly
+namespace Monopoly.Mortgage
 {
     public class MortgageResult
     {
