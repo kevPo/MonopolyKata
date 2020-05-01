@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
-using Monopoly.Mortgage;
+using Monopoly.Locations;
 using MonopolyTests.Fakes;
 
 namespace MonopolyTests
@@ -11,60 +11,25 @@ namespace MonopolyTests
     [TestClass]
     public class GameTests
     {
-        private readonly Board board;
-        private readonly FakeDice dice;
-        private readonly IEnumerable<Player> players;
-        private readonly ITurnService turnService;
-        private readonly IMortgageBroker mortgageBroker;
-        private readonly IMortgageAdvisor mortgageAdvisor;
-        private readonly IMortgageService mortgageService;
-        private readonly IBailAdvisor bailAdvisor;
-        private Game game;
+        private readonly FakeBoard fakeBoard;
+        private readonly FakeDice fakeDice;
+        private readonly FakeTurnService fakeTurnService;
 
         public GameTests()
         {
-            players = new[] { new Player("Horse"), new Player("Car") };
-
-            dice = new FakeDice();
-            board = new Board(dice);
-            mortgageBroker = new MortgageBroker();
-            mortgageAdvisor = new MortgageAdvisor();
-            mortgageService = new MortgageService(board, mortgageAdvisor, mortgageBroker);
-            bailAdvisor = new FakeBailAdvisor();
-            turnService = new TurnService(mortgageService, bailAdvisor);
-            game = new Game(players.ToArray(), board, dice, turnService);
+            fakeBoard = new FakeBoard();
+            fakeDice = new FakeDice();
+            fakeTurnService = new FakeTurnService();
         }
 
         [TestMethod]
         public void PlayerOnBeginningLocationIsAtLocation0()
         {
+            var players = new[] { new Player("Horse", location: LocationConstants.BoardwalkIndex) , new Player("Car", location: LocationConstants.ParkPlaceIndex) };
+            var game = new Game(players, fakeBoard, fakeDice, fakeTurnService);
             var rounds = game.Play();
 
             Assert.IsTrue(rounds[0].All(turn => turn.StartingLocation == 0));
-        }
-
-        [TestMethod]
-        public void PlayerOnBeginningLocationRolls7AndEndsOnLocation7()
-        {
-            dice.LoadRoll(3, 4);
-            dice.LoadRoll(3, 4);
-
-            var rounds = game.Play();
-
-            Assert.IsTrue(rounds[0].All(turn => turn.EndingLocation == 7));
-        }
-
-        [TestMethod]
-        public void PlayerOnLocation39Rolls6AndEndsUpOnLocation5()
-        {
-            dice.LoadRoll(2, 37);
-            dice.LoadRoll(2, 37);
-            dice.LoadRoll(2, 4);
-            dice.LoadRoll(2, 4);
-
-            var rounds = game.Play();
-
-            Assert.IsTrue(rounds[1].All(turn => turn.EndingLocation == 5));
         }
 
         [TestMethod]
@@ -72,14 +37,14 @@ namespace MonopolyTests
         {
             var players = new[] { new Player("Horse") , new Player("Car") };
 
-            new Game(players, board, dice, turnService);
+            new Game(players, fakeBoard, fakeDice, fakeTurnService);
         }
 
         [TestMethod]
         public void GameCannotBeCreatedWithOnePlayer()
         {
             var horse = new Player("Horse");
-            var game = new Game(new[] { horse }, board, dice, turnService);
+            var game = new Game(new[] { horse }, fakeBoard, fakeDice, fakeTurnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -87,7 +52,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithMoreThanEightPlayers()
         {
-            var game = new Game(new Player[9], board, dice, turnService);
+            var game = new Game(new Player[9], fakeBoard, fakeDice, fakeTurnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -95,7 +60,7 @@ namespace MonopolyTests
         [TestMethod]
         public void GameCannotBeCreatedWithZeroPlayers()
         {
-            var game = new Game(Enumerable.Empty<Player>().ToArray(), board, dice, turnService);
+            var game = new Game(Enumerable.Empty<Player>().ToArray(), fakeBoard, fakeDice, fakeTurnService);
 
             Assert.ThrowsException<Exception>(() => game.Play());
         }
@@ -109,7 +74,8 @@ namespace MonopolyTests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(new[] { horse, car }, board, dice, turnService);
+                var players = new[] { new Player("Horse") , new Player("Car") };
+                var game = new Game(players, fakeBoard, fakeDice, fakeTurnService);
                 gameRounds.Add(game.Play());
             }
 
@@ -120,6 +86,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayReturnsAGameWith20PlayedRounds()
         {
+            var players = new[] { new Player("Horse") , new Player("Car") };
+            var game = new Game(players, fakeBoard, fakeDice, fakeTurnService);
             var rounds = game.Play();
 
             Assert.AreEqual(20, rounds.Values.Count());
@@ -128,6 +96,8 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerMaintainSameTurnOrderForEveryRoundOfGame()
         {
+            var players = new[] { new Player("Horse") , new Player("Car") };
+            var game = new Game(players, fakeBoard, fakeDice, fakeTurnService);
             var rounds = game.Play();
 
             var carTurnOrder = rounds[0].Where(t => t.PlayerName == "Car").First().TurnOrder;

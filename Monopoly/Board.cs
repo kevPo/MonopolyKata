@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Monopoly.Actions;
 using Monopoly.Locations;
@@ -8,8 +8,6 @@ namespace Monopoly
 {
     public class Board : IBoard
     {
-        private const int NumberOfLocations = 40;
-
         public IList<ILocation> Locations { get; }
 
         public IDictionary<int, ILocation> LocationDictionary => Locations.ToDictionary(l => l.LocationIndex);
@@ -67,44 +65,6 @@ namespace Monopoly
                 genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
                 realEstateFactory.Create(LocationConstants.BoardwalkIndex)
             };
-        }
-
-        public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
-        {
-            var (locationHistory, newLocationIndex) = BuildLocationHistory(currentLocationIndex, locationsToMove);
-
-            RemoveLastLocation(locationHistory);
-
-            return new MoveResult
-            {
-                CurrentLocation = Locations.ElementAt(newLocationIndex), LocationHistory = locationHistory
-            };
-        }
-
-        private (List<ILocation>, int) BuildLocationHistory(int currentLocationIndex, int locationsToMove)
-        {
-            var locationHistory = new List<ILocation>();
-
-            for (var i = 0; i < locationsToMove; i++)
-            {
-                currentLocationIndex = CalculationNextLocationIndex(currentLocationIndex);
-                locationHistory.Add(Locations.ElementAt(currentLocationIndex));
-            }
-
-            return (locationHistory, currentLocationIndex);
-        }
-
-        private static void RemoveLastLocation(List<ILocation> locationHistory)
-        {
-            if (locationHistory.Any())
-            {
-                locationHistory.RemoveAt(locationHistory.Count - 1);
-            }
-        }
-
-        private int CalculationNextLocationIndex(int location)
-        {
-            return ++location % NumberOfLocations;
         }
 
         public bool PlayerOwnsPropertyGroup(IPlayer player, PropertyGroup propertyGroup)

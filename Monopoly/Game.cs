@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Monopoly.Locations;
 
 namespace Monopoly
 {
@@ -13,9 +14,9 @@ namespace Monopoly
         private readonly IBoard board;
         private readonly IDice dice;
         private readonly ITurnService turnService;
-        private readonly IDictionary<int, Player> playerOrder;
+        private readonly IDictionary<int, IPlayer> playerOrder;
 
-        public Game(IEnumerable<Player> players, IBoard board, IDice dice, ITurnService turnService)
+        public Game(IEnumerable<IPlayer> players, IBoard board, IDice dice, ITurnService turnService)
         {
             this.board = board;
             this.dice = dice;
@@ -23,7 +24,7 @@ namespace Monopoly
             this.playerOrder = ShufflePlayers(players);
         }
 
-        private IDictionary<int, Player> ShufflePlayers(IEnumerable<Player> players)
+        private IDictionary<int, IPlayer> ShufflePlayers(IEnumerable<IPlayer> players)
         {
             var orderedPlayers = players.OrderBy(p => Guid.NewGuid());
             var playerOrder = 0;
@@ -34,8 +35,9 @@ namespace Monopoly
         public IDictionary<int, IEnumerable<TurnResult>> Play()
         {
             ValidateGameHasCorrectNumberOfPlayers();
-            var rounds = new Dictionary<int, IEnumerable<TurnResult>>();
+            StartAllPlayersOnFirstLocation();
 
+            var rounds = new Dictionary<int, IEnumerable<TurnResult>>();
             for (var round = 0; round < NumberOfRounds; round++)
             {
                 rounds.Add(round, PlayRound());
@@ -50,6 +52,11 @@ namespace Monopoly
             {
                 throw new Exception();
             }
+        }
+
+        private void StartAllPlayersOnFirstLocation()
+        {
+            playerOrder.Values.ForEach(p => p.MoveToLocation(LocationConstants.GoIndex));
         }
 
         private IEnumerable<TurnResult> PlayRound()

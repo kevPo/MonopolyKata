@@ -52,6 +52,7 @@
     <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="IMoveService.cs" />
     <Compile Include="Locations\Factories\GenericLocationFactory.cs" />
     <Compile Include="IBailAdvisor.cs" />
     <Compile Include="Locations\Factories\IGenericLocationFactory.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Locations\Factories\NullLocationFactory.cs" />
     <Compile Include="Locations\Factories\RailroadFactory.cs" />
     <Compile Include="Locations\Factories\RealEstateFactory.cs" />
+    <Compile Include="MoveService.cs" />
     <Compile Include="TurnService.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IBoard.cs" />

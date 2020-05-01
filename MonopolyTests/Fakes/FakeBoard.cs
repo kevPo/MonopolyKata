@@ -25,11 +25,6 @@ namespace MonopolyTests.Fakes
 
         public IDictionary<int, IProperty> PropertyDictionary => Locations.OfType<IProperty>().ToDictionary(l => l.LocationIndex);
 
-        public MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public int NumberOfRailRoadsOwnedByPlayer(IPlayer player)
         {
             return numberOfRailroadsOwnedByPlayer;

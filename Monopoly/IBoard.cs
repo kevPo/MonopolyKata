@@ -11,6 +11,5 @@ namespace Monopoly
         bool PlayerOwnsPropertyGroup(IPlayer player, PropertyGroup propertyGroup);
         int NumberOfRailRoadsOwnedByPlayer(IPlayer player);
         int NumberOfUtilitiesOwned();
-        MoveResult MoveToLocation(int currentLocationIndex, int locationsToMove);
     }
 }

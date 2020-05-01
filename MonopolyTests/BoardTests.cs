@@ -24,22 +24,6 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void MoveNewPlayer7LocationsReturns7()
-        {
-            var result = board.MoveToLocation(0, 7);
-
-            Assert.AreEqual(7, result.CurrentLocation.LocationIndex);
-        }
-
-        [TestMethod]
-        public void CalculateNewLocationFrom39With6LocationsToMoveReturns5()
-        {
-            var result = board.MoveToLocation(39, 6);
-
-            Assert.AreEqual(5, result.CurrentLocation.LocationIndex);
-        }
-
-        [TestMethod]
         public void PlayerOwnsPropertyGroupReturnsFalseWhenPlayerOwnsNoneOfPropertyGroup()
         {
             var player = new Player("horse");

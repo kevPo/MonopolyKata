@@ -15,19 +15,21 @@ namespace MonopolyTests
         private readonly FakeDice fakeDice;
         private readonly FakeBailAdvisor fakeBailAdvisor;
         private readonly IPlayer player;
-        private readonly ITurnService turnService;
         private readonly IBoard board;
+        private readonly IMoveService moveService;
+        private readonly ITurnService turnService;
 
         public TurnServiceTests()
         {
             fakeDice = new FakeDice();
             fakeBailAdvisor = new FakeBailAdvisor();
             board = new Board(fakeDice);
+            moveService = new MoveService(board);
             player = new Player("horse");
             var mortgageBroker = new MortgageBroker();
             var mortgageAdvisor = new MortgageAdvisor();
             var mortgageService = new MortgageService(board, mortgageAdvisor, mortgageBroker);
-            turnService = new TurnService(mortgageService, fakeBailAdvisor);
+            turnService = new TurnService(moveService, mortgageService, fakeBailAdvisor);
         }
 
         [TestMethod]

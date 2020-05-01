@@ -7,11 +7,13 @@ namespace Monopoly
     {
         private const int MaxNumberOfDoubles = 3;
 
+        private readonly IMoveService moveService;
         private readonly IMortgageService mortgageService;
         private readonly IBailAdvisor bailAdvisor;
 
-        public TurnService(IMortgageService mortgageService, IBailAdvisor bailAdvisor)
+        public TurnService(IMoveService moveService, IMortgageService mortgageService, IBailAdvisor bailAdvisor)
         {
+            this.moveService = moveService;
             this.mortgageService = mortgageService;
             this.bailAdvisor = bailAdvisor;
         }
@@ -103,9 +105,9 @@ namespace Monopoly
             return result;
         }
 
-        private static TurnResult MovePlayerToLocation(TurnResult result, IPlayer player, IBoard board, RollResult rollResult)
+        private TurnResult MovePlayerToLocation(TurnResult result, IPlayer player, IBoard board, RollResult rollResult)
         {
-            var moveResult = board.MoveToLocation(player.Location, rollResult.Total);
+            var moveResult = moveService.MoveToLocation(player.Location, rollResult.Total);
 
             player.MoveToLocation(moveResult.CurrentLocation.LocationIndex);
             result.Locations.Add(moveResult.CurrentLocation.LocationIndex);
