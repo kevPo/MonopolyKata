@@ -505,5 +505,20 @@ namespace MonopolyTests
             Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
             Assert.AreEqual(LocationConstants.VirginiaAveIndex, player.Location);
         }
+
+        [TestMethod]
+        public void PlayerGetsOutOfJailByPaying50AndStillWithdrawsMoneyWhenDoublesAreRolled()
+        {
+            player.DepositMoney(MonopolyConstants.BailMoney);
+            player.GoToJail();
+            fakeDice.LoadRoll(3, 3);
+            fakeDice.LoadRoll(1, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
+            Assert.AreEqual(LocationConstants.FreeParkingIndex, player.Location);
+        }
     }
 }

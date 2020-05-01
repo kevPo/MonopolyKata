@@ -25,7 +25,7 @@ namespace Monopoly.Locations
         // Community Chest
         public const int TennesseeAveIndex = 18;
         public const int NewYorkAveIndex = 19;
-        // Free Parking
+        public const int FreeParkingIndex = 20;
         public const int KentuckyAveIndex = 21;
         // Chance
         public const int IndianaAveIndex = 23;
