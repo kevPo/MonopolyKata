@@ -5,7 +5,7 @@ using Monopoly.Locations;
 using Monopoly.Mortgage;
 using MonopolyTests.Fakes;
 
-namespace MonopolyTests
+namespace MonopolyTests.Mortgage
 {
     [TestClass]
     public class MortgageServiceTests
