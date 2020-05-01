@@ -1,6 +1,6 @@
 ﻿using Monopoly;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeBailAdvisor : IBailAdvisor
     {

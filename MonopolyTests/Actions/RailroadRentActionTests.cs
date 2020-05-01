@@ -2,6 +2,7 @@
 using Monopoly;
 using Monopoly.Actions;
 using Monopoly.Locations;
+using MonopolyTests.Fakes;
 
 namespace MonopolyTests.Actions
 {

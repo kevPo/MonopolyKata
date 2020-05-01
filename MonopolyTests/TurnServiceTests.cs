@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 using Monopoly.Locations;
 using Monopoly.Mortgage;
+using MonopolyTests.Fakes;
 
 namespace MonopolyTests
 {

@@ -1,7 +1,7 @@
 ﻿using Monopoly;
 using Monopoly.Actions;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeAction : IAction
     {

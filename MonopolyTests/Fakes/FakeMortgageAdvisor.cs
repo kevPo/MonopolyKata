@@ -2,7 +2,7 @@
 using Monopoly.Locations;
 using Monopoly.Mortgage;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeMortgageAdvisor : IMortgageAdvisor
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 using Monopoly.Actions;
+using MonopolyTests.Fakes;
 
 namespace MonopolyTests.Actions
 {

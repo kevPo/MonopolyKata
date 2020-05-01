@@ -3,7 +3,7 @@ using System.Linq;
 using Monopoly;
 using Monopoly.Locations;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeBoard : IBoard
     {

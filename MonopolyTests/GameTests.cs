@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Monopoly;
 using Monopoly.Mortgage;
+using MonopolyTests.Fakes;
 
 namespace MonopolyTests
 {

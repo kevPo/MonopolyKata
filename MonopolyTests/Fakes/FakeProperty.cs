@@ -2,7 +2,7 @@
 using Monopoly;
 using Monopoly.Locations;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeProperty : IProperty
     {

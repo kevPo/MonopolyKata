@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Monopoly;
 
-namespace MonopolyTests
+namespace MonopolyTests.Fakes
 {
     public class FakeDice : IDice
     {
