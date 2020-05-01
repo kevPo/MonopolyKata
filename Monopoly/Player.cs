@@ -8,6 +8,7 @@ namespace Monopoly
         public Money Balance { get; private set; }
         public int Location { get; private set; }
         public bool IsInJail { get; private set; }
+        public int NumberOfEscapeAttempts { get; private set; }
 
         public Player(string name, Money? balance = null, int location = 0)
         {
@@ -19,6 +20,11 @@ namespace Monopoly
         public bool HasAvailableFunds(Money amount)
         {
             return Balance.Amount >= amount.Amount;
+        }
+
+        public bool HasReachedMaxEscapeAttempts()
+        {
+            return NumberOfEscapeAttempts == MonopolyConstants.MaximumNumberOfEscapeAttempts;
         }
 
         public bool DepositMoney(Money amount)
@@ -50,11 +56,18 @@ namespace Monopoly
         {
             Location = LocationConstants.JailIndex;
             IsInJail = true;
+            NumberOfEscapeAttempts = 0;
         }
 
         public void GetOutOfJail()
         {
             IsInJail = false;
+            NumberOfEscapeAttempts = 0;
+        }
+
+        public void AddEscapeAttempt()
+        {
+            NumberOfEscapeAttempts++;
         }
     }
 }

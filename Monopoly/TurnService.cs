@@ -75,6 +75,18 @@ namespace Monopoly
                 player.GetOutOfJail();
                 result = TakeTurn(result, player, board, rollResult);
             }
+            else
+            {
+                player.AddEscapeAttempt();
+            }
+
+            if (player.HasReachedMaxEscapeAttempts())
+            {
+                player.WithdrawMoney(MonopolyConstants.BailMoney);
+                player.GetOutOfJail();
+                result.PlayerPaidBail = true;
+                result = TakeTurn(result, player, board, rollResult);
+            }
 
             return result;
         }

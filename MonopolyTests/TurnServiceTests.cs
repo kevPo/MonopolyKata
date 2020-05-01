@@ -528,6 +528,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerGetsOutOfJailByRollingDoublesOnFirstTurn()
         {
+            fakeBailAdvisor.ShouldPayBail = false;
             player.DepositMoney(new Money(25));
             var expectedBalance = player.Balance;
             player.GoToJail();
@@ -538,6 +539,97 @@ namespace MonopolyTests
             Assert.IsFalse(player.IsInJail);
             Assert.AreEqual(expectedBalance, player.Balance);
             Assert.AreEqual(LocationConstants.StJamesPlaceIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerStaysInJailAfterFailingToRollDoublesOnFirstTurn()
+        {
+            fakeBailAdvisor.ShouldPayBail = false;
+            player.DepositMoney(new Money(25));
+            var expectedBalance = player.Balance;
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerGetsOutOfJailByRollingDoublesOnSecondTurn()
+        {
+            fakeBailAdvisor.ShouldPayBail = false;
+            player.DepositMoney(new Money(25));
+            var expectedBalance = player.Balance;
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(3, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(LocationConstants.StJamesPlaceIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerStaysInJailAfterFailingToRollDoublesOnSecondTurn()
+        {
+            fakeBailAdvisor.ShouldPayBail = false;
+            player.DepositMoney(new Money(25));
+            var expectedBalance = player.Balance;
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(1, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsTrue(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(LocationConstants.JailIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerGetsOutOfJailByRollingDoublesOnThirdTurn()
+        {
+            fakeBailAdvisor.ShouldPayBail = false;
+            player.DepositMoney(new Money(25));
+            var expectedBalance = player.Balance;
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(3, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(expectedBalance, player.Balance);
+            Assert.AreEqual(LocationConstants.StJamesPlaceIndex, player.Location);
+        }
+
+        [TestMethod]
+        public void PlayerIsForcedToPayBailAfterFailingToRollDoublesOnThirdTurn()
+        {
+            fakeBailAdvisor.ShouldPayBail = false;
+            player.DepositMoney(MonopolyConstants.BailMoney);
+            player.GoToJail();
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(1, 3);
+            fakeDice.LoadRoll(1, 3);
+
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+            turnService.Take(0, player, board, fakeDice);
+
+            Assert.IsFalse(player.IsInJail);
+            Assert.AreEqual(MonopolyConstants.NoMoney, player.Balance);
+            Assert.AreEqual(LocationConstants.VirginiaAveIndex, player.Location);
         }
     }
 }

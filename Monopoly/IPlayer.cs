@@ -8,10 +8,12 @@
         bool IsInJail { get; }
 
         bool HasAvailableFunds(Money amount);
+        bool HasReachedMaxEscapeAttempts();
         bool DepositMoney(Money amount);
         bool WithdrawMoney(Money amount);
         void MoveToLocation(int location);
         void GoToJail();
         void GetOutOfJail();
+        void AddEscapeAttempt();
     }
 }
