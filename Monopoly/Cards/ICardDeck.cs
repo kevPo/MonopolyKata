@@ -2,8 +2,7 @@
 {
     public interface ICardDeck
     {
-        ICard GetTopCard();
+        ICard DrawCard();
         ICard GetBottomCard();
-        void PutTopCardOnBottom();
     }
 }

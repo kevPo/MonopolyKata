@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Actions\IncomeTaxActionTests.cs" />
     <Compile Include="Actions\PayoutActionTests.cs" />
+    <Compile Include="Actions\PickupCardActionTests.cs" />
     <Compile Include="Actions\UtilityRentActionTests.cs" />
     <Compile Include="Actions\RailroadRentActionTests.cs" />
     <Compile Include="Actions\RealEstateRentActionTests.cs" />
@@ -58,7 +59,8 @@
     <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="Cards\CardDeckTests.cs" />
-    <Compile Include="Cards\FakeCard.cs" />
+    <Compile Include="Cards\FakeStimulusCard.cs" />
+    <Compile Include="Cards\FakeCardDeck.cs" />
     <Compile Include="Fakes\FakeBailAdvisor.cs" />
     <Compile Include="Fakes\FakeBoard.cs" />
     <Compile Include="Fakes\FakeDice.cs" />

@@ -13,9 +13,7 @@ namespace Monopoly.Actions
 
         public void ProcessAction(IPlayer player)
         {
-            var card = cardDeck.GetTopCard();
-            card.Play(player);
-            cardDeck.PutTopCardOnBottom();
+            cardDeck.DrawCard().Play(player);
         }
     }
 }

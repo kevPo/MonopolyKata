@@ -18,19 +18,17 @@ namespace Monopoly.Cards
             this.cards = cards ?? throw new ArgumentNullException(nameof(cards));
         }
 
-        public ICard GetTopCard()
+        public ICard DrawCard()
         {
-            return cards.First();
+            var topCard = cards.First();
+            cards = cards.Skip(1).Append(topCard);
+
+            return topCard;
         }
 
         public ICard GetBottomCard()
         {
             return cards.Last();
-        }
-
-        public void PutTopCardOnBottom()
-        {
-            cards = cards.Skip(1).Append(GetTopCard());
         }
     }
 }

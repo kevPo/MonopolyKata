@@ -23,11 +23,11 @@ namespace MonopolyTests.Cards
         [TestMethod]
         public void GetTopCard_ReturnsTopCard()
         {
-            var topCard = new FakeCard();
-            var bottomCard = new FakeCard();
+            var topCard = new FakeStimulusCard();
+            var bottomCard = new FakeStimulusCard();
             var cardDeck = new CardDeck(new[] { topCard, bottomCard });
             
-            var card = cardDeck.GetTopCard();
+            var card = cardDeck.DrawCard();
 
             Assert.AreEqual(topCard, card);
         }
@@ -35,8 +35,8 @@ namespace MonopolyTests.Cards
         [TestMethod]
         public void GetBottomCard_ReturnsBottomCard()
         {
-            var topCard = new FakeCard();
-            var bottomCard = new FakeCard();
+            var topCard = new FakeStimulusCard();
+            var bottomCard = new FakeStimulusCard();
             var cardDeck = new CardDeck(new[] { topCard, bottomCard });
 
             var card = cardDeck.GetBottomCard();
@@ -45,13 +45,13 @@ namespace MonopolyTests.Cards
         }
 
         [TestMethod]
-        public void PutCardOnBottom_RemovesTopCardFromTheTop()
+        public void DrawCard_PutsTopCardOnTheBottom()
         {
-            var card1 = new FakeCard();
-            var card2 = new FakeCard();
+            var card1 = new FakeStimulusCard();
+            var card2 = new FakeStimulusCard();
             var cardDeck = new CardDeck(new[] { card1, card2 });
 
-            cardDeck.PutTopCardOnBottom();
+            _ = cardDeck.DrawCard();
             var card = cardDeck.GetBottomCard();
 
             Assert.AreEqual(card1, card);
