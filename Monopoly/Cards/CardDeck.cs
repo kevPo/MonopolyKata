@@ -10,12 +10,12 @@ namespace Monopoly.Cards
 
         public CardDeck(IEnumerable<ICard> cards)
         {
-            if (!cards.Any())
+            this.cards = cards ?? throw new ArgumentNullException(nameof(cards));
+
+            if (!this.cards.Any())
             {
                 throw new ArgumentException("Gotta have cards!");
             }
-
-            this.cards = cards ?? throw new ArgumentNullException(nameof(cards));
         }
 
         public ICard DrawCard()
