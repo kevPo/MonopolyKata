@@ -23,8 +23,8 @@ namespace MonopolyTests.Cards
         [TestMethod]
         public void GetTopCard_ReturnsTopCard()
         {
-            var topCard = new FakeStimulusCard();
-            var bottomCard = new FakeStimulusCard();
+            var topCard = new FakeCard();
+            var bottomCard = new FakeCard();
             var cardDeck = new CardDeck(new[] { topCard, bottomCard });
             
             var card = cardDeck.DrawCard();
@@ -35,8 +35,8 @@ namespace MonopolyTests.Cards
         [TestMethod]
         public void GetBottomCard_ReturnsBottomCard()
         {
-            var topCard = new FakeStimulusCard();
-            var bottomCard = new FakeStimulusCard();
+            var topCard = new FakeCard();
+            var bottomCard = new FakeCard();
             var cardDeck = new CardDeck(new[] { topCard, bottomCard });
 
             var card = cardDeck.GetBottomCard();
@@ -47,8 +47,8 @@ namespace MonopolyTests.Cards
         [TestMethod]
         public void DrawCard_PutsTopCardOnTheBottom()
         {
-            var card1 = new FakeStimulusCard();
-            var card2 = new FakeStimulusCard();
+            var card1 = new FakeCard();
+            var card2 = new FakeCard();
             var cardDeck = new CardDeck(new[] { card1, card2 });
 
             _ = cardDeck.DrawCard();

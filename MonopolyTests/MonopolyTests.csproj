@@ -59,7 +59,7 @@
     <Compile Include="Actions\PurchasePropertyActionTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="Cards\CardDeckTests.cs" />
-    <Compile Include="Cards\FakeStimulusCard.cs" />
+    <Compile Include="Cards\FakeCard.cs" />
     <Compile Include="Cards\FakeCardDeck.cs" />
     <Compile Include="Fakes\FakeBailAdvisor.cs" />
     <Compile Include="Fakes\FakeBoard.cs" />

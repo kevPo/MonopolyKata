@@ -8,19 +8,17 @@ namespace MonopolyTests.Actions
     [TestClass]
     public class PickupCardActionTests
     {
-        private readonly Money stimulusMoney = new Money(2000);
-
         [TestMethod]
         public void ProcessAction_PlaysCardForPlayer()
         {
-            var stimulusCard = new FakeStimulusCard(stimulusMoney);
-            var cardDeck = new FakeCardDeck(stimulusCard);
+            var card = new FakeCard();
+            var cardDeck = new FakeCardDeck(card);
             var action = new PickupCardAction(cardDeck);
             var player = new Player("Fake");
 
             action.ProcessAction(player);
 
-            Assert.AreEqual(stimulusMoney, player.Balance);
+            Assert.AreEqual(card.LastPlayerPlayed, player);
         }
     }
 }

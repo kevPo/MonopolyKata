@@ -3,6 +3,5 @@
     public interface ICardDeck
     {
         ICard DrawCard();
-        ICard GetBottomCard();
     }
 }
