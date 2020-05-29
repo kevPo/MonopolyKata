@@ -2,6 +2,6 @@
 {
     public interface ICard
     {
-        void Play(IPlayer play);
+        void Play(IPlayer player);
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Actions\RealEstateRentAction.cs" />
     <Compile Include="Actions\GoToJailAction.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Cards\ActionCard.cs" />
     <Compile Include="Cards\CardDeck.cs" />
     <Compile Include="Cards\ICard.cs" />
     <Compile Include="Cards\ICardDeck.cs" />
