@@ -59,6 +59,7 @@
     <Compile Include="Cards\ICardDeck.cs" />
     <Compile Include="IMoveService.cs" />
     <Compile Include="Locations\Factories\CardLocationFactory.cs" />
+    <Compile Include="Locations\Factories\DeckFactory.cs" />
     <Compile Include="Locations\Factories\GenericLocationFactory.cs" />
     <Compile Include="IBailAdvisor.cs" />
     <Compile Include="Locations\Factories\ICardLocationFactory.cs" />

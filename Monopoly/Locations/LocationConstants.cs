@@ -7,12 +7,12 @@ namespace Monopoly.Locations
         // Indexes
         public const int GoIndex = 0;
         public const int MediterraneanAveIndex = 1;
-        // Community Chest
+        public const int CommunityChestIndex1 = 2;
         public const int BalticAveIndex = 3;
         public const int IncomeTaxIndex = 4;
         public const int ReadingRailroadIndex = 5;
         public const int OrientalAveIndex = 6;
-        // Chance
+        public const int ChanceIndex1 = 7;
         public const int VermontAveIndex = 8;
         public const int ConnecticutAveIndex = 9;
         public const int JailIndex = 10;
@@ -22,12 +22,12 @@ namespace Monopoly.Locations
         public const int VirginiaAveIndex = 14;
         public const int PennsylvaniaRailroadIndex = 15;
         public const int StJamesPlaceIndex = 16;
-        // Community Chest
+        public const int CommunityChestIndex2 = 17;
         public const int TennesseeAveIndex = 18;
         public const int NewYorkAveIndex = 19;
         public const int FreeParkingIndex = 20;
         public const int KentuckyAveIndex = 21;
-        // Chance
+        public const int ChanceIndex2 = 22;
         public const int IndianaAveIndex = 23;
         public const int IllinoisAveIndex = 24;
         public const int BAndORailroadIndex = 25;
@@ -38,10 +38,10 @@ namespace Monopoly.Locations
         public const int GoToJailIndex = 30;
         public const int PacificAveIndex = 31;
         public const int NorthCarolinaAveIndex = 32;
-        // Community Chest
+        public const int CommunityChestIndex3 = 33;
         public const int PennsylvaniaAveIndex = 34;
         public const int ShortLineRailroadIndex = 35;
-        // Chance
+        public const int ChanceIndex3 = 36;
         public const int ParkPlaceIndex = 37;
         public const int LuxuryTaxIndex = 38;
         public const int BoardwalkIndex = 39;

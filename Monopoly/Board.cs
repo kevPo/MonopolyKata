@@ -16,9 +16,12 @@ namespace Monopoly
 
         public Board(IDice dice)
         {
+            var deckFactory = new DeckFactory();
+
             var utilityFactory = new UtilityFactory(this, dice);
             var railroadFactory = new RailroadFactory(this);
             var realEstateFactory = new RealEstateFactory(this);
+            var cardLocationFactory = new CardLocationFactory(deckFactory);
             var nullLocationFactory = new NullLocationFactory();
             var genericLocationFactory = new GenericLocationFactory();
 
@@ -26,12 +29,12 @@ namespace Monopoly
             {
                 genericLocationFactory.Create(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
                 realEstateFactory.Create(LocationConstants.MediterraneanAveIndex),
-                nullLocationFactory.Create(2),
+                cardLocationFactory.CreateCommunityChestLocation(LocationConstants.CommunityChestIndex1),
                 realEstateFactory.Create(LocationConstants.BalticAveIndex),
                 genericLocationFactory.Create(LocationConstants.IncomeTaxIndex, new IncomeTaxAction(MonopolyConstants.IncomeTaxRate, MonopolyConstants.IncomeTaxMaximumAmount)),
                 railroadFactory.Create(LocationConstants.ReadingRailroadIndex),
                 realEstateFactory.Create(LocationConstants.OrientalAveIndex),
-                nullLocationFactory.Create(7),
+                cardLocationFactory.CreateChanceLocation(LocationConstants.ChanceIndex1),
                 realEstateFactory.Create(LocationConstants.VermontAveIndex),
                 realEstateFactory.Create(LocationConstants.ConnecticutAveIndex),
                 nullLocationFactory.Create(10),
@@ -41,12 +44,12 @@ namespace Monopoly
                 realEstateFactory.Create(LocationConstants.VirginiaAveIndex),
                 railroadFactory.Create(LocationConstants.PennsylvaniaRailroadIndex),
                 realEstateFactory.Create(LocationConstants.StJamesPlaceIndex),
-                nullLocationFactory.Create(17),
+                cardLocationFactory.CreateCommunityChestLocation(LocationConstants.CommunityChestIndex2),
                 realEstateFactory.Create(LocationConstants.TennesseeAveIndex),
                 realEstateFactory.Create(LocationConstants.NewYorkAveIndex),
                 nullLocationFactory.Create(20),
                 realEstateFactory.Create(LocationConstants.KentuckyAveIndex),
-                nullLocationFactory.Create(22),
+                cardLocationFactory.CreateChanceLocation(LocationConstants.ChanceIndex2),
                 realEstateFactory.Create(LocationConstants.IndianaAveIndex),
                 realEstateFactory.Create(LocationConstants.IllinoisAveIndex),
                 railroadFactory.Create(LocationConstants.BAndORailroadIndex),
@@ -57,10 +60,10 @@ namespace Monopoly
                 genericLocationFactory.Create(LocationConstants.GoToJailIndex, new GoToJailAction()),
                 realEstateFactory.Create(LocationConstants.PacificAveIndex),
                 realEstateFactory.Create(LocationConstants.NorthCarolinaAveIndex),
-                nullLocationFactory.Create(33),
+                cardLocationFactory.CreateCommunityChestLocation(LocationConstants.CommunityChestIndex3),
                 realEstateFactory.Create(LocationConstants.PennsylvaniaAveIndex),
                 railroadFactory.Create(LocationConstants.ShortLineRailroadIndex),
-                nullLocationFactory.Create(36),
+                cardLocationFactory.CreateChanceLocation(LocationConstants.ChanceIndex3),
                 realEstateFactory.Create(LocationConstants.ParkPlaceIndex),
                 genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
                 realEstateFactory.Create(LocationConstants.BoardwalkIndex)
