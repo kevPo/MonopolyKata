@@ -62,6 +62,7 @@
     <Compile Include="Locations\Factories\GenericLocationFactory.cs" />
     <Compile Include="IBailAdvisor.cs" />
     <Compile Include="Locations\Factories\ICardLocationFactory.cs" />
+    <Compile Include="Locations\Factories\IDeckFactory.cs" />
     <Compile Include="Locations\Factories\IGenericLocationFactory.cs" />
     <Compile Include="Mortgage\IMortgageAdvisor.cs" />
     <Compile Include="Mortgage\IMortgageBroker.cs" />
