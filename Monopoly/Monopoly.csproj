@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\IPropertyAction.cs" />
-    <Compile Include="Actions\LuxuryTaxAction.cs" />
+    <Compile Include="Actions\WithdrawAction.cs" />
     <Compile Include="Actions\NullAction.cs" />
     <Compile Include="Actions\IncomeTaxAction.cs" />
-    <Compile Include="Actions\PayoutAction.cs" />
+    <Compile Include="Actions\DepositAction.cs" />
     <Compile Include="Actions\PickupCardAction.cs" />
     <Compile Include="Actions\PurchasePropertyAction.cs" />
     <Compile Include="Actions\UtilityRentAction.cs" />

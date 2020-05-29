@@ -73,11 +73,11 @@ namespace MonopolyTests
         public void PlayerPassesGoAndGets200DollarsAddedToBalance()
         {
             player.MoveToLocation(39);
-            fakeDice.LoadRoll(1, 2);
+            fakeDice.LoadRoll(5, 6);
 
             turnService.Take(0, player, board, fakeDice);
 
-            Assert.AreEqual(2, player.Location);
+            Assert.AreEqual(10, player.Location);
             Assert.AreEqual(MonopolyConstants.GoPayoutAmount, player.Balance);
         }
 
@@ -94,7 +94,7 @@ namespace MonopolyTests
         [TestMethod]
         public void PlayerPassesGoTwiceInOneTurnAndGains400ToBalance()
         {
-            fakeDice.LoadRoll(1, 81);
+            fakeDice.LoadRoll(1, 89);
             var expectedBalance = MonopolyConstants.GoPayoutAmount.Add(MonopolyConstants.GoPayoutAmount);
 
             turnService.Take(0, player, board, fakeDice);

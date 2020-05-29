@@ -27,7 +27,7 @@ namespace Monopoly
 
             Locations = new[]
             {
-                genericLocationFactory.Create(LocationConstants.GoIndex, new PayoutAction(MonopolyConstants.GoPayoutAmount), new PayoutAction(MonopolyConstants.GoPayoutAmount)),
+                genericLocationFactory.Create(LocationConstants.GoIndex, new DepositAction(MonopolyConstants.GoPayoutAmount), new DepositAction(MonopolyConstants.GoPayoutAmount)),
                 realEstateFactory.Create(LocationConstants.MediterraneanAveIndex),
                 cardLocationFactory.CreateCommunityChestLocation(LocationConstants.CommunityChestIndex1),
                 realEstateFactory.Create(LocationConstants.BalticAveIndex),
@@ -65,7 +65,7 @@ namespace Monopoly
                 railroadFactory.Create(LocationConstants.ShortLineRailroadIndex),
                 cardLocationFactory.CreateChanceLocation(LocationConstants.ChanceIndex3),
                 realEstateFactory.Create(LocationConstants.ParkPlaceIndex),
-                genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new LuxuryTaxAction(MonopolyConstants.LuxuryTaxAmount)),
+                genericLocationFactory.Create(LocationConstants.LuxuryTaxIndex, new WithdrawAction(MonopolyConstants.LuxuryTaxAmount)),
                 realEstateFactory.Create(LocationConstants.BoardwalkIndex)
             };
         }
